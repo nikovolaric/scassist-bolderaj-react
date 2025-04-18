@@ -5,7 +5,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMyChild } from "../services/userAPI";
 
 function ChildDashboardLayout() {
-  const { id } = useParams();
+  const { childId } = useParams();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const me: { parentOf: { child: string }[] } | undefined =
@@ -19,7 +19,7 @@ function ChildDashboardLayout() {
 
   const { isPending } = useQuery({
     queryKey: ["child"],
-    queryFn: () => getMyChild(id!),
+    queryFn: () => getMyChild(childId!),
   });
 
   if (isPending) {

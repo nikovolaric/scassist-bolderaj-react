@@ -1,10 +1,10 @@
 import { useQueryClient } from "@tanstack/react-query";
 import Logo from "../components/Logo";
-import Logout from "../features/auth/components/Logout";
 import MyChildrenSection from "../features/dashboard/components/MyChildrenSection";
 import MyClimbingSection from "../features/dashboard/components/MyClimbingSection";
 import UserBox from "../features/dashboard/components/UserBox";
 import WelcomeSection from "../features/dashboard/components/WelcomeSection";
+import NavMenu from "../features/dashboard/components/NavMenu";
 
 function Dashboard() {
   const queryClient = useQueryClient();
@@ -16,9 +16,9 @@ function Dashboard() {
       <div className="w-1/2 lg:w-1/6">
         <Logo />
       </div>
-      <div className="flex items-center justify-between gap-3">
-        <Logout />
+      <div className="flex items-center justify-end gap-3">
         <UserBox />
+        <NavMenu />
       </div>
       <div className="flex flex-col gap-12 lg:mt-12 lg:gap-24">
         <WelcomeSection />

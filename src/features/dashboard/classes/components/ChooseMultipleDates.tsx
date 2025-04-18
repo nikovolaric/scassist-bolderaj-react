@@ -1,13 +1,23 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getMultipleDateClasses } from "../../../../services/classAPI";
 import ChooseClassCard, { IClassInfo } from "./ChooseClassCard";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import { useParams } from "react-router";
 
 function ChooseMultipleDates() {
+  const { childId } = useParams();
+  const queryClient = useQueryClient();
+
+  const ageGroup = childId
+    ? queryClient.getQueryData<{ myChild: { ageGroup: string; age: number } }>([
+        "child",
+      ])!.myChild.ageGroup
+    : undefined;
+
   const { data, isPending } = useQuery({
     queryKey: ["classesMultiple"],
-    queryFn: getMultipleDateClasses,
+    queryFn: () => getMultipleDateClasses(ageGroup),
   });
 
   if (isPending) {
@@ -15,23 +25,33 @@ function ChooseMultipleDates() {
   }
 
   const mondays = data.classes.filter(
-    (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 1,
+    (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 0,
   );
   const tuesdays = data.classes.filter(
-    (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 2,
+    (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 1,
   );
   const wednesdays = data.classes.filter(
-    (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 3,
+    (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 2,
   );
   const thursdays = data.classes.filter(
-    (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 4,
+    (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 3,
   );
   const fridays = data.classes.filter(
-    (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 5,
+    (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 4,
   );
   const saturdays = data.classes.filter(
-    (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 6,
+    (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 5,
   );
+
+  if (data.classes.length === 0) {
+    return (
+      <div>
+        <p className="text-xl font-semibold">
+          Trenutno ni razpisanih datumov za vodene vadbe.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-6">
@@ -82,11 +102,11 @@ function RenderClasses({
         </button>
       </div>
       {isOpen && (
-        <>
+        <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-x-5 md:gap-y-12">
           {classInfo.map((el: IClassInfo) => (
             <ChooseClassCard key={el._id} classInfo={el} />
           ))}
-        </>
+        </div>
       )}
     </div>
   );

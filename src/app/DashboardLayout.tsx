@@ -1,14 +1,37 @@
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import Spinner from "../components/Spinner";
-import { Navigate, Outlet } from "react-router";
+import { Navigate, Outlet, useLocation, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getMe } from "../services/userAPI";
+import { useAppDispatch } from "./hooks";
+import { clearPayment } from "../features/dashboard/payments/slices/paymentSlice";
+import { clearTicketData } from "../features/dashboard/tickets/slices/ticketCartSlice";
+import { clearClassData } from "../features/dashboard/classes/slices/classCartSlice";
 
 function DashboardLayout() {
+  const { childId } = useParams();
+  const { pathname } = useLocation();
+  const dispatch = useAppDispatch();
   const { data, isPending } = useQuery({
     queryKey: ["me"],
     queryFn: getMe,
   });
+
+  useEffect(
+    function () {
+      if (!pathname.includes("/ticketcart")) {
+        dispatch(clearPayment());
+        dispatch(clearTicketData());
+      }
+      if (
+        !pathname.includes("/classes/") ||
+        !pathname.includes("/dashboard/")
+      ) {
+        dispatch(clearClassData());
+      }
+    },
+    [childId, pathname, dispatch],
+  );
 
   if (isPending) {
     return <Spinner />;

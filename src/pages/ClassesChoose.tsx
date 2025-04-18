@@ -33,9 +33,13 @@ function ClassesChoose() {
           <Link to="/dashboard/classes">Tečaji in vadbe</Link>{" "}
           <ChevronRightIcon className="w-6 stroke-3" /> Prijava
         </h1>
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-col gap-5 rounded-xl bg-white px-4 py-8">
-            <p className="font-quicksand text-lg font-bold uppercase">
+        <div className="flex flex-col gap-6 lg:mx-auto lg:w-3/4 xl:w-2/3">
+          <div
+            className={`flex flex-col gap-5 rounded-xl bg-white px-4 py-8 md:grid md:grid-cols-2 md:items-center`}
+          >
+            <p
+              className={`font-quicksand text-lg font-bold uppercase ${article.endDate ? "md:col-span-2" : ""}`}
+            >
               {article.name}
             </p>
             {article.endDate && (
@@ -45,7 +49,7 @@ function ClassesChoose() {
                 {new Date(article.endDate).toLocaleDateString()}
               </p>
             )}
-            <p className="bg-primary/35 rounded-xl px-4 py-3">
+            <p className="bg-primary/35 rounded-xl px-4 py-3 md:justify-self-end">
               Cena:{" "}
               <span className="font-semibold">
                 {(article.endDate
@@ -64,7 +68,7 @@ function ClassesChoose() {
         </div>
       </div>
       {classData.classes.length === article.noClasses && (
-        <div className="bg-neutral fixed bottom-0 left-0 flex h-20 w-full items-center justify-end px-4">
+        <div className="bg-neutral fixed bottom-0 left-0 flex h-20 w-full items-center justify-end px-4 md:px-8 lg:px-20 xl:left-1/2 xl:max-w-[1440px] xl:-translate-x-1/2">
           <LinkBtn to={`${pathname}/payment`} type="primary">
             <p className="flex items-center gap-4">
               Nadaljuj na plačilo <ChevronRightIcon className="w-6 stroke-3" />
@@ -73,7 +77,7 @@ function ClassesChoose() {
         </div>
       )}
       {!article.noClasses && classData.classes.length === 1 && (
-        <div className="bg-neutral fixed bottom-0 left-0 flex h-20 w-full items-center justify-end px-4">
+        <div className="bg-neutral fixed bottom-0 left-0 flex h-20 w-full items-center justify-end px-4 md:px-8 lg:px-20 xl:left-1/2 xl:max-w-[1280px] xl:-translate-x-1/2">
           <LinkBtn to={`${pathname}/payment`} type="primary">
             <p className="flex items-center gap-4">
               Nadaljuj na plačilo <ChevronRightIcon className="w-6 stroke-3" />

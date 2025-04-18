@@ -21,7 +21,7 @@ function ClassSignUpSuccess() {
         </h1>
       </div>
       <PaymentInfo />
-      <div>
+      <div className="lg:mx-auto lg:w-4/5 xl:w-2/3">
         <LinkBtn to="/dashboard" type="primary">
           <p className="flex items-center gap-4">
             <ChevronLeftIcon className="w-4 stroke-3" />
@@ -47,7 +47,7 @@ function PaymentInfo() {
   }
 
   return (
-    <div className="border-primary flex gap-5 rounded-lg border bg-white px-3 py-6">
+    <div className="border-primary flex gap-5 rounded-lg border bg-white px-3 py-6 lg:mx-auto lg:w-4/5 xl:w-2/3">
       <p className="font-quicksand from-primary to-secondary drop-shadow-input flex h-6 w-6 flex-none items-center justify-center rounded-lg bg-gradient-to-r font-semibold">
         i
       </p>

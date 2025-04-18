@@ -21,14 +21,15 @@ import SetChildAuth from "./pages/SetChildAuth";
 import ClassesChoose from "./pages/ClassesChoose";
 import ClassPayment from "./pages/ClassPayment";
 import ClassSignUpSuccess from "./pages/ClassSignUpSuccess";
-
-const queryClient = new QueryClient();
+import MyClasses from "./pages/MyClasses";
+import TicketPaymentSuccess from "./pages/TicketPaymentSuccess";
 
 const router = createBrowserRouter([
   {
     path: "/",
     Component: AppLayout,
     loader: Spinner,
+    HydrateFallback: Spinner,
     children: [
       {
         index: true,
@@ -71,8 +72,12 @@ const router = createBrowserRouter([
             Component: Tickets,
           },
           {
-            path: "ticketcart",
+            path: "tickets/ticketcart",
             Component: OnlineCart,
+          },
+          {
+            path: "tickets/ticketcart/success",
+            Component: TicketPaymentSuccess,
           },
           {
             path: "classes",
@@ -95,7 +100,11 @@ const router = createBrowserRouter([
             Component: MyTickets,
           },
           {
-            path: "child/:id",
+            path: "myclasses",
+            Component: MyClasses,
+          },
+          {
+            path: "child/:childId",
             Component: ChildDashboardLayout,
             children: [
               {
@@ -107,8 +116,28 @@ const router = createBrowserRouter([
                 Component: Tickets,
               },
               {
+                path: "tickets/ticketcart",
+                Component: OnlineCart,
+              },
+              {
+                path: "tickets/ticketcart/success",
+                Component: TicketPaymentSuccess,
+              },
+              {
                 path: "classes",
                 Component: Classes,
+              },
+              {
+                path: "classes/:id",
+                Component: ClassesChoose,
+              },
+              {
+                path: "classes/:id/payment",
+                Component: ClassPayment,
+              },
+              {
+                path: "classes/:id/payment/success",
+                Component: ClassSignUpSuccess,
               },
             ],
           },
@@ -117,6 +146,8 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
+const queryClient = new QueryClient();
 
 function App() {
   return (

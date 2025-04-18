@@ -53,12 +53,15 @@ export async function getChildClasses(id: string) {
   }
 }
 
-export async function getMultipleDateClasses() {
+export async function getMultipleDateClasses(ageGroup?: string) {
   try {
-    const res = await fetch(`${API_URL}/classes/multipledates`, {
-      method: "GET",
-      credentials: "include",
-    });
+    const res = await fetch(
+      `${API_URL}/classes/multipledates${ageGroup ? `?ageGroup=${ageGroup}` : "?ageGroup=adult"}`,
+      {
+        method: "GET",
+        credentials: "include",
+      },
+    );
 
     if (!res.ok) {
       const data = await res.json();
@@ -78,12 +81,15 @@ export async function getMultipleDateClasses() {
   }
 }
 
-export async function getSingleDateClasses() {
+export async function getSingleDateClasses(ageGroup?: string) {
   try {
-    const res = await fetch(`${API_URL}/classes/singledates`, {
-      method: "GET",
-      credentials: "include",
-    });
+    const res = await fetch(
+      `${API_URL}/classes/singledates${ageGroup ? `?ageGroup=${ageGroup}` : "?ageGroup=adult"}`,
+      {
+        method: "GET",
+        credentials: "include",
+      },
+    );
 
     if (!res.ok) {
       const data = await res.json();
@@ -103,10 +109,25 @@ export async function getSingleDateClasses() {
   }
 }
 
-export async function signUpForClassOnline(classCart: {
-  classes: string[];
-  articleId: string;
-  paymentMethod: string;
+export async function signUpForClassOnline({
+  classCart,
+  paymentData,
+}: {
+  classCart: {
+    classes: string[];
+    articleId: string;
+    paymentMethod?: string;
+  };
+  paymentData?: {
+    card: {
+      holder: string;
+      number: string;
+      expiryMonth: string;
+      expiryYear: string;
+      cvv: string;
+    };
+    amount: string;
+  };
 }) {
   try {
     const res = await fetch(`${API_URL}/classes/signuponline`, {
@@ -115,7 +136,7 @@ export async function signUpForClassOnline(classCart: {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify(classCart),
+      body: JSON.stringify({ articles: classCart, paymentData }),
     });
 
     if (!res.ok) {
@@ -131,7 +152,59 @@ export async function signUpForClassOnline(classCart: {
 
     const data = await res.json();
 
-    console.log(data);
+    return data;
+  } catch (error) {
+    return error as Error;
+  }
+}
+
+export async function signUpChildForClassOnline({
+  classCart,
+  paymentData,
+  childId,
+}: {
+  classCart: {
+    classes: string[];
+    articleId: string;
+    paymentMethod?: string;
+  };
+  paymentData?: {
+    card: {
+      holder: string;
+      number: string;
+      expiryMonth: string;
+      expiryYear: string;
+      cvv: string;
+    };
+    amount: string;
+  };
+  childId: string;
+}) {
+  try {
+    const res = await fetch(
+      `${API_URL}/classes/child/signuponline/${childId}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ articles: classCart, paymentData }),
+      },
+    );
+
+    if (!res.ok) {
+      const data = await res.json();
+      console.log(data);
+      if (data.error.statusCode === 500) {
+        throw new Error(
+          "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
+        );
+      }
+      throw data;
+    }
+
+    const data = await res.json();
 
     return data;
   } catch (error) {

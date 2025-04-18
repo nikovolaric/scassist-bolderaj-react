@@ -3,13 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 interface IClassCart {
   articleId: string;
   classes: string[];
-  paymentMethod: string;
+  paymentMethod: string | undefined;
 }
 
 const initialState: IClassCart = {
   articleId: "",
   classes: [],
-  paymentMethod: "",
+  paymentMethod: undefined,
 };
 
 const classCartSlice = createSlice({

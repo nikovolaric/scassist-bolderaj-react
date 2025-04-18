@@ -13,7 +13,10 @@ function PrijaveNaTecaj() {
         začetno kot za napredno stopnjo plezanja.
       </p>
       <div className="self-end">
-        <LinkBtn to={`${pathname}/classes`} type="primary">
+        <LinkBtn
+          to={`${pathname.includes("child") ? pathname : "/dashboard"}/classes`}
+          type="primary"
+        >
           <p className="flex items-center gap-2">
             Izbiraj in se prijavi <ChevronRightIcon className="h-4 stroke-3" />
           </p>

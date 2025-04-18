@@ -1,17 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
-import { getChildLastVisits } from "../../services/visitsApi";
+import { getChildLastVisits } from "../../services/visitsAPI";
 import Spinner from "../../components/Spinner";
 import MyVisitsCard, {
   IVisit,
 } from "../dashboard/visitsTicketsAndClasses/MyVisitsCard";
 
 function ChildVisits() {
-  const { id } = useParams();
+  const { childId } = useParams();
   const { data, isPending } = useQuery({
     queryKey: ["childVisits"],
-    queryFn: () => getChildLastVisits(id!, 10),
-    enabled: !!id,
+    queryFn: () => getChildLastVisits(childId!, 10),
+    enabled: !!childId,
   });
 
   if (isPending) {

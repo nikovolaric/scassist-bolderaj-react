@@ -52,3 +52,54 @@ export async function getOneArticle(id: string) {
     return error as Error;
   }
 }
+
+export async function buyArticlesOnline({
+  articles,
+  paymentData,
+  id,
+}: {
+  articles: {
+    articleId: string;
+    quantity: string;
+    gift: boolean;
+  }[];
+  paymentData: {
+    card: {
+      holder: string;
+      number: string;
+      expiryMonth: string;
+      expiryYear: string;
+      cvv: string;
+    };
+    amount: string;
+  };
+  id?: string;
+}) {
+  try {
+    const res = await fetch(
+      `${API_URL}/articles/buyarticlesonline${id ? `/${id}` : ""}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ articles, paymentData }),
+      },
+    );
+
+    if (!res.ok) {
+      const data = await res.json();
+      if (data.error.statusCode === 500) {
+        throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
+      }
+      throw data;
+    }
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    return error as Error;
+  }
+}

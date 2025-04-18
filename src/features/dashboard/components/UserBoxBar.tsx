@@ -1,6 +1,7 @@
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import LinkBtn from "../../../components/LinkBtn";
 import UserBox from "./UserBox";
+import NavMenu from "./NavMenu";
 
 function UserBoxBar({ btn, btnTo }: { btn: string; btnTo: string }) {
   return (
@@ -15,7 +16,10 @@ function UserBoxBar({ btn, btnTo }: { btn: string; btnTo: string }) {
           </p>
         </LinkBtn>
       </div>
-      <UserBox />
+      <div className="flex items-center gap-3">
+        <UserBox />
+        <NavMenu />
+      </div>
     </div>
   );
 }

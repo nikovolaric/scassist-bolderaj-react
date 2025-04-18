@@ -2,18 +2,28 @@ import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../components/Spinner";
 import { useParams } from "react-router";
 import { getChildClasses } from "../../services/classAPI";
+import { getMyUnpaiedPreInvoices } from "../../services/preInvoiceAPI";
 
 function ChildClasses() {
-  const { id } = useParams();
+  const { childId } = useParams();
   const { data, isPending } = useQuery({
-    queryKey: ["myclasses"],
-    queryFn: () => getChildClasses(id!),
-    enabled: !!id,
+    queryKey: ["childClasses"],
+    queryFn: () => getChildClasses(childId!),
+    enabled: !!childId,
   });
-  if (isPending) {
+
+  const { data: preInvoiceData, isPending: isPendingPre } = useQuery({
+    queryKey: ["preInvoices"],
+    queryFn: getMyUnpaiedPreInvoices,
+  });
+
+  if (isPending || isPendingPre) {
     return <Spinner />;
   }
-  if (!data.classes) {
+
+  const { preInvoices } = preInvoiceData;
+
+  if (!data.classes || data.classes.length === 0) {
     return (
       <div className="flex flex-col gap-6 rounded-xl bg-white px-5 py-8 md:px-6 lg:py-10 xl:gap-12">
         <p className="font-quicksand text-lg font-bold lg:text-xl">
@@ -35,27 +45,56 @@ function ChildClasses() {
           _id: string;
           dates: string[];
           hours: string[];
-          article: {
-            name: string;
-          };
-        }) => (
-          <p
-            key={el._id}
-            className="border-gray rounded-lg border px-3 py-4 font-medium"
-          >
-            {el.article.name},{" "}
-            {Array.from(
-              new Set(
-                el.dates.map((day) =>
-                  new Date(day).toLocaleDateString("si-SL", {
-                    weekday: "long",
-                  }),
-                ),
-              ),
-            ).join(",")}{" "}
-            od {el.hours.join(" - ")}
-          </p>
-        ),
+          className: string;
+        }) => {
+          const isNotPaid =
+            preInvoices.filter((preInvoice: { classes: string[] }) =>
+              preInvoice.classes.includes(el._id),
+            ).length > 0;
+
+          return (
+            <div
+              key={el._id}
+              className="border-gray/80 bg-neutral flex flex-col gap-1 rounded-xl border px-3 py-4"
+            >
+              <p className="font-semibold">
+                {el.className}
+                {el.dates.length > 1 ? " - vodena vadba" : ""}
+              </p>
+              {el.dates.length > 1 && (
+                <p className="flex items-center gap-1 text-sm capitalize">
+                  <span className="font-semibold normal-case">
+                    Izbran termin:
+                  </span>
+                  {Array.from(
+                    new Set(
+                      el.dates.map((day) =>
+                        new Date(day).toLocaleDateString("si-SL", {
+                          weekday: "long",
+                        }),
+                      ),
+                    ),
+                  ).join(",")}
+                  , {el.hours.join(" - ")}
+                </p>
+              )}
+              {el.dates.length === 1 && (
+                <p className="flex items-center gap-1 text-sm capitalize">
+                  <span className="font-semibold normal-case">
+                    Izbran termin:
+                  </span>
+                  {new Date(el.dates[0]).toLocaleDateString()},{" "}
+                  {el.hours.join(" - ")}
+                </p>
+              )}
+              {isNotPaid && (
+                <p className="self-end font-medium text-red-500">
+                  Plačilo še ni poravnano!
+                </p>
+              )}
+            </div>
+          );
+        },
       )}
       {/* <div className="mt-auto self-end">
               <LinkBtn to="/dashboard/mytickets" type="primary">

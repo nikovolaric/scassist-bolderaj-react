@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import signUpReducer from "../features/auth/slices/signUpSlice";
 import ticketCartReducer from "../features/dashboard/tickets/slices/ticketCartSlice";
 import classCartReducer from "../features/dashboard/classes/slices/classCartSlice";
+import paymentReducer from "../features/dashboard/payments/slices/paymentSlice";
 
 export const store = configureStore({
   reducer: {
     signUp: signUpReducer,
     ticketCart: ticketCartReducer,
     classCart: classCartReducer,
+    payment: paymentReducer,
   },
 });
 

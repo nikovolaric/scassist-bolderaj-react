@@ -1,5 +1,6 @@
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import LinkBtn from "../../../../components/LinkBtn";
+import { useParams } from "react-router";
 
 export interface IClassArticle {
   _id: string;
@@ -14,6 +15,7 @@ export interface IClassArticle {
 }
 
 function ClassCard({ classInfo }: { classInfo: IClassArticle }) {
+  const { childId } = useParams();
   const { name, endDate, classPriceData, _id, priceDDV } = classInfo;
 
   return (
@@ -24,11 +26,11 @@ function ClassCard({ classInfo }: { classInfo: IClassArticle }) {
           <span className="font-semibold">Trajanje: </span>
           {endDate
             ? `${new Date().toLocaleDateString()} - ${new Date(endDate).toLocaleDateString()}`
-            : "Tečaj se izvede v enem od razpisanih terminov."}
+            : "Aktivnost se izvede v enem od razpisanih terminov."}
         </p>
       </div>
       <div className="flex flex-col gap-4">
-        <p className="bg-primary/35 flex items-center gap-4 self-end rounded-lg p-3">
+        <p className="bg-primary/35 flex items-center justify-between rounded-lg p-3">
           Cena:
           <span className="font-semibold">
             {!endDate
@@ -37,14 +39,15 @@ function ClassCard({ classInfo }: { classInfo: IClassArticle }) {
             €
           </span>
         </p>
-        <div className="self-end">
-          <LinkBtn to={`/dashboard/classes/${_id}`} type="primary">
-            <p className="flex items-center gap-4 self-end">
-              Izberi termin in se prijavi
-              <ChevronRightIcon className="w-4 flex-none stroke-3" />
-            </p>
-          </LinkBtn>
-        </div>
+        <LinkBtn
+          to={`/dashboard/${childId ? `child/${childId}/` : ""}classes/${_id}`}
+          type="primary"
+        >
+          <p className="flex items-center justify-center gap-12 self-end">
+            Izberi termin in se prijavi
+            <ChevronRightIcon className="w-4 flex-none stroke-3" />
+          </p>
+        </LinkBtn>
       </div>
     </div>
   );

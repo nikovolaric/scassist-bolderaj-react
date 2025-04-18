@@ -6,9 +6,10 @@ import {
 import { useState } from "react";
 import { useAppDispatch } from "../../../../app/hooks";
 import { setArticles } from "../slices/ticketCartSlice";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 function SetQuantity({ id }: { id: string }) {
+  const { childId } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [quantity, setQuantity] = useState(0);
@@ -32,7 +33,11 @@ function SetQuantity({ id }: { id: string }) {
       setErr("");
       dispatch(setArticles(articles));
 
-      navigate("/dashboard/ticketcart");
+      if (childId) {
+        navigate(`/dashboard/child/${childId}/tickets/ticketcart`);
+      } else {
+        navigate("/dashboard/tickets/ticketcart");
+      }
     } else {
       setErr("Prosim izberite količino!");
     }
@@ -41,7 +46,7 @@ function SetQuantity({ id }: { id: string }) {
   return (
     <div className="flex items-center justify-between">
       <div>
-        <div className="border-gray drop-shadow-input flex w-fit items-center rounded-lg border-[1.5px]">
+        <div className="border-gray flex w-fit items-center rounded-lg border-[1.5px] shadow-xs">
           <button className="cursor-pointer p-3" onClick={handleMinus}>
             <MinusIcon className="w-4 stroke-3" />
           </button>

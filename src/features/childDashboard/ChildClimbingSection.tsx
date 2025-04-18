@@ -7,14 +7,14 @@ import Spinner from "../../components/Spinner";
 import ChildClasses from "./ChildClasses";
 
 function ChildClimbingSection() {
-  const { id } = useParams();
+  const { childId } = useParams();
   const { data, isPending } = useQuery({
-    queryKey: ["child", id],
-    queryFn: () => getMyChild(id!),
-    enabled: !!id,
+    queryKey: ["child", childId],
+    queryFn: () => getMyChild(childId!),
+    enabled: !!childId,
   });
 
-  if (isPending || !id) {
+  if (isPending || !childId) {
     return <Spinner />;
   }
 
@@ -28,7 +28,7 @@ function ChildClimbingSection() {
       <div className="flex flex-col gap-12 gap-x-5 md:grid md:grid-cols-2 xl:grid-cols-3">
         <ChildValidTickets />
         <ChildVisits />
-        {/* <ChildClasses /> */}
+        <ChildClasses />
       </div>
     </section>
   );

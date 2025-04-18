@@ -2,6 +2,25 @@ import { useNavigate } from "react-router";
 import { useAppDispatch } from "../../../app/hooks";
 import { clearSignupData } from "../slices/signUpSlice";
 
+// function AuthLogo() {
+//   const navigate = useNavigate();
+//   const dispatch = useAppDispatch();
+
+//   function handleClick() {
+//     dispatch(clearSignupData());
+//     navigate("/");
+//   }
+
+//   return (
+//     <img
+//       src="/logo.svg"
+//       alt="logotip"
+//       className="h-auto w-auto cursor-pointer object-cover"
+//       onClick={handleClick}
+//     />
+//   );
+// }
+
 function AuthLogo() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -13,9 +32,9 @@ function AuthLogo() {
 
   return (
     <img
-      src="/logo.svg"
+      src="/logocrn.svg"
       alt="logotip"
-      className="h-auto w-auto cursor-pointer object-cover"
+      className="bg-primary drop-shadow-input h-auto w-auto cursor-pointer rounded-lg object-cover px-4 py-2"
       onClick={handleClick}
     />
   );

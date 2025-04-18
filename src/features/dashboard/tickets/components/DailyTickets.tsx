@@ -1,23 +1,50 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { getArticles } from "../../../../services/articlesAPI";
 import Spinner from "../../../../components/Spinner";
 import TicketCard, { ITicket } from "./TicketCard";
 import { useParams } from "react-router";
+import { useEffect, useState } from "react";
+import { getMe, getMyChild } from "../../../../services/userAPI";
 
 function DailyTickets() {
-  const { id } = useParams();
-  const queryClient = useQueryClient();
-  const me = id
-    ? queryClient.getQueryData<{ myChild: { ageGroup: string } }>(["child"])!
-        .myChild
-    : queryClient.getQueryData<{ ageGroup: string }>(["me"])!;
+  const { childId } = useParams();
+  const [ageGroup, setAgeGroup] = useState("adult");
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["dailyTickets"],
-    queryFn: () => getArticles("V", me.ageGroup, "dnevna"),
+  const { data: childData, isLoading: isLoadingChild } = useQuery({
+    queryKey: ["child", childId],
+    queryFn: () => getMyChild(childId!),
+    enabled: !!childId,
+  });
+  const {
+    data: meData,
+    isLoading: isLoadingMe,
+    isPending,
+  } = useQuery({
+    queryKey: ["me"],
+    queryFn: getMe,
   });
 
-  if (isLoading) {
+  const me = childId ? childData?.myChild : meData;
+
+  useEffect(
+    function () {
+      if (!me) return;
+      if (me.age < 18) {
+        setAgeGroup(me.ageGroup);
+      } else {
+        setAgeGroup("adult");
+      }
+    },
+    [me],
+  );
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["dailyTickets", ageGroup],
+    queryFn: () => getArticles("V", ageGroup, "dnevna"),
+    enabled: !isPending,
+  });
+
+  if (isLoading || isLoadingChild || isLoadingMe) {
     return <Spinner />;
   }
 

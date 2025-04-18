@@ -7,11 +7,11 @@ import MyValidTicketCard, {
 } from "../dashboard/visitsTicketsAndClasses/MyValidTicketCard";
 
 function ChildValidTickets() {
-  const { id } = useParams();
+  const { childId } = useParams();
   const { data, isPending } = useQuery({
     queryKey: ["myTickets"],
-    queryFn: () => getChildUnusedTickets(id!),
-    enabled: !!id,
+    queryFn: () => getChildUnusedTickets(childId!),
+    enabled: !!childId,
   });
 
   if (isPending) {

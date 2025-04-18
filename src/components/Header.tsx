@@ -12,7 +12,12 @@ function Header() {
       </div>
       <UserBoxBar
         btn="Nazaj"
-        btnTo={pathname.split("/").slice(0, -1).join("/")}
+        btnTo={
+          pathname.split("/").slice(0, -1).length === 3 &&
+          pathname.includes("child")
+            ? "/dashboard"
+            : pathname.split("/").slice(0, -1).join("/")
+        }
       />
     </header>
   );

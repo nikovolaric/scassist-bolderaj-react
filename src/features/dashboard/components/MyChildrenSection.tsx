@@ -10,7 +10,7 @@ function MyChildrenSection() {
     queryFn: getMyKids,
   });
 
-  if (isPending) {
+  if (isPending || !data) {
     return <Spinner />;
   }
 
