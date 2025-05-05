@@ -1,7 +1,10 @@
 import SetQuantity from "./SetQuantity";
 
 export interface ITicket {
-  name: string;
+  name: {
+    sl: string;
+    en: string;
+  };
   priceDDV: number;
   morning: boolean;
   type: string;
@@ -13,10 +16,10 @@ function TicketCard({ ticket }: { ticket: ITicket }) {
 
   return (
     <div className="flex flex-col gap-6 rounded-xl bg-white px-4 py-6">
-      <h1 className="font-quicksand text-lg font-bold uppercase">{name}</h1>
+      <h1 className="font-quicksand text-lg font-bold uppercase">{name.sl}</h1>
       <div className="bg-primary/35 mt-auto flex items-center justify-between rounded-lg px-6 py-3">
         <p>Cena vstopnice:</p>
-        <p className="text-center text-xl font-semibold">
+        <p className="text-center font-semibold">
           {priceDDV.toFixed(2).split(".").join(",")}€
         </p>
       </div>

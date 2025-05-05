@@ -1,6 +1,9 @@
 export interface iValidTicket {
   _id: string;
-  name: string;
+  name: {
+    sl: string;
+    en: string;
+  };
   validUntil: string;
   type: string;
   visits: number;
@@ -19,7 +22,7 @@ function MyValidTicketCard({ ticket }: { ticket: iValidTicket }) {
   return (
     <div className="bg-neutral border-gray/80 flex flex-col gap-8 rounded-xl border px-3 py-4">
       <div className="flex items-center justify-between">
-        <p className="text-lg font-semibold">{name}</p>
+        <p className="text-lg font-semibold">{name.sl}</p>
         <p className="text-gray border-gray rounded-lg border bg-white px-2 text-sm font-medium shadow">
           Velja do {new Date(validUntil).toLocaleDateString()}
         </p>
@@ -40,8 +43,8 @@ function MyValidTicketCard({ ticket }: { ticket: iValidTicket }) {
           <>
             <p>
               {used
-                ? `Velja še ${daysLeft} dni`
-                : `Karto je potrebno aktivirati v ${daysLeft} dneh`}
+                ? `Vstopnica velja še ${daysLeft} dni`
+                : `Vstpnico je potrebno aktivirati v ${daysLeft} dneh`}
             </p>
             <progress max={duration} value={duration - daysLeft} />
             <p className="self-end text-sm">

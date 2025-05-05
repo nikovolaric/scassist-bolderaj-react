@@ -118,13 +118,13 @@ function LoginData() {
 
   return (
     <div className="flex flex-col gap-3">
-      <p className="font-medium">Osebni podatki</p>
+      <p className="font-medium">Podatki za prijavo v spletno aplikacijo</p>
       <form
         className="flex flex-col gap-6 rounded-xl bg-white px-5 py-4 md:grid md:grid-cols-2 lg:px-20 lg:py-16"
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col gap-1.5">
-          <label className="font-medium">Elektronski naslov</label>
+          <label className="text-sm font-medium">Elektronski naslov</label>
           <input
             type="text"
             value={me.email}
@@ -134,30 +134,39 @@ function LoginData() {
         </div>
         <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-1.5">
-            <label className="font-medium">Trenutno geslo</label>
+            <label className="text-sm font-medium">
+              Trenutno geslo <span className="text-red-500">*</span>
+            </label>
             <input
               type="password"
               className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
+              placeholder="Vnesite trenutno geslo"
               onChange={(e) =>
                 dispatch({ type: "currentPassword", payload: e.target.value })
               }
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="font-medium">Novo geslo</label>
+            <label className="text-sm font-medium">
+              Novo geslo <span className="text-red-500">*</span>
+            </label>
             <input
               type="password"
               className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
+              placeholder="Vnesite novo geslo"
               onChange={(e) =>
                 dispatch({ type: "newPassword", payload: e.target.value })
               }
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="font-medium">Potrdite novo geslo</label>
+            <label className="text-sm font-medium">
+              Potrdite novo geslo <span className="text-red-500">*</span>
+            </label>
             <input
               type="password"
               className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
+              placeholder="Potrdite novo geslo"
               onChange={(e) =>
                 dispatch({
                   type: "newPasswordConfirm",

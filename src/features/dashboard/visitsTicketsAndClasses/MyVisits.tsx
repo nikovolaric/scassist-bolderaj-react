@@ -8,7 +8,7 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline";
 function MyVisits({ page }: { page?: boolean }) {
   const { data, isPending } = useQuery({
     queryKey: ["myVisits"],
-    queryFn: () => getMyLastVisits(page ? 3 : 10),
+    queryFn: () => getMyLastVisits(page ? 3 : 7),
   });
 
   if (isPending) {

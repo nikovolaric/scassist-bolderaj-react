@@ -38,7 +38,7 @@ export async function loginAction({
   }
 }
 
-export async function logoutAction() {
+export async function logout() {
   try {
     const res = await fetch(`${API_URL}/users/logout`, {
       method: "POST",
@@ -53,7 +53,7 @@ export async function logoutAction() {
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw data;
+      throw new Error(data.message);
     }
 
     const data = await res.json();
@@ -241,10 +241,11 @@ export async function sendResetToken(email: string) {
 
     if (!res.ok) {
       const data = await res.json();
+      console.log(data);
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw data;
+      throw new Error(data.message);
     }
 
     const data = await res.json();

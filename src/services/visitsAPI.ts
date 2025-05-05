@@ -56,7 +56,7 @@ export async function getChildLastVisits(id: string, limit: number) {
   }
 }
 
-export async function getYearlyVisitNo(year: number) {
+export async function getYearlyVisitNo(year: string) {
   try {
     const res = await fetch(`${API_URL}/visits/yearly/${year}`, {
       method: "GET",

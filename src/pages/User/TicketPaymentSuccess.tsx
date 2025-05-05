@@ -1,16 +1,20 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import LinkBtn from "../components/LinkBtn";
-import { Link } from "react-router";
-import Header from "../components/Header";
+import LinkBtn from "../../components/LinkBtn";
+import { Link, useParams } from "react-router";
+import Header from "../../components/Header";
 
 function TicketPaymentSuccess() {
+  const { childId } = useParams();
+
   return (
     <div className="my-16 flex flex-col gap-12">
       <Header />
       <div className="flex flex-col gap-14">
         <h1 className="flex items-center gap-4 text-2xl font-semibold">
-          <Link to={`/dashboard/tickets`}>Nakup vstopnice</Link>{" "}
-          <ChevronRightIcon className="w-6 stroke-3" /> Zaključen nakup
+          <Link to={`/dashboard${childId ? `/child/${childId}` : ""}/tickets`}>
+            Nakup vstopnice
+          </Link>{" "}
+          <ChevronRightIcon className="w-6 stroke-3" /> Zaključek nakupa
         </h1>
       </div>
       <PaymentInfo />

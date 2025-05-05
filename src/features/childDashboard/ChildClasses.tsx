@@ -25,12 +25,12 @@ function ChildClasses() {
 
   if (!data.classes || data.classes.length === 0) {
     return (
-      <div className="flex flex-col gap-6 rounded-xl bg-white px-5 py-8 md:px-6 lg:py-10 xl:gap-12">
-        <p className="font-quicksand text-lg font-bold lg:text-xl">
-          OTROKOVE VADBE IN TEČAJI
+      <div className="flex flex-col gap-8 rounded-lg bg-white px-5 py-8">
+        <p className="font-quicksand text-lg font-bold">
+          OTROKOVE AKTIVNOSTI IN VADBE
         </p>
-        <p className="font-medium">
-          Trenutno vaš otrok ni vpisan na noben tečaj ali vadbo
+        <p className="font-medium lg:text-lg">
+          Trenutno vaš otrok ni vpisan na nobeno aktivnost ali vadbo
         </p>
       </div>
     );
@@ -45,7 +45,9 @@ function ChildClasses() {
           _id: string;
           dates: string[];
           hours: string[];
-          className: string;
+          className: {
+            sl: string;
+          };
         }) => {
           const isNotPaid =
             preInvoices.filter((preInvoice: { classes: string[] }) =>
@@ -58,7 +60,7 @@ function ChildClasses() {
               className="border-gray/80 bg-neutral flex flex-col gap-1 rounded-xl border px-3 py-4"
             >
               <p className="font-semibold">
-                {el.className}
+                {el.className.sl}
                 {el.dates.length > 1 ? " - vodena vadba" : ""}
               </p>
               {el.dates.length > 1 && (

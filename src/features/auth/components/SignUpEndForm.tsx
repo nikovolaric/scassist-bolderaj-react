@@ -54,7 +54,7 @@ function SignUpEndForm() {
   return (
     <div className="flex flex-col gap-8">
       <h1 className="text-2xl font-semibold lg:text-3xl">Registrirajte se</h1>
-      <div className="flex flex-col gap-8 lg:mx-auto lg:w-2/5">
+      <div className="flex flex-col gap-8">
         <p className="flex items-center gap-4 text-lg font-semibold lg:text-xl">
           <span className="bg-primary rounded-lg border border-black px-2.5 py-0.5">
             2
@@ -63,7 +63,9 @@ function SignUpEndForm() {
         </p>
         <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium">Elektronski naslov*</label>
+            <label className="text-sm font-medium">
+              Elektronski naslov <span className="text-red-500"></span>
+            </label>
             <input
               type="text"
               placeholder="Vnesite elektronski naslov"
@@ -75,7 +77,9 @@ function SignUpEndForm() {
           </div>
           <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:gap-5">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">Geslo*</label>
+              <label className="text-sm font-medium">
+                Geslo <span className="text-red-500"></span>
+              </label>
               <input
                 type="password"
                 placeholder="Vnesite geslo"
@@ -86,7 +90,9 @@ function SignUpEndForm() {
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">Potrdite geslo*</label>
+              <label className="text-sm font-medium">
+                Potrdite geslo <span className="text-red-500"></span>
+              </label>
               <input
                 type="password"
                 placeholder="Ponovno vnesite geslo"

@@ -1,6 +1,6 @@
-import Header from "../components/Header";
-import ChildClimbingSection from "../features/childDashboard/ChildClimbingSection";
-import WelcomeSection from "../features/dashboard/components/WelcomeSection";
+import Header from "../../components/Header";
+import ChildClimbingSection from "../../features/childDashboard/ChildClimbingSection";
+import WelcomeSection from "../../features/dashboard/components/WelcomeSection";
 
 function ChildDashboard() {
   return (

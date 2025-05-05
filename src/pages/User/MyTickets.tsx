@@ -1,8 +1,8 @@
-import Header from "../components/Header";
-import WelcomeSection from "../features/dashboard/components/WelcomeSection";
-import MyValidTickets from "../features/dashboard/visitsTicketsAndClasses/MyValidTickets";
-import MyVisits from "../features/dashboard/visitsTicketsAndClasses/MyVisits";
-import MyVisitsThisYear from "../features/dashboard/visitsTicketsAndClasses/MyVisitsThisYear";
+import Header from "../../components/Header";
+import WelcomeSection from "../../features/dashboard/components/WelcomeSection";
+import MyValidTickets from "../../features/dashboard/visitsTicketsAndClasses/MyValidTickets";
+import MyVisits from "../../features/dashboard/visitsTicketsAndClasses/MyVisits";
+import MyVisitsThisYear from "../../features/dashboard/visitsTicketsAndClasses/MyVisitsThisYear";
 
 function MyTickets() {
   return (

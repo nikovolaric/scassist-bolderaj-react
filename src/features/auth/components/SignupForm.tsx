@@ -61,7 +61,7 @@ function SignupForm() {
   return (
     <div className="flex flex-col gap-8">
       <h1 className="text-2xl font-semibold lg:text-3xl">Registrirajte se</h1>
-      <div className="flex flex-col gap-8 lg:mx-auto lg:w-1/2">
+      <div className="flex flex-col gap-8">
         <p className="font-medium">
           V kolikor želite registrirati mladoletno osebo, se najprej
           registrirajte kot starš oz. skrbnik, nato pa postopek registracije
@@ -76,7 +76,9 @@ function SignupForm() {
         <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:gap-5">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">Ime*</label>
+              <label className="text-sm font-medium">
+                Ime<span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 placeholder="Vnesite svoje ime"
@@ -88,7 +90,9 @@ function SignupForm() {
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">Priimek*</label>
+              <label className="text-sm font-medium">
+                Priimek<span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 placeholder="Vnesite svoj priimek"
@@ -102,7 +106,9 @@ function SignupForm() {
           </div>
           <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:gap-5">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">Datum rojstva*</label>
+              <label className="text-sm font-medium">
+                Datum rojstva<span className="text-red-500">*</span>
+              </label>
               <div className="flex items-center justify-between">
                 <select
                   className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
@@ -176,7 +182,9 @@ function SignupForm() {
           </div>
           <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:gap-5">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">Naslov bivališča*</label>
+              <label className="text-sm font-medium">
+                Naslov bivališča <span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 placeholder="Vnesite naslov bivališča"
@@ -188,7 +196,9 @@ function SignupForm() {
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">Kraj bivališča*</label>
+              <label className="text-sm font-medium">
+                Kraj bivališča <span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 placeholder="Vnesite kraj bivališča"
@@ -202,7 +212,9 @@ function SignupForm() {
           </div>
           <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:gap-5">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">Poštna številka*</label>
+              <label className="text-sm font-medium">
+                Poštna številka <span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 placeholder="Vnesite poštno številko"
@@ -214,7 +226,9 @@ function SignupForm() {
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">Država*</label>
+              <label className="text-sm font-medium">
+                Država <span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 placeholder="Vnesite državo bivališča"
@@ -228,7 +242,9 @@ function SignupForm() {
           </div>
           <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:gap-5">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">Telefonska številka</label>
+              <label className="text-sm font-medium">
+                Telefonska številka <span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 placeholder="Vnesite telefonsko številko"

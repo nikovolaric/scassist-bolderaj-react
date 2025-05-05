@@ -34,7 +34,7 @@ function ChildLoginDataForm({ child }: { child: IChild }) {
         {password && email && (
           <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-x-5 lg:gap-x-16">
             <div className="flex flex-col gap-1.5">
-              <label>Elektronski naslov*</label>
+              <label className="text-sm font-medium">Elektronski naslov</label>
               <input
                 type="text"
                 required
@@ -47,7 +47,7 @@ function ChildLoginDataForm({ child }: { child: IChild }) {
             </div>
             <div className="flex flex-col gap-6">
               <div className="flex flex-col gap-1.5">
-                <label>Geslo*</label>
+                <label className="text-sm font-medium">Geslo</label>
                 <input
                   type="password"
                   required
@@ -73,12 +73,14 @@ function ChildLoginDataForm({ child }: { child: IChild }) {
       {isOpen && (
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-1.5">
-            <label>Otrokov elektronski naslov*</label>
+            <label className="text-sm font-medium">
+              Otrokov elektronski naslov <span className="text-red-500">*</span>
+            </label>
             <input
               type="text"
               required
               autoComplete="off"
-              placeholder="Vnesite ortrokov elektronski naslov"
+              placeholder="Vnesite otrokov elektronski naslov"
               className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none disabled:cursor-not-allowed"
               onChange={(e) => setChildEmail(e.target.value)}
             />

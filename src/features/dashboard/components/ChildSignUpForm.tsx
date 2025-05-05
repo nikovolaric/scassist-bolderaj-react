@@ -170,7 +170,7 @@ function ChildSignUpForm({
         dispatch({
           type: "error",
           payload:
-            "18 letni in starejši uporabnik se morajo samostojno prijaviti.",
+            "18 letni in starejši uporabniki se morajo samostojno prijaviti.",
         });
       } else {
         dispatch({ type: "error", payload: "" });
@@ -216,11 +216,13 @@ function ChildSignUpForm({
   return (
     <div className="rounded-xl bg-white px-4 py-7 lg:px-6 lg:py-9">
       <div className="flex flex-col gap-8 lg:mx-auto lg:w-3/4">
-        <p className="font-medium">Osebni podatki</p>
+        <p className="font-semibold">Osebni podatki</p>
         <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 lg:gap-x-16">
             <div className="flex flex-col gap-1.5">
-              <label className="font-medium">Ime</label>
+              <label className="text-sm font-medium">
+                Ime <span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 required
@@ -231,7 +233,9 @@ function ChildSignUpForm({
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="font-medium">Priimek</label>
+              <label className="text-sm font-medium">
+                Priimek <span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 required
@@ -244,7 +248,9 @@ function ChildSignUpForm({
           </div>
           <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 lg:gap-x-16">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">Datum rojstva*</label>
+              <label className="text-sm font-medium">
+                Datum rojstva <span className="text-red-500">*</span>
+              </label>
               <div className="flex items-center justify-between">
                 <select
                   className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
@@ -306,7 +312,9 @@ function ChildSignUpForm({
           </div>
           <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 lg:gap-x-16">
             <div className="flex flex-col gap-1.5">
-              <label className="font-medium">Naslov bivališča</label>
+              <label className="text-sm font-medium">
+                Naslov bivališča <span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 required
@@ -318,7 +326,9 @@ function ChildSignUpForm({
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="font-medium">Kraj bivališča</label>
+              <label className="text-sm font-medium">
+                Kraj bivališča <span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 required
@@ -331,7 +341,9 @@ function ChildSignUpForm({
           </div>
           <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 lg:gap-x-16">
             <div className="flex flex-col gap-1.5">
-              <label className="font-medium">Poštna številka</label>
+              <label className="text-sm font-medium">
+                Poštna številka <span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 required
@@ -342,7 +354,9 @@ function ChildSignUpForm({
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="font-medium">Država</label>
+              <label className="text-sm font-medium">
+                Država <span className="text-red-500">*</span>
+              </label>
               <input
                 type="text"
                 required

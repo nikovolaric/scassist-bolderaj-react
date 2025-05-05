@@ -28,17 +28,19 @@ function ForgotPasswordForm() {
   }
 
   return (
-    <div className="flex flex-col gap-8 lg:mx-auto lg:w-1/2">
+    <div className="flex flex-col gap-8">
       <h1 className="text-2xl font-semibold lg:text-3xl">Pozabljeno geslo</h1>
       <p className="font-medium lg:w-1/2">
         Vnesite elektronski naslov za obnovitev gesla.
       </p>
       <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium">Elektronski naslov*</label>
+          <label className="text-sm font-medium">
+            Elektronski naslov <span className="text-red-500">*</span>
+          </label>
           <input
             type="text"
-            placeholder="Vnesite svoje svoj elektornski naslov"
+            placeholder="Vnesite svoj elektronski naslov"
             className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
             autoComplete="off"
             required

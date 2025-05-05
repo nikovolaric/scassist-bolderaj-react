@@ -1,28 +1,30 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import SignUpEnd from "./pages/SignUpEnd";
+import Login from "./pages/User/Login";
+import SignUp from "./pages/User/SignUp";
+import SignUpEnd from "./pages/User/SignUpEnd";
 import AppLayout from "./app/AppLayout";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/User/Dashboard";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import DashboardMe from "./pages/DashboardMe";
-import Tickets from "./pages/Tickets";
-import OnlineCart from "./pages/OnlineCart";
-import Classes from "./pages/Classes";
-import MyTickets from "./pages/MyTickets";
+import DashboardMe from "./pages/User/DashboardMe";
+import Tickets from "./pages/User/Tickets";
+import OnlineCart from "./pages/User/OnlineCart";
+import Classes from "./pages/User/Classes";
+import MyTickets from "./pages/User/MyTickets";
 import DashboardLayout from "./app/DashboardLayout";
 import ChildDashboardLayout from "./app/ChildDashboardLayout";
 import Spinner from "./components/Spinner";
-import ChildDashboard from "./pages/ChildDashboard";
-import ForgotPassword from "./pages/ForgotPassword";
-import ResetPassword from "./pages/ResetPassword";
-import SetChildAuth from "./pages/SetChildAuth";
-import ClassesChoose from "./pages/ClassesChoose";
-import ClassPayment from "./pages/ClassPayment";
-import ClassSignUpSuccess from "./pages/ClassSignUpSuccess";
-import MyClasses from "./pages/MyClasses";
-import TicketPaymentSuccess from "./pages/TicketPaymentSuccess";
+import ChildDashboard from "./pages/User/ChildDashboard";
+import ForgotPassword from "./pages/User/ForgotPassword";
+import ResetPassword from "./pages/User/ResetPassword";
+import SetChildAuth from "./pages/User/SetChildAuth";
+import ClassesChoose from "./pages/User/ClassesChoose";
+import ClassPayment from "./pages/User/ClassPayment";
+import ClassSignUpSuccess from "./pages/User/ClassSignUpSuccess";
+import MyClasses from "./pages/User/MyClasses";
+import TicketPaymentSuccess from "./pages/User/TicketPaymentSuccess";
+import PickUser from "./pages/User/PickUser";
+import MyInvoices from "./pages/User/MyInvoices";
 
 const router = createBrowserRouter([
   {
@@ -72,6 +74,10 @@ const router = createBrowserRouter([
             Component: Tickets,
           },
           {
+            path: "tickets/pickuser",
+            Component: PickUser,
+          },
+          {
             path: "tickets/ticketcart",
             Component: OnlineCart,
           },
@@ -82,6 +88,10 @@ const router = createBrowserRouter([
           {
             path: "classes",
             Component: Classes,
+          },
+          {
+            path: "classes/pickuser",
+            Component: PickUser,
           },
           {
             path: "classes/:id",
@@ -102,6 +112,10 @@ const router = createBrowserRouter([
           {
             path: "myclasses",
             Component: MyClasses,
+          },
+          {
+            path: "invoices",
+            Component: MyInvoices,
           },
           {
             path: "child/:childId",

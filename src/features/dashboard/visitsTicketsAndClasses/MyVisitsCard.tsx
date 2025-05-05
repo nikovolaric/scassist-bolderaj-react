@@ -2,7 +2,10 @@ export interface IVisit {
   _id: string;
   date: string;
   ticket: {
-    name: string;
+    name: {
+      sl: string;
+      en: string;
+    };
   };
 }
 
@@ -21,7 +24,8 @@ function MyVisitsCard({ visit }: { visit: IVisit }) {
       </p>
       <progress value={1} max={1} />
       <p>
-        <span className="font-medium">Koriščena vstopnica:</span> {ticket.name}
+        <span className="font-medium">Koriščena vstopnica:</span>{" "}
+        {ticket.name.sl}
       </p>
     </div>
   );

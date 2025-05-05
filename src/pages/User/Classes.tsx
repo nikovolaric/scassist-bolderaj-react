@@ -1,24 +1,31 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getArticles } from "../services/articlesAPI";
-import Spinner from "../components/Spinner";
+import { useQuery } from "@tanstack/react-query";
+import { getArticles } from "../../services/articlesAPI";
+import Spinner from "../../components/Spinner";
 import ClassCard, {
   IClassArticle,
-} from "../features/dashboard/classes/components/ClassCard";
-import Header from "../components/Header";
+} from "../../features/dashboard/classes/components/ClassCard";
+import Header from "../../components/Header";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
+import { getMe, getMyChild } from "../../services/userAPI";
 
 function Classes() {
   const { childId } = useParams();
-  const queryClient = useQueryClient();
   const [ageGroup, setAgeGroup] = useState("adult");
 
-  const childData = queryClient.getQueryData<{
-    myChild: { ageGroup: string; age: number };
-  }>(["child", childId]);
-  const meData = queryClient.getQueryData<{ ageGroup: string; age: number }>([
-    "me",
-  ]);
+  const { data: childData, isLoading: isLoadingChild } = useQuery({
+    queryKey: ["child", childId],
+    queryFn: () => getMyChild(childId!),
+    enabled: !!childId,
+  });
+  const {
+    data: meData,
+    isLoading: isLoadingMe,
+    isPending,
+  } = useQuery({
+    queryKey: ["me"],
+    queryFn: getMe,
+  });
 
   const me = childId ? childData?.myChild : meData;
 
@@ -34,12 +41,13 @@ function Classes() {
     [me],
   );
 
-  const { data, isPending } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["classArticles", ageGroup],
     queryFn: () => getArticles("T", ageGroup),
+    enabled: !isPending,
   });
 
-  if (isPending) {
+  if (isLoading || isLoadingMe || isLoadingChild) {
     return <Spinner />;
   }
 
@@ -54,9 +62,17 @@ function Classes() {
     <div className="my-16 flex flex-col gap-12">
       <Header />
       <div className="flex flex-col gap-14">
-        <h1 className="text-2xl font-semibold lg:text-3xl">
-          Aktivnosti in vodene vadbe
-        </h1>
+        <div>
+          <h1 className="font-semibold">Aktivnosti in vodene vadbe</h1>
+          {meData.parentOf.length > 0 && (
+            <p className="bg-gray/80 mt-8 w-fit rounded-lg px-3 py-1 font-medium">
+              Nakupujem za:{" "}
+              {!childId
+                ? `${meData.firstName} (jaz)`
+                : `${childData.myChild.firstName} (${childData.myChild.age} let)`}
+            </p>
+          )}
+        </div>
         <div className="flex flex-col gap-10">
           {single && (
             <div className="flex flex-col gap-4">

@@ -7,6 +7,7 @@ import { useAppDispatch } from "./hooks";
 import { clearPayment } from "../features/dashboard/payments/slices/paymentSlice";
 import { clearTicketData } from "../features/dashboard/tickets/slices/ticketCartSlice";
 import { clearClassData } from "../features/dashboard/classes/slices/classCartSlice";
+import Footer from "../components/Footer";
 
 function DashboardLayout() {
   const { childId } = useParams();
@@ -44,6 +45,7 @@ function DashboardLayout() {
   return (
     <Suspense fallback={<Spinner />}>
       <Outlet />
+      <Footer />
     </Suspense>
   );
 }

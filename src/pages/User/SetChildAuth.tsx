@@ -1,5 +1,5 @@
-import AuthLogo from "../features/auth/components/AuthLogo";
-import SetChildAuthForm from "../features/auth/components/SetChildAuthForm";
+import AuthLogo from "../../features/auth/components/AuthLogo";
+import SetChildAuthForm from "../../features/auth/components/SetChildAuthForm";
 
 function SetChildAuth() {
   return (

@@ -7,7 +7,7 @@ function LinkBtn({
   type,
 }: {
   children: ReactNode;
-  to: string;
+  to?: string;
   type: string;
 }) {
   const navigate = useNavigate();
@@ -17,10 +17,16 @@ function LinkBtn({
       "from-primary to-secondary drop-shadow-btn hover:to-primary cursor-pointer rounded-lg bg-gradient-to-r px-4 py-3 font-semibold transition-colors duration-300",
     secondary:
       "hover:bg-secondary cursor-pointer rounded-lg px-4 py-3 font-semibold transition-colors duration-300 border border-black hover:border-black/0",
+    backBtn:
+      "drop-shadow-input border-gray/50 h-11 rounded-lg border bg-white px-4 cursor-pointer text-black/50 font-semibold",
   };
 
   function handleClick() {
-    navigate(to);
+    if (to) {
+      navigate(to);
+    } else {
+      navigate(-1);
+    }
   }
 
   return (

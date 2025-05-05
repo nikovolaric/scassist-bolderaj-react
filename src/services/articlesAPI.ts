@@ -56,6 +56,7 @@ export async function getOneArticle(id: string) {
 export async function buyArticlesOnline({
   articles,
   paymentData,
+  company,
   id,
 }: {
   articles: {
@@ -73,6 +74,13 @@ export async function buyArticlesOnline({
     };
     amount: string;
   };
+  company?: {
+    name: string;
+    address: string;
+    postalCode: string;
+    city: string;
+    taxNumber: string;
+  };
   id?: string;
 }) {
   try {
@@ -84,7 +92,7 @@ export async function buyArticlesOnline({
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ articles, paymentData }),
+        body: JSON.stringify({ articles, paymentData, company }),
       },
     );
 

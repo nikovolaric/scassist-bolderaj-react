@@ -20,11 +20,9 @@ function ChildValidTickets() {
 
   return (
     <div className="flex flex-col gap-8 rounded-lg bg-white px-5 py-8">
-      <p className="font-quicksand text-lg font-bold lg:text-xl">
-        VELJAVNE VSTOPNICE
-      </p>
+      <p className="font-quicksand text-lg font-bold">VELJAVNE VSTOPNICE</p>
       {data.results === 0 && (
-        <p className="text-lg font-medium">
+        <p className="font-medium lg:text-lg">
           Trenutno vaš otrok nima veljavnih vstopnic
         </p>
       )}

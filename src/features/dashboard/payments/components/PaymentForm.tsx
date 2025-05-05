@@ -39,7 +39,7 @@ function PaymentForm() {
           <label className="text-sm font-medium">Številka kartice</label>
           <input
             type="text"
-            placeholder="1234 1234 1234 1234"
+            placeholder="0000 0000 0000 0000"
             className="border-gray rounded-lg border px-3.5 py-1.5 shadow-sm outline-none"
             required
             onChange={(e) => {
@@ -65,7 +65,7 @@ function PaymentForm() {
           <label className="text-sm font-medium">Veljavnost</label>
           <input
             type="text"
-            placeholder="01/2025"
+            placeholder={`01/${new Date().getFullYear()}`}
             className="border-gray rounded-lg border px-3.5 py-1.5 shadow-sm outline-none"
             required
             maxLength={7}
@@ -88,8 +88,8 @@ function PaymentForm() {
         <div className="flex flex-col gap-1">
           <label className="text-sm font-medium">CVV</label>
           <input
-            type="text"
-            placeholder="123"
+            type="password"
+            placeholder="●●●"
             className="border-gray rounded-lg border px-3.5 py-1.5 shadow-sm outline-none"
             required
             onChange={(e) => dispatch(setCVV(e.target.value))}

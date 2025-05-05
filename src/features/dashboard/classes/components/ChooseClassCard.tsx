@@ -18,7 +18,10 @@ export interface IClassInfo {
   maxStudents: number;
   hours: string[];
   _id: string;
-  className: string;
+  className: {
+    sl: string;
+    en: string;
+  };
   full: boolean;
 }
 
@@ -68,7 +71,7 @@ function ChooseClassCard({ classInfo }: { classInfo: IClassInfo }) {
     return (
       <div className="flex flex-col gap-4 rounded-xl bg-white px-4 py-8">
         <div className="flex items-center justify-between">
-          <p className="font-semibold">{className}</p>
+          <p className="font-semibold">{className.sl}</p>
           {full && (
             <div className="bg-primary flex h-6 items-center justify-center rounded-lg border border-black/75 px-4">
               <span className="font-semibold">Polno</span>
@@ -131,7 +134,7 @@ function ChooseClassCard({ classInfo }: { classInfo: IClassInfo }) {
       >
         <div>
           {full || signedUp ? (
-            <div className="bg-neutral flex h-6 w-6 items-center justify-center rounded-lg border border-black/75 opacity-0 transition-all duration-75 peer-checked:scale-125 md:opacity-50"></div>
+            <div className="bg-neutral flex h-6 w-6 items-center justify-center rounded-lg border border-black/75 opacity-0 transition-all duration-75 md:opacity-50"></div>
           ) : (
             <label className="cursor-pointer">
               <input
@@ -141,16 +144,16 @@ function ChooseClassCard({ classInfo }: { classInfo: IClassInfo }) {
                 onChange={handleChange}
                 disabled={full}
               />
-              <div className="bg-neutral flex h-6 w-6 items-center justify-center rounded-lg border border-black/75 transition-all duration-75 peer-checked:scale-125">
+              <div className="bg-neutral flex h-6 w-6 items-center justify-center rounded-lg border border-black/75 transition-all duration-75">
                 <span
-                  className={`${isChecked ? "bg-primary border border-black/75" : ""} h-4 w-4 rounded-full`}
+                  className={`${isChecked ? "bg-primary border-gray border" : ""} h-4 w-4 rounded-full`}
                 />
               </div>
             </label>
           )}
         </div>
         <div className="flex flex-col gap-1">
-          <p className="font-semibold">{className}</p>
+          <p className="font-semibold">{className.sl}</p>
           <p>
             <span className="font-semibold">Ura izvajanja: </span>{" "}
             {hours.join(" - ")}

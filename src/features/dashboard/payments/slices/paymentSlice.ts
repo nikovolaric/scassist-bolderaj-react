@@ -9,6 +9,7 @@ interface IPaymentSlice {
     cvv: string;
   };
   amount: string;
+
   errors: { expiryError: string };
 }
 
@@ -20,6 +21,7 @@ const initialState: IPaymentSlice = {
     expiryYear: "",
     cvv: "",
   },
+
   amount: "",
   errors: { expiryError: "" },
 };

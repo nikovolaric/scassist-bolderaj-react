@@ -22,11 +22,11 @@ function OsebniPodatki() {
 
   return (
     <div className="flex flex-col gap-3">
-      <p className="font-medium">Osebni podatki</p>
+      <p className="font-semibold">Osebni podatki</p>
       <form className="flex flex-col gap-6 rounded-xl bg-white px-5 py-4 lg:px-20 lg:py-16">
         <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5">
           <div className="flex flex-col gap-1.5">
-            <label className="font-medium">Ime</label>
+            <label className="text-sm font-medium">Ime</label>
             <input
               type="text"
               value={me.firstName}
@@ -35,7 +35,7 @@ function OsebniPodatki() {
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="font-medium">Priimek</label>
+            <label className="text-sm font-medium">Priimek</label>
             <input
               type="text"
               value={me.lastName}
@@ -46,7 +46,7 @@ function OsebniPodatki() {
         </div>
         <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5">
           <div className="flex flex-col gap-1.5">
-            <label className="font-medium">Datum rojstva</label>
+            <label className="text-sm font-medium">Datum rojstva</label>
             <input
               type="text"
               value={new Date(me.birthDate).toLocaleDateString()}
@@ -58,7 +58,7 @@ function OsebniPodatki() {
         </div>
         <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5">
           <div className="flex flex-col gap-1.5">
-            <label className="font-medium">Naslov bivališča</label>
+            <label className="text-sm font-medium">Naslov bivališča</label>
             <input
               type="text"
               value={me.address}
@@ -68,7 +68,7 @@ function OsebniPodatki() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="font-medium">Kraj bivališča</label>
+            <label className="text-sm font-medium">Kraj bivališča</label>
             <input
               type="text"
               value={me.city}
@@ -79,7 +79,7 @@ function OsebniPodatki() {
         </div>
         <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5">
           <div className="flex flex-col gap-1.5">
-            <label className="font-medium">Poštna številka</label>
+            <label className="text-sm font-medium">Poštna številka</label>
             <input
               type="text"
               value={me.postalCode}
@@ -89,7 +89,7 @@ function OsebniPodatki() {
           </div>
 
           <div className="flex flex-col gap-1.5">
-            <label className="font-medium">Država</label>
+            <label className="text-sm font-medium">Država</label>
             <input
               type="text"
               value={me.country}
@@ -100,7 +100,7 @@ function OsebniPodatki() {
         </div>
         <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5">
           <div className="flex flex-col gap-1.5">
-            <label className="font-medium">Telefonska številka</label>
+            <label className="text-sm font-medium">Telefonska številka</label>
             <input
               type="text"
               value={me.phoneNumber}
@@ -109,7 +109,7 @@ function OsebniPodatki() {
             />
           </div>
           <div className="flex flex-col gap-1.5">
-            <label className="font-medium">Elektronski naslov</label>
+            <label className="text-sm font-medium">Elektronski naslov</label>
             <input
               type="text"
               value={me.email}

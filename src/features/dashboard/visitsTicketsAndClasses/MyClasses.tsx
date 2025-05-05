@@ -38,14 +38,17 @@ function MyClasses() {
             _id: string;
             dates: string[];
             hours: string[];
-            className: string;
+            className: {
+              sl: string;
+              en: string;
+            };
           }) => (
             <div
               key={el._id}
               className="border-gray/80 bg-neutral rounded-xl border px-3 py-4"
             >
               <p className="font-semibold">
-                {el.className}
+                {el.className.sl}
                 {el.dates.length > 1 ? " - vodena vadba" : ""}
               </p>
               {el.dates.length > 1 && (

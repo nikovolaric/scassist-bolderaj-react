@@ -5,17 +5,8 @@ import ChildLoginDataForm from "./ChildLoginDataForm";
 
 function ChildCard({ child }: { child: IChild }) {
   const [isOpen, setIsOpen] = useState(false);
-  const {
-    firstName,
-    lastName,
-    birthDate,
-    address,
-    city,
-    postalCode,
-    phoneNumber,
-    country,
-    email,
-  } = child;
+  const { firstName, lastName, birthDate, address, city, postalCode, country } =
+    child;
 
   return (
     <div className="flex flex-col gap-16 rounded-xl bg-white px-4 py-7 lg:px-6 lg:py-9">
@@ -40,11 +31,11 @@ function ChildCard({ child }: { child: IChild }) {
       {isOpen && (
         <>
           <div className="flex flex-col gap-8 lg:mx-auto lg:w-3/4">
-            <p className="font-medium">Osebni podatki</p>
+            <p className="font-semibold">Osebni podatki</p>
             <form className="flex flex-col gap-6">
               <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 lg:gap-x-16">
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-medium">Ime</label>
+                  <label className="text-sm font-medium">Ime</label>
                   <input
                     type="text"
                     value={firstName}
@@ -53,7 +44,7 @@ function ChildCard({ child }: { child: IChild }) {
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-medium">Priimek</label>
+                  <label className="text-sm font-medium">Priimek</label>
                   <input
                     type="text"
                     value={lastName}
@@ -64,27 +55,7 @@ function ChildCard({ child }: { child: IChild }) {
               </div>
               <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 lg:gap-x-16">
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-medium">Elektronski naslov</label>
-                  <input
-                    type="text"
-                    value={email ? email : ""}
-                    disabled
-                    className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
-                  />
-                </div>
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-medium">Telefonska številka</label>
-                  <input
-                    type="text"
-                    value={phoneNumber}
-                    disabled={phoneNumber !== undefined}
-                    className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
-                  />
-                </div>
-              </div>
-              <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 lg:gap-x-16">
-                <div className="flex flex-col gap-1.5">
-                  <label className="font-medium">Datum rojstva</label>
+                  <label className="text-sm font-medium">Datum rojstva</label>
                   <input
                     type="text"
                     value={new Date(birthDate).toLocaleDateString()}
@@ -96,7 +67,9 @@ function ChildCard({ child }: { child: IChild }) {
               </div>
               <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 lg:gap-x-16">
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-medium">Naslov bivališča</label>
+                  <label className="text-sm font-medium">
+                    Naslov bivališča
+                  </label>
                   <input
                     type="text"
                     value={address}
@@ -104,9 +77,8 @@ function ChildCard({ child }: { child: IChild }) {
                     className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
                   />
                 </div>
-
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-medium">Kraj bivališča</label>
+                  <label className="text-sm font-medium">Kraj bivališča</label>
                   <input
                     type="text"
                     value={city}
@@ -117,7 +89,7 @@ function ChildCard({ child }: { child: IChild }) {
               </div>
               <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 lg:gap-x-16">
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-medium">Poštna številka</label>
+                  <label className="text-sm font-medium">Poštna številka</label>
                   <input
                     type="text"
                     value={postalCode}
@@ -126,7 +98,7 @@ function ChildCard({ child }: { child: IChild }) {
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="font-medium">Država</label>
+                  <label className="text-sm font-medium">Država</label>
                   <input
                     type="text"
                     value={country}

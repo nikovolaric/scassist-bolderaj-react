@@ -8,8 +8,9 @@
   --color-black: #1c1c1c;
   --color-neutral: #efecea;
   --color-gray: #cccccc;
-  --drop-shadow-input: 0px 1px 2px rgba(28, 28, 28, 0.25);
-  --drop-shadow-btn: 1px 1px 4px rgba(28, 28, 28, 0.25);
+  --drop-shadow-input: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  --drop-shadow-btn: 1px 1px 4px rgba(0, 0, 0, 0.25);
+  --text-3xl: 28px;
 }
 
 .loader {
@@ -102,4 +103,12 @@ progress::-webkit-progress-value {
 progress::-moz-progress-bar {
   background-color: #ffde00;
   border-radius: 5px;
+}
+
+html {
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar-x {
+  display: none;
 }

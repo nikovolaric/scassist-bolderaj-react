@@ -111,12 +111,20 @@ export async function getSingleDateClasses(ageGroup?: string) {
 
 export async function signUpForClassOnline({
   classCart,
+  company,
   paymentData,
 }: {
   classCart: {
     classes: string[];
     articleId: string;
     paymentMethod?: string;
+  };
+  company?: {
+    name: string;
+    address: string;
+    postalCode: string;
+    city: string;
+    taxNumber: string;
   };
   paymentData?: {
     card: {
@@ -136,17 +144,11 @@ export async function signUpForClassOnline({
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify({ articles: classCart, paymentData }),
+      body: JSON.stringify({ articles: classCart, company, paymentData }),
     });
 
     if (!res.ok) {
       const data = await res.json();
-      console.log(data);
-      if (data.error.statusCode === 500) {
-        throw new Error(
-          "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
-        );
-      }
       throw data;
     }
 
@@ -160,6 +162,7 @@ export async function signUpForClassOnline({
 
 export async function signUpChildForClassOnline({
   classCart,
+  company,
   paymentData,
   childId,
 }: {
@@ -167,6 +170,13 @@ export async function signUpChildForClassOnline({
     classes: string[];
     articleId: string;
     paymentMethod?: string;
+  };
+  company?: {
+    name: string;
+    address: string;
+    postalCode: string;
+    city: string;
+    taxNumber: string;
   };
   paymentData?: {
     card: {
@@ -189,18 +199,13 @@ export async function signUpChildForClassOnline({
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ articles: classCart, paymentData }),
+        body: JSON.stringify({ articles: classCart, company, paymentData }),
       },
     );
 
     if (!res.ok) {
       const data = await res.json();
-      console.log(data);
-      if (data.error.statusCode === 500) {
-        throw new Error(
-          "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
-        );
-      }
+
       throw data;
     }
 

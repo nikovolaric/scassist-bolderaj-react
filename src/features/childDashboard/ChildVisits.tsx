@@ -20,12 +20,10 @@ function ChildVisits() {
 
   return (
     <div className="flex flex-col gap-8 rounded-lg bg-white px-5 py-8">
-      <p className="font-quicksand text-lg font-bold lg:text-xl">
-        PRETEKLI OBISKI
-      </p>
+      <p className="font-quicksand text-lg font-bold">PRETEKLI OBISKI</p>
       {data.results === 0 && (
-        <p className="text-lg font-medium">
-          Trenutno še nimate zabeleženega obiska
+        <p className="font-medium lg:text-lg">
+          Trenutno še vaš otrok nima zabeleženega obiska
         </p>
       )}
       {data.results > 0 && (

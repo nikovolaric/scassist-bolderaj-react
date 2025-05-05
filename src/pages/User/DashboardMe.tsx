@@ -1,5 +1,5 @@
-import Header from "../components/Header";
-import MyProfile from "../features/dashboard/components/MyProfile";
+import Header from "../../components/Header";
+import MyProfile from "../../features/dashboard/components/MyProfile";
 
 function DashboardMe() {
   return (

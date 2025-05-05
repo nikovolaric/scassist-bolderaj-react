@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import AuthLogo from "../features/auth/components/AuthLogo";
-import LoginForm from "../features/auth/components/LoginForm";
-import { getMe } from "../services/userAPI";
-import Spinner from "../components/Spinner";
+import AuthLogo from "../../features/auth/components/AuthLogo";
+import LoginForm from "../../features/auth/components/LoginForm";
+import { getMe } from "../../services/userAPI";
+import Spinner from "../../components/Spinner";
 import { Navigate } from "react-router";
 
 function Login() {

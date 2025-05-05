@@ -9,7 +9,7 @@ function MyVisitsThisYear() {
 
   const { data, isPending } = useQuery({
     queryKey: ["yearlyVisits", year],
-    queryFn: () => getYearlyVisitNo(Number(year)),
+    queryFn: () => getYearlyVisitNo(year),
     placeholderData: true,
   });
 
@@ -25,7 +25,8 @@ function MyVisitsThisYear() {
         </p>
         <select
           onChange={(e) => setYear(e.target.value)}
-          className="text-lg font-bold outline-none lg:text-xl"
+          className="cursor-pointer text-lg font-bold outline-none lg:text-xl"
+          value={year}
         >
           {Array.from({ length: new Date().getFullYear() - 2024 }).map(
             (_, i) => (

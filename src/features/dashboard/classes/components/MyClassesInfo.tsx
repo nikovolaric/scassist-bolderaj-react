@@ -1,8 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import { getMyClasses } from "../../../../services/classAPI";
 import Spinner from "../../../../components/Spinner";
-import { getMyUnpaiedPreInvoices } from "../../../../services/preInvoiceAPI";
+import {
+  downloadPreinvoiceFromClass,
+  getMyUnpaiedPreInvoices,
+} from "../../../../services/preInvoiceAPI";
 import { IClassInfo } from "./ChooseClassCard";
+import { ArrowDownTrayIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
+import { useState } from "react";
 
 function MyClassesInfo() {
   const { data: classesData, isPending: isPendingClass } = useQuery({
@@ -23,7 +28,7 @@ function MyClassesInfo() {
 
   return (
     <div className="flex flex-col gap-10">
-      <h1 className="text-2xl font-semibold">Moji tečaji in vadbe</h1>
+      <h1 className="text-2xl font-semibold">Moje aktivnosti in vadbe</h1>
       <div className="flex flex-col gap-4 rounded-xl bg-white px-4 py-8 md:grid md:grid-cols-2 md:gap-x-10 md:gap-y-4 md:px-8 lg:gap-x-14 xl:grid-cols-3 2xl:grid-cols-4">
         {classes.map((classinfo: IClassInfo) => (
           <MyClass
@@ -44,8 +49,30 @@ function MyClass({
   classinfo: IClassInfo;
   preInvoices: { classes: string[] }[];
 }) {
+  const [isLoading, setIsLoading] = useState(false);
   if (!classinfo) {
     return <Spinner />;
+  }
+
+  async function handleClick() {
+    try {
+      setIsLoading(true);
+
+      const data = await downloadPreinvoiceFromClass(classinfo._id);
+
+      if (data instanceof Error) return data;
+
+      const url = URL.createObjectURL(data);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `Predračun.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.log(error as Error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const isNotPaid =
@@ -54,7 +81,7 @@ function MyClass({
   return (
     <div className="bg-neutral border-gray/80 flex flex-col gap-6 rounded-xl border px-3 py-4">
       <p className="font-semibold">
-        {classinfo.className}
+        {classinfo.className.sl}
         {classinfo.dates.length > 1 ? " - vodena vadba" : ""}
       </p>
       <div className="flex flex-col gap-4">
@@ -73,9 +100,19 @@ function MyClass({
           </p>
         )}
         {isNotPaid && (
-          <p className="self-end font-semibold text-red-500">
-            Plačilo še ni poravnano.
-          </p>
+          <div className="flex items-center justify-end gap-4">
+            <p className="self-end font-semibold text-red-500">
+              Plačilo še ni poravnano.
+            </p>
+            {isLoading ? (
+              <ArrowPathIcon className="h-5 animate-spin cursor-not-allowed" />
+            ) : (
+              <ArrowDownTrayIcon
+                className="h-5 cursor-pointer stroke-2"
+                onClick={handleClick}
+              />
+            )}
+          </div>
         )}
       </div>
     </div>

@@ -26,7 +26,7 @@ function TicketCardInfo() {
   return (
     <div className="bg-neutral border-gray/80 flex flex-col gap-8 rounded-xl border px-3 py-4">
       <div className="flex items-center justify-between">
-        <p className="text-lg font-semibold">{ticket.name}</p>
+        <p className="text-lg font-semibold">{ticket.name.sl}</p>
         <p className="text-gray border-gray rounded-lg border bg-white px-2 text-sm font-medium shadow">
           Velja do {new Date(ticket.validUntil).toLocaleDateString()}
         </p>

@@ -4,7 +4,10 @@ import { useParams } from "react-router";
 
 export interface IClassArticle {
   _id: string;
-  name: string;
+  name: {
+    sl: string;
+    en: string;
+  };
   startDate: string;
   endDate: string;
   priceDDV: number;
@@ -21,7 +24,9 @@ function ClassCard({ classInfo }: { classInfo: IClassArticle }) {
   return (
     <div className="flex flex-col gap-8 rounded-xl bg-white px-4 py-6">
       <div className="flex flex-col gap-4">
-        <h1 className="font-quicksand text-lg font-bold uppercase">{name}</h1>
+        <h1 className="font-quicksand text-lg font-bold uppercase">
+          {name.sl}
+        </h1>
         <p>
           <span className="font-semibold">Trajanje: </span>
           {endDate
@@ -30,7 +35,7 @@ function ClassCard({ classInfo }: { classInfo: IClassArticle }) {
         </p>
       </div>
       <div className="flex flex-col gap-4">
-        <p className="bg-primary/35 flex items-center justify-between rounded-lg p-3">
+        <p className="bg-primary/35 flex items-center justify-between rounded-lg px-6 py-3">
           Cena:
           <span className="font-semibold">
             {!endDate
@@ -39,15 +44,17 @@ function ClassCard({ classInfo }: { classInfo: IClassArticle }) {
             €
           </span>
         </p>
-        <LinkBtn
-          to={`/dashboard/${childId ? `child/${childId}/` : ""}classes/${_id}`}
-          type="primary"
-        >
-          <p className="flex items-center justify-center gap-12 self-end">
-            Izberi termin in se prijavi
-            <ChevronRightIcon className="w-4 flex-none stroke-3" />
-          </p>
-        </LinkBtn>
+        <div className="self-end">
+          <LinkBtn
+            to={`/dashboard/${childId ? `child/${childId}/` : ""}classes/${_id}`}
+            type="primary"
+          >
+            <p className="flex items-center justify-end gap-12">
+              Izberi termin in se prijavi
+              <ChevronRightIcon className="w-4 flex-none stroke-3" />
+            </p>
+          </LinkBtn>
+        </div>
       </div>
     </div>
   );

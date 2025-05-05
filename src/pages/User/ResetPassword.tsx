@@ -1,5 +1,5 @@
-import AuthLogo from "../features/auth/components/AuthLogo";
-import ResetPasswordForm from "../features/auth/components/ResetPasswordForm";
+import AuthLogo from "../../features/auth/components/AuthLogo";
+import ResetPasswordForm from "../../features/auth/components/ResetPasswordForm";
 
 function ResetPassword() {
   return (
