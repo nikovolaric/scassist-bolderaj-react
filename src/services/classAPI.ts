@@ -1,9 +1,7 @@
-const API_URL = "http://localhost:3000/api/v1";
-
 export async function getMyClasses(limit?: number) {
   try {
     const res = await fetch(
-      `${API_URL}/classes/myclasses${limit ? `?limit=${limit}` : ""}`,
+      `${import.meta.env.VITE_API_URL}/classes/myclasses${limit ? `?limit=${limit}` : ""}`,
       {
         method: "GET",
         credentials: "include",
@@ -17,7 +15,7 @@ export async function getMyClasses(limit?: number) {
           "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
         );
       }
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -30,10 +28,13 @@ export async function getMyClasses(limit?: number) {
 
 export async function getChildClasses(id: string) {
   try {
-    const res = await fetch(`${API_URL}/classes/child/getclasses/${id}`, {
-      method: "GET",
-      credentials: "include",
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/classes/child/getclasses/${id}`,
+      {
+        method: "GET",
+        credentials: "include",
+      },
+    );
 
     if (!res.ok) {
       const data = await res.json();
@@ -42,7 +43,7 @@ export async function getChildClasses(id: string) {
           "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
         );
       }
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -56,7 +57,7 @@ export async function getChildClasses(id: string) {
 export async function getMultipleDateClasses(ageGroup?: string) {
   try {
     const res = await fetch(
-      `${API_URL}/classes/multipledates${ageGroup ? `?ageGroup=${ageGroup}` : "?ageGroup=adult"}`,
+      `${import.meta.env.VITE_API_URL}/classes/multipledates${ageGroup ? `?ageGroup=${ageGroup}` : "?ageGroup=adult"}`,
       {
         method: "GET",
         credentials: "include",
@@ -70,7 +71,7 @@ export async function getMultipleDateClasses(ageGroup?: string) {
           "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
         );
       }
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -84,7 +85,7 @@ export async function getMultipleDateClasses(ageGroup?: string) {
 export async function getSingleDateClasses(ageGroup?: string) {
   try {
     const res = await fetch(
-      `${API_URL}/classes/singledates${ageGroup ? `?ageGroup=${ageGroup}` : "?ageGroup=adult"}`,
+      `${import.meta.env.VITE_API_URL}/classes/singledates${ageGroup ? `?ageGroup=${ageGroup}` : "?ageGroup=adult"}`,
       {
         method: "GET",
         credentials: "include",
@@ -98,7 +99,7 @@ export async function getSingleDateClasses(ageGroup?: string) {
           "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
         );
       }
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -138,18 +139,21 @@ export async function signUpForClassOnline({
   };
 }) {
   try {
-    const res = await fetch(`${API_URL}/classes/signuponline`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/classes/signuponline`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ articles: classCart, company, paymentData }),
       },
-      credentials: "include",
-      body: JSON.stringify({ articles: classCart, company, paymentData }),
-    });
+    );
 
     if (!res.ok) {
       const data = await res.json();
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -192,7 +196,7 @@ export async function signUpChildForClassOnline({
 }) {
   try {
     const res = await fetch(
-      `${API_URL}/classes/child/signuponline/${childId}`,
+      `${import.meta.env.VITE_API_URL}/classes/child/signuponline/${childId}`,
       {
         method: "POST",
         headers: {
@@ -206,7 +210,7 @@ export async function signUpChildForClassOnline({
     if (!res.ok) {
       const data = await res.json();
 
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();

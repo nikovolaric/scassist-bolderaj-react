@@ -96,6 +96,12 @@ function SetChildAuthForm() {
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
           </div>
+          <div className="flex items-center gap-2">
+            <input type="checkbox" name="agreesToterms" required />
+            <label className="font-medium">
+              Prebral sem in se strinjam s pogoji poslovanja.
+            </label>
+          </div>
           {err && <p className="font-medium text-red-500">{err}</p>}
           {success && (
             <p className="text-primary font-medium">

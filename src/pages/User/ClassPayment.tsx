@@ -89,7 +89,7 @@ function PaymentType() {
   const { mutate, isPending: isPendingBtn } = useMutation({
     mutationFn: signUpForClassOnline,
     onSuccess: (data) => {
-      if (data.status === "error" || data.status === "fail") {
+      if (data instanceof Error) {
         return;
       } else {
         navigate(`${pathname}/success`);
@@ -167,8 +167,17 @@ function PaymentType() {
         {article.endDate && (
           <p>
             <span className="font-semibold">Trajanje: </span>{" "}
-            {new Date().toLocaleDateString()} -{" "}
-            {new Date(article.endDate).toLocaleDateString()}
+            {new Date().toLocaleDateString("sl-SI", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })}{" "}
+            -{" "}
+            {new Date(article.endDate).toLocaleDateString("sl-SI", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })}
           </p>
         )}
         <p className="bg-primary/35 rounded-xl px-4 py-3 md:justify-self-end">
@@ -273,8 +282,7 @@ function PaymentTypeChild() {
   const { mutate, isPending: isPendingBtn } = useMutation({
     mutationFn: signUpChildForClassOnline,
     onSuccess: (data) => {
-      if (data.status === "error" || data.status === "fail") {
-        console.log("error");
+      if (data instanceof Error) {
         return null;
       } else {
         navigate(`${pathname}/success`);
@@ -355,8 +363,17 @@ function PaymentTypeChild() {
         {article.endDate && (
           <p>
             <span className="font-semibold">Trajanje: </span>{" "}
-            {new Date().toLocaleDateString()} -{" "}
-            {new Date(article.endDate).toLocaleDateString()}
+            {new Date().toLocaleDateString("sl-SI", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })}{" "}
+            -{" "}
+            {new Date(article.endDate).toLocaleDateString("sl-SI", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+            })}
           </p>
         )}
         <p className="bg-primary/35 rounded-xl px-4 py-3 md:justify-self-end">

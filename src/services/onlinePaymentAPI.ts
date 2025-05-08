@@ -1,5 +1,3 @@
-const API_URL = "http://localhost:3000/api/v1";
-
 export async function makePayment(bodyData: {
   amount: string;
   card: {
@@ -11,14 +9,17 @@ export async function makePayment(bodyData: {
   };
 }) {
   try {
-    const res = await fetch(`${API_URL}/payments/makepayment`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/payments/makepayment`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bodyData),
       },
-      body: JSON.stringify(bodyData),
-    });
+    );
 
     if (!res.ok) {
       const data = await res.json();
@@ -27,7 +28,7 @@ export async function makePayment(bodyData: {
           "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
         );
       }
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();

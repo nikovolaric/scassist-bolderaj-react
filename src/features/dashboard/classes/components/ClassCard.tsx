@@ -30,7 +30,15 @@ function ClassCard({ classInfo }: { classInfo: IClassArticle }) {
         <p>
           <span className="font-semibold">Trajanje: </span>
           {endDate
-            ? `${new Date().toLocaleDateString()} - ${new Date(endDate).toLocaleDateString()}`
+            ? `${new Date().toLocaleDateString("sl-SI", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })} - ${new Date(endDate).toLocaleDateString("sl-SI", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+              })}`
             : "Aktivnost se izvede v enem od razpisanih terminov."}
         </p>
       </div>

@@ -10,7 +10,6 @@ import {
   setCountry,
   setFirstName,
   setLastName,
-  setParentContactMail,
   setPhoneNumber,
   setPostalCode,
 } from "../slices/signUpSlice";
@@ -23,12 +22,12 @@ function SignupForm() {
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
-  const [age, setAge] = useState<number>(100);
+  // const [age, setAge] = useState<number>(100);
   const [err, setErr] = useState("");
 
   useEffect(() => {
     if (day && month && year) {
-      const birthDate = new Date(Number(year), Number(month) - 1, Number(day)); // Meseci so 0-indeksirani
+      const birthDate = new Date(Number(year), Number(month) - 1, Number(day));
       const today = new Date();
 
       let calculatedAge = today.getFullYear() - birthDate.getFullYear();
@@ -39,15 +38,15 @@ function SignupForm() {
         calculatedAge--;
       }
 
-      if (calculatedAge < 15) {
+      if (calculatedAge < 18) {
         setErr(
-          "Mlajšim od 15 let ni dovoljena samostojna prijava brez privolitve staršev ali skrbnikov.",
+          "Samostojna priajava je dovoljena osebam, starejšim od 18 let. Dostop mladoletnim osebam lahko v svojem profilu omogočijo starši ali skrbniki.",
         );
       } else {
         setErr("");
       }
 
-      setAge(calculatedAge);
+      // setAge(calculatedAge);
       dispatch(setBirthDate(`${year}-${month}-${day}`));
     }
   }, [day, month, year, dispatch]);
@@ -163,7 +162,7 @@ function SignupForm() {
                 </select>
               </div>
             </div>
-            {age >= 15 && age < 18 && (
+            {/* {age >= 15 && age < 18 && (
               <div className="flex flex-col gap-1.5">
                 <label className="text-sm font-medium">
                   Kontaktni mail starša ali skrbnika
@@ -178,7 +177,7 @@ function SignupForm() {
                   }
                 />
               </div>
-            )}
+            )} */}
           </div>
           <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:gap-5">
             <div className="flex flex-col gap-1.5">
@@ -242,9 +241,7 @@ function SignupForm() {
           </div>
           <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:gap-5">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">
-                Telefonska številka <span className="text-red-500">*</span>
-              </label>
+              <label className="text-sm font-medium">Telefonska številka</label>
               <input
                 type="text"
                 placeholder="Vnesite telefonsko številko"

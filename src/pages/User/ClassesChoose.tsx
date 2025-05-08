@@ -67,8 +67,17 @@ function ClassesChoose() {
             {article.endDate && (
               <p>
                 <span className="font-semibold">Trajanje: </span>{" "}
-                {new Date().toLocaleDateString()} -{" "}
-                {new Date(article.endDate).toLocaleDateString()}
+                {new Date().toLocaleDateString("sl-SI", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                })}{" "}
+                -{" "}
+                {new Date(article.endDate).toLocaleDateString("sl-SI", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                })}
               </p>
             )}
             <p className="bg-primary/35 rounded-xl px-4 py-3 md:justify-self-end">

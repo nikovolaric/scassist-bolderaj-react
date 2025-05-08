@@ -1,7 +1,5 @@
 import { ISignUp } from "../features/auth/slices/signUpSlice";
 
-const API_URL = "http://localhost:3000/api/v1";
-
 export async function loginAction({
   email,
   password,
@@ -10,7 +8,7 @@ export async function loginAction({
   password: string;
 }) {
   try {
-    const res = await fetch(`${API_URL}/users/login`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,7 +25,7 @@ export async function loginAction({
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw new Error("Napačen elektronski naslov ali geslo");
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -40,7 +38,7 @@ export async function loginAction({
 
 export async function logout() {
   try {
-    const res = await fetch(`${API_URL}/users/logout`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/users/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +51,7 @@ export async function logout() {
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw new Error(data.message);
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -66,7 +64,7 @@ export async function logout() {
 
 export async function signUpNewUser(signUpData: ISignUp) {
   try {
-    const res = await fetch(`${API_URL}/users/signup`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/users/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -100,14 +98,17 @@ export async function createChild(child: {
   agreesToTerms: boolean;
 }) {
   try {
-    const res = await fetch(`${API_URL}/users/createchild`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/users/createchild`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(child),
       },
-      credentials: "include",
-      body: JSON.stringify(child),
-    });
+    );
 
     if (!res.ok) {
       const data = await res.json();
@@ -131,14 +132,17 @@ export async function sendChildAuthMail({
   email: string;
 }) {
   try {
-    const res = await fetch(`${API_URL}/users/sendchildauthmail/${id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/users/sendchildauthmail/${id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ email }),
       },
-      credentials: "include",
-      body: JSON.stringify({ email }),
-    });
+    );
 
     if (!res.ok) {
       const data = await res.json();
@@ -168,14 +172,17 @@ export async function setChildAuth({
   phoneNumber: string;
 }) {
   try {
-    const res = await fetch(`${API_URL}/users/setchildauth/${token}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/users/setchildauth/${token}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ email, password, passwordConfirm, phoneNumber }),
       },
-      credentials: "include",
-      body: JSON.stringify({ email, password, passwordConfirm, phoneNumber }),
-    });
+    );
 
     if (!res.ok) {
       const data = await res.json();
@@ -183,7 +190,7 @@ export async function setChildAuth({
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
 
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -199,24 +206,27 @@ export async function updatePassword(
   password: string,
 ) {
   try {
-    const res = await fetch(`${API_URL}/users/updatepassword`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/users/updatepassword`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          currentPassword,
+          password,
+        }),
       },
-      credentials: "include",
-      body: JSON.stringify({
-        currentPassword,
-        password,
-      }),
-    });
+    );
 
     if (!res.ok) {
       const data = await res.json();
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -229,15 +239,18 @@ export async function updatePassword(
 
 export async function sendResetToken(email: string) {
   try {
-    const res = await fetch(`${API_URL}/users/forgotpassword`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/users/forgotpassword`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+        }),
       },
-      body: JSON.stringify({
-        email,
-      }),
-    });
+    );
 
     if (!res.ok) {
       const data = await res.json();
@@ -245,7 +258,7 @@ export async function sendResetToken(email: string) {
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw new Error(data.message);
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -262,23 +275,26 @@ export async function resetPassword(
   passwordConfirm: string,
 ) {
   try {
-    const res = await fetch(`${API_URL}/users/resetpassword/${token}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/users/resetpassword/${token}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          password,
+          passwordConfirm,
+        }),
       },
-      body: JSON.stringify({
-        password,
-        passwordConfirm,
-      }),
-    });
+    );
 
     if (!res.ok) {
       const data = await res.json();
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();

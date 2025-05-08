@@ -77,7 +77,7 @@ function DownloadPreInvoiceCard({
       const url = URL.createObjectURL(data);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `Predračun.pdf`;
+      a.download = `Predračun-${number}-${new Date(date).getFullYear()}.pdf`;
       a.click();
       URL.revokeObjectURL(url);
     } catch (error) {

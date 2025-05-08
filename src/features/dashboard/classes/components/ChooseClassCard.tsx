@@ -80,7 +80,12 @@ function ChooseClassCard({ classInfo }: { classInfo: IClassInfo }) {
         </div>
         <p>
           <span className="font-semibold">Termin izvajanja: </span>
-          {new Date(dates[0]).toLocaleDateString()}, od {hours.join(" - ")}
+          {new Date(dates[0]).toLocaleDateString("sl-SI", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          })}
+          , od {hours.join(" - ")}
         </p>
         <p>
           <span className="font-semibold">Izvajalec tečaja: </span>

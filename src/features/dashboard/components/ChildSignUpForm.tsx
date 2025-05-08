@@ -7,6 +7,7 @@ import {
 } from "react";
 import { createChild } from "../../../services/authAPI";
 import { useQueryClient } from "@tanstack/react-query";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 interface IInitialState {
   firstName: string;
@@ -214,8 +215,12 @@ function ChildSignUpForm({
   }
 
   return (
-    <div className="rounded-xl bg-white px-4 py-7 lg:px-6 lg:py-9">
-      <div className="flex flex-col gap-8 lg:mx-auto lg:w-3/4">
+    <div className="relative rounded-xl bg-white px-4 py-7 lg:px-6 lg:py-9">
+      <XMarkIcon
+        className="absolute top-6 right-6 h-6 cursor-pointer stroke-2 text-black/50"
+        onClick={() => setIsOpen(false)}
+      />
+      <div className="flex flex-col gap-8 lg:mx-auto lg:w-4/5">
         <p className="font-semibold">Osebni podatki</p>
         <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 lg:gap-x-16">

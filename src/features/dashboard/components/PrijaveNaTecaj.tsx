@@ -19,7 +19,7 @@ function PrijaveNaTecaj() {
       <p className="font-quicksand text-lg font-bold">AKTIVNOSTI IN VADBE</p>
       <p className="md:h-20 lg:h-24 xl:h-28 xl:text-xl">
         V Bolderaju poteka več različnih vadb in tečajev, ki so primerni tako za
-        začetno kot za napredno stopnjo plezanja.
+        začetnike kot tudi izkušene plezalce.
       </p>
       <div className="self-end">
         <LinkBtn

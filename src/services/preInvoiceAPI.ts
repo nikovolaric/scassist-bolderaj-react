@@ -1,18 +1,19 @@
-const API_URL = "http://localhost:3000/api/v1";
-
 export async function getMyUnpaiedPreInvoices() {
   try {
-    const res = await fetch(`${API_URL}/preinvoices/myunpaid`, {
-      method: "GET",
-      credentials: "include",
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/preinvoices/myunpaid`,
+      {
+        method: "GET",
+        credentials: "include",
+      },
+    );
 
     if (!res.ok) {
       const data = await res.json();
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw new Error(data.message);
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -26,7 +27,7 @@ export async function getMyUnpaiedPreInvoices() {
 export async function downloadPreinvoiceFromClass(classId: string) {
   try {
     const res = await fetch(
-      `${API_URL}/preinvoices/download/class/${classId}`,
+      `${import.meta.env.VITE_API_URL}/preinvoices/download/class/${classId}`,
       {
         method: "GET",
         credentials: "include",
@@ -38,7 +39,7 @@ export async function downloadPreinvoiceFromClass(classId: string) {
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw new Error(data.message);
+      throw Error(data.message);
     }
 
     const data = await res.blob();
@@ -51,17 +52,20 @@ export async function downloadPreinvoiceFromClass(classId: string) {
 
 export async function downloadMyPreinvoice(id: string) {
   try {
-    const res = await fetch(`${API_URL}/preinvoices/download/${id}`, {
-      method: "GET",
-      credentials: "include",
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/preinvoices/download/${id}`,
+      {
+        method: "GET",
+        credentials: "include",
+      },
+    );
 
     if (!res.ok) {
       const data = await res.json();
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw new Error(data.message);
+      throw Error(data.message);
     }
 
     const data = await res.blob();

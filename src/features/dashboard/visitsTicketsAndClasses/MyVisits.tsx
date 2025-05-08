@@ -16,7 +16,7 @@ function MyVisits({ page }: { page?: boolean }) {
   }
 
   return (
-    <div className="flex flex-col gap-8 rounded-lg bg-white px-5 py-8">
+    <div className="flex flex-col gap-8 rounded-lg bg-white px-5 py-8 md:px-6 lg:py-10 xl:gap-12">
       <p className="font-quicksand text-lg font-bold lg:text-xl">
         PRETEKLI OBISKI
       </p>

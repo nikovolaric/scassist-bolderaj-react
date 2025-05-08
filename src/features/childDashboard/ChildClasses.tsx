@@ -49,10 +49,12 @@ function ChildClasses() {
             sl: string;
           };
         }) => {
-          const isNotPaid =
-            preInvoices.filter((preInvoice: { classes: string[] }) =>
+          const preInvoice = preInvoices.filter(
+            (preInvoice: { classes: string[] }) =>
               preInvoice.classes.includes(el._id),
-            ).length > 0;
+          );
+
+          const isNotPaid = preInvoice.length > 0;
 
           return (
             <div
@@ -91,7 +93,8 @@ function ChildClasses() {
               )}
               {isNotPaid && (
                 <p className="self-end font-medium text-red-500">
-                  Plačilo še ni poravnano!
+                  {`Predračun ${preInvoice[0].preInvoiceNumber}-${new Date(preInvoice[0].date).getFullYear()}`}{" "}
+                  še ni poravnan!
                 </p>
               )}
             </div>

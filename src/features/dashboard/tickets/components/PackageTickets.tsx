@@ -50,7 +50,7 @@ function PackageTickets() {
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="font-medium">Dnevne vstopnice</p>
+      <p className="font-medium">Paketi obiskov</p>
       <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-x-5 lg:gap-y-6 xl:grid-cols-3">
         {data.articles.map((ticket: ITicket) => (
           <TicketCard key={ticket._id} ticket={ticket} />

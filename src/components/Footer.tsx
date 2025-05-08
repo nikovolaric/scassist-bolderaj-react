@@ -21,7 +21,7 @@ function Footer() {
             </p>
             <div className="flex flex-col gap-4">
               <p>PE: Plezalni center</p>
-              <p>Janežičeva pot 1</p>
+              <p>Popovičeva ulica 2</p>
               <p>3000 Celje, Slovenija</p>
             </div>
             <div className="flex flex-col gap-4">
@@ -41,11 +41,11 @@ function Footer() {
             </p>
             <div className="flex flex-col gap-4">
               <p className="flex items-center justify-between">
-                Vsak dan v tednu<span>9:00-22:00</span>
+                odprto vsak dan<span>9:00-22:00</span>
               </p>
-              <p className="flex items-center justify-between">
+              {/* <p className="flex items-center justify-between">
                 Nedelje in prazniki<span>9:00-21:00</span>
-              </p>
+              </p> */}
             </div>
           </div>
           <div className="flex flex-col gap-8 lg:gap-14">

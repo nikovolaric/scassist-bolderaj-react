@@ -1,5 +1,3 @@
-const API_URL = "http://localhost:3000/api/v1";
-
 export async function getArticles(
   label: string,
   ageGroup?: string,
@@ -7,7 +5,7 @@ export async function getArticles(
 ) {
   try {
     const res = await fetch(
-      `${API_URL}/articles/getvisible?label=${label}${ageGroup ? `&ageGroup=${ageGroup}` : ""}${type ? `&type=${type}` : ""}`,
+      `${import.meta.env.VITE_API_URL}/articles/getvisible?label=${label}${ageGroup ? `&ageGroup=${ageGroup}` : ""}${type ? `&type=${type}` : ""}`,
       {
         method: "GET",
         credentials: "include",
@@ -19,7 +17,7 @@ export async function getArticles(
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -32,7 +30,7 @@ export async function getArticles(
 
 export async function getOneArticle(id: string) {
   try {
-    const res = await fetch(`${API_URL}/articles/${id}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/articles/${id}`, {
       method: "GET",
       credentials: "include",
     });
@@ -42,7 +40,7 @@ export async function getOneArticle(id: string) {
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -85,7 +83,7 @@ export async function buyArticlesOnline({
 }) {
   try {
     const res = await fetch(
-      `${API_URL}/articles/buyarticlesonline${id ? `/${id}` : ""}`,
+      `${import.meta.env.VITE_API_URL}/articles/buyarticlesonline${id ? `/${id}` : ""}`,
       {
         method: "POST",
         headers: {
@@ -101,7 +99,7 @@ export async function buyArticlesOnline({
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();

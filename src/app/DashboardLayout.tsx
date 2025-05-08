@@ -38,7 +38,7 @@ function DashboardLayout() {
     return <Spinner />;
   }
 
-  if (data.error) {
+  if (data instanceof Error) {
     return <Navigate to="/" replace />;
   }
 

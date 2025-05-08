@@ -120,12 +120,13 @@ function PaymentType() {
     mutationFn: buyArticlesOnline,
     onSuccess: (data) => {
       if (data instanceof Error) {
-        setError(
-          "Nekaj je šlo narobe! Prosimo, da še enkrat preverite vnešene podatke.",
-        );
+        throw data;
       } else {
         navigate(`${pathname}/success`);
       }
+    },
+    onError: (error) => {
+      setError((error as Error).message);
     },
   });
 

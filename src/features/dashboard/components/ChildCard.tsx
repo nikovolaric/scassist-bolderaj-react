@@ -30,7 +30,7 @@ function ChildCard({ child }: { child: IChild }) {
       </div>
       {isOpen && (
         <>
-          <div className="flex flex-col gap-8 lg:mx-auto lg:w-3/4">
+          <div className="flex flex-col gap-8 lg:mx-auto lg:w-4/5">
             <p className="font-semibold">Osebni podatki</p>
             <form className="flex flex-col gap-6">
               <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 lg:gap-x-16">
@@ -58,7 +58,11 @@ function ChildCard({ child }: { child: IChild }) {
                   <label className="text-sm font-medium">Datum rojstva</label>
                   <input
                     type="text"
-                    value={new Date(birthDate).toLocaleDateString()}
+                    value={new Date(birthDate).toLocaleDateString("sl-SI", {
+                      day: "2-digit",
+                      year: "numeric",
+                      month: "2-digit",
+                    })}
                     disabled
                     className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
                   />

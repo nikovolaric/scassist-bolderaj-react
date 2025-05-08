@@ -1,8 +1,6 @@
-const API_URL = "http://localhost:3000/api/v1";
-
 export async function getMe() {
   try {
-    const res = await fetch(`${API_URL}/users/getme`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/users/getme`, {
       method: "GET",
       credentials: "include",
     });
@@ -12,7 +10,7 @@ export async function getMe() {
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -25,17 +23,20 @@ export async function getMe() {
 
 export async function getMyKids() {
   try {
-    const res = await fetch(`${API_URL}/users/getmychildren`, {
-      method: "GET",
-      credentials: "include",
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/users/getmychildren`,
+      {
+        method: "GET",
+        credentials: "include",
+      },
+    );
 
     if (!res.ok) {
       const data = await res.json();
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw new Error(data.message);
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -48,17 +49,20 @@ export async function getMyKids() {
 
 export async function getMyChild(id: string) {
   try {
-    const res = await fetch(`${API_URL}/users/getmychildren/${id}`, {
-      method: "GET",
-      credentials: "include",
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/users/getmychildren/${id}`,
+      {
+        method: "GET",
+        credentials: "include",
+      },
+    );
 
     if (!res.ok) {
       const data = await res.json();
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw new Error(data.message);
+      throw Error(data.message);
     }
 
     const data = await res.json();

@@ -1,18 +1,19 @@
-const API_URL = "http://localhost:3000/api/v1";
-
 export async function getMyUnusedTickets() {
   try {
-    const res = await fetch(`${API_URL}/tickets/mytickets`, {
-      method: "GET",
-      credentials: "include",
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/tickets/mytickets`,
+      {
+        method: "GET",
+        credentials: "include",
+      },
+    );
 
     if (!res.ok) {
       const data = await res.json();
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();
@@ -25,17 +26,20 @@ export async function getMyUnusedTickets() {
 
 export async function getChildUnusedTickets(id: string) {
   try {
-    const res = await fetch(`${API_URL}/tickets/childtickets/${id}`, {
-      method: "GET",
-      credentials: "include",
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/tickets/childtickets/${id}`,
+      {
+        method: "GET",
+        credentials: "include",
+      },
+    );
 
     if (!res.ok) {
       const data = await res.json();
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw data;
+      throw Error(data.message);
     }
 
     const data = await res.json();

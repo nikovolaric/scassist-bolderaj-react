@@ -28,7 +28,7 @@ function ChildLoginDataForm({ child }: { child: IChild }) {
   }
 
   return (
-    <div className="flex flex-col gap-8 lg:mx-auto lg:w-3/4">
+    <div className="flex flex-col gap-8 lg:mx-auto lg:w-4/5">
       <p className="font-medium">Podatki za prijavo v otrokov profil</p>
       <form className="flex flex-col gap-14">
         {password && email && (

@@ -49,7 +49,11 @@ function OsebniPodatki() {
             <label className="text-sm font-medium">Datum rojstva</label>
             <input
               type="text"
-              value={new Date(me.birthDate).toLocaleDateString()}
+              value={new Date(me.birthDate).toLocaleDateString("sl-SI", {
+                day: "2-digit",
+                year: "numeric",
+                month: "2-digit",
+              })}
               disabled
               className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
             />

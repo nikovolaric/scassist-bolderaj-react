@@ -15,7 +15,7 @@ function Login() {
     return <Spinner />;
   }
 
-  if (!data.error && !data.role.includes("admin")) {
+  if (!(data instanceof Error) && !data.role.includes("admin")) {
     return <Navigate to="/dashboard" replace />;
   }
 

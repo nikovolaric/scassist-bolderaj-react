@@ -24,7 +24,12 @@ function MyValidTicketCard({ ticket }: { ticket: iValidTicket }) {
       <div className="flex items-center justify-between">
         <p className="text-lg font-semibold">{name.sl}</p>
         <p className="text-gray border-gray rounded-lg border bg-white px-2 text-sm font-medium shadow">
-          Velja do {new Date(validUntil).toLocaleDateString()}
+          Velja do{" "}
+          {new Date(validUntil).toLocaleDateString("sl-SI", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+          })}
         </p>
       </div>
       <div className="flex flex-col gap-1">
