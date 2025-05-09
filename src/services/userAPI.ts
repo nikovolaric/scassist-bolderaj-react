@@ -83,17 +83,6 @@ export async function updateMe(
   phoneNumber?: string,
   email?: string,
 ) {
-  console.log({
-    firstName,
-    lastName,
-    address,
-    city,
-    postalCode,
-    country,
-    phoneNumber,
-    email,
-  });
-
   try {
     const res = await fetch(`${import.meta.env.VITE_API_URL}/users/updateme`, {
       method: "PATCH",
