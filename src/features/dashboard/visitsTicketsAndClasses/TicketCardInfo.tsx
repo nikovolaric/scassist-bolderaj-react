@@ -6,18 +6,25 @@ function TicketCardInfo() {
   const { data, isPending } = useQuery({
     queryKey: ["myTickets"],
     queryFn: getMyUnusedTickets,
+    retry: 1,
   });
 
-  if (isPending || data.error) {
+  if (isPending || data instanceof Error) {
     return <Spinner />;
+  }
+
+  if (data.results === 0) {
+    return <p>Podatki o vstopnici niso na voljo.</p>;
   }
 
   const { unusedTickets } = data;
 
   const ticket = unusedTickets[0];
+
   if (!ticket || !ticket.validUntil) {
     return <p>Podatki o vstopnici niso na voljo.</p>;
   }
+
   const daysLeft = Math.ceil(
     (new Date(ticket.validUntil).getTime() - Date.now()) /
       (1000 * 60 * 60 * 24),

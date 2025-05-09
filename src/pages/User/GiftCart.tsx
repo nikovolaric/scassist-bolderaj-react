@@ -1,56 +1,45 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { buyGiftOnline, getOneArticle } from "../../services/articlesAPI";
+import { getGiftCart } from "../../features/dashboard/gifts/slices/giftSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import Header from "../../components/Header";
-import { getTicketCart } from "../../features/dashboard/tickets/slices/ticketCartSlice";
-import { buyArticlesOnline, getOneArticle } from "../../services/articlesAPI";
-import Spinner from "../../components/Spinner";
-import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import { Link, useLocation, useNavigate, useParams } from "react-router";
-import PaymentForm from "../../features/dashboard/payments/components/PaymentForm";
 import {
   getPaymentData,
   setAmount,
 } from "../../features/dashboard/payments/slices/paymentSlice";
+import Spinner from "../../components/Spinner";
+import Header from "../../components/Header";
+import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import CompanyInvoiceForm from "../../features/dashboard/payments/components/CompanyInvoiceForm";
-import { getMyChild } from "../../services/userAPI";
+import { getTicketCart } from "../../features/dashboard/tickets/slices/ticketCartSlice";
+import PaymentForm from "../../features/dashboard/payments/components/PaymentForm";
 
-function OnlineCart() {
-  const { childId } = useParams();
+function GiftCart() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const ticketCart = useAppSelector(getTicketCart);
-  const queryClient = useQueryClient();
-  const me = queryClient.getQueryData<{
-    firstName: string;
-    parentOf: unknown[];
-  }>(["me"])!;
-  const { data: childData } = useQuery({
-    queryKey: ["child", childId],
-    queryFn: () => getMyChild(childId!),
-    enabled: !!childId,
-  });
+  const giftCart = useAppSelector(getGiftCart);
   const { data, isPending } = useQuery({
     queryKey: ["article"],
-    queryFn: () => getOneArticle(ticketCart.articles[0].articleId),
+    queryFn: () => getOneArticle(giftCart.articles[0].articleId),
   });
 
   useEffect(
     function () {
-      if (ticketCart.articles.length === 0) {
-        navigate("/dashboard/tickets");
+      if (giftCart.articles.length === 0) {
+        navigate("/dashboard/gifts/pickage");
       }
       if (data) {
         dispatch(
           setAmount(
             (
-              data.article.priceDDV * Number(ticketCart.articles[0].quantity)
+              data.article.priceDDV * Number(giftCart.articles[0].quantity)
             ).toString(),
           ),
         );
       }
     },
-    [navigate, ticketCart, data, dispatch],
+    [navigate, giftCart, data, dispatch],
   );
 
   if (isPending || !data) {
@@ -62,19 +51,9 @@ function OnlineCart() {
       <Header />
       <div>
         <h1 className="flex items-center gap-4 font-semibold">
-          <Link to={`/dashboard${childId ? `/child/${childId}` : ""}/tickets`}>
-            Nakup vstopnice
-          </Link>
+          <Link to="/dashboard/gifts/pickage">Plezanje kot darilo</Link>
           <ChevronRightIcon className="w-4 stroke-3" /> Plačilo
         </h1>
-        {me.parentOf.length > 0 && (
-          <p className="bg-gray/80 mt-8 w-fit rounded-lg px-3 py-1 font-medium">
-            Nakupujem za:{" "}
-            {!childId
-              ? `${me.firstName} (jaz)`
-              : `${childData.myChild.firstName} (${childData.myChild.age} let)`}
-          </p>
-        )}
       </div>
       <div className="flex flex-col lg:mx-auto lg:w-2/3">
         <p className="font-medium">Povzetek nakupa</p>
@@ -87,13 +66,13 @@ function OnlineCart() {
           <p className="bg-primary/10 flex items-center justify-between rounded-xl px-4 py-3 md:col-start-2 md:w-full md:justify-self-end">
             Količina:{" "}
             <span className="font-semibold">
-              {ticketCart.articles[0].quantity}
+              {giftCart.articles[0].quantity}
             </span>
           </p>
           <p className="bg-primary/35 flex items-center justify-between rounded-xl px-4 py-3 md:col-start-2 md:w-full md:justify-self-end">
             Skupaj za plačilo:{" "}
             <span className="font-semibold">
-              {(data.article.priceDDV * Number(ticketCart.articles[0].quantity))
+              {(data.article.priceDDV * Number(giftCart.articles[0].quantity))
                 .toFixed(2)
                 .replace(".", ",")}{" "}
               €
@@ -110,14 +89,14 @@ function OnlineCart() {
 }
 
 function PaymentType() {
-  const { childId } = useParams();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const paymentData = useAppSelector(getPaymentData);
+  const giftCart = useAppSelector(getGiftCart);
   const ticketCart = useAppSelector(getTicketCart);
   const [error, setError] = useState("");
   const { mutate, isPending } = useMutation({
-    mutationFn: buyArticlesOnline,
+    mutationFn: buyGiftOnline,
     onSuccess: (data) => {
       if (data instanceof Error) {
         throw data;
@@ -143,10 +122,9 @@ function PaymentType() {
       return;
     }
     mutate({
-      articles: ticketCart.articles,
+      articles: giftCart.articles,
       paymentData,
       company: ticketCart.company,
-      id: childId,
     });
   }
 
@@ -203,4 +181,4 @@ function PaymentType() {
   );
 }
 
-export default OnlineCart;
+export default GiftCart;

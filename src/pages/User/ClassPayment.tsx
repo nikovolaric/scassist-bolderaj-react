@@ -243,7 +243,7 @@ function PaymentType() {
             <div className="flex flex-col gap-2">
               <p className="font-medium">Po predračunu</p>
               <p className="text-sm font-medium text-black/50">
-                Znesek lahko poravnate tudi v času delovnih ur, na recepciji
+                Znesek lahko poravnaš tudi v času delovnih ur, na recepciji
                 plezalnega centra, pred pričetkom tečaja.
               </p>
             </div>
@@ -434,7 +434,7 @@ function PaymentTypeChild() {
             <div className="flex flex-col gap-2">
               <p className="font-medium">Po predračunu</p>
               <p className="text-sm font-medium text-black/50">
-                Znesek lahko poravnate tudi v času delovnih ur, na recepciji
+                Znesek lahko poravnaš tudi v času delovnih ur, na recepciji
                 plezalnega centra, pred pričetkom tečaja.
               </p>
             </div>

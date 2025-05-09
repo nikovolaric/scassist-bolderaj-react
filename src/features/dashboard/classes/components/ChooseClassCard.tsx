@@ -103,7 +103,7 @@ function ChooseClassCard({ classInfo }: { classInfo: IClassInfo }) {
             <span className="from-primary to-secondary drop-shadow-input flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-r">
               i
             </span>
-            Na termin ste že prijavljeni
+            Na termin si že prijavljen/a
           </p>
         )}
         {full && !signedUp && (
@@ -181,7 +181,7 @@ function ChooseClassCard({ classInfo }: { classInfo: IClassInfo }) {
           <span className="from-primary to-secondary drop-shadow-input flex h-6 w-6 items-center justify-center rounded-lg bg-gradient-to-r">
             i
           </span>
-          Na termin ste že prijavljeni
+          Na termin si že prijavljen/a
         </p>
       )}
       {full && !signedUp && (

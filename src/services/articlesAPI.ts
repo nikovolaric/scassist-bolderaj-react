@@ -60,7 +60,6 @@ export async function buyArticlesOnline({
   articles: {
     articleId: string;
     quantity: string;
-    gift: boolean;
   }[];
   paymentData: {
     card: {
@@ -84,6 +83,88 @@ export async function buyArticlesOnline({
   try {
     const res = await fetch(
       `${import.meta.env.VITE_API_URL}/articles/buyarticlesonline${id ? `/${id}` : ""}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ articles, paymentData, company }),
+      },
+    );
+
+    if (!res.ok) {
+      const data = await res.json();
+      if (data.error.statusCode === 500) {
+        throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
+      }
+      throw Error(data.message);
+    }
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    return error as Error;
+  }
+}
+
+export async function getGiftArticles(ageGroup: string, label: string) {
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/articles/getgifts/${ageGroup}?label=${label}`,
+      {
+        method: "GET",
+        credentials: "include",
+      },
+    );
+
+    if (!res.ok) {
+      const data = await res.json();
+      if (data.error.statusCode === 500) {
+        throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
+      }
+      throw Error(data.message);
+    }
+
+    const data = await res.json();
+
+    return data;
+  } catch (error) {
+    return error as Error;
+  }
+}
+
+export async function buyGiftOnline({
+  articles,
+  paymentData,
+  company,
+}: {
+  articles: {
+    articleId: string;
+    quantity: string;
+  }[];
+  paymentData: {
+    card: {
+      holder: string;
+      number: string;
+      expiryMonth: string;
+      expiryYear: string;
+      cvv: string;
+    };
+    amount: string;
+  };
+  company?: {
+    name: string;
+    address: string;
+    postalCode: string;
+    city: string;
+    taxNumber: string;
+  };
+}) {
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/articles/buygiftonline`,
       {
         method: "POST",
         headers: {

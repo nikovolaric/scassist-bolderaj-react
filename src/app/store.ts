@@ -3,6 +3,7 @@ import signUpReducer from "../features/auth/slices/signUpSlice";
 import ticketCartReducer from "../features/dashboard/tickets/slices/ticketCartSlice";
 import classCartReducer from "../features/dashboard/classes/slices/classCartSlice";
 import paymentReducer from "../features/dashboard/payments/slices/paymentSlice";
+import giftCartReducer from "../features/dashboard/gifts/slices/giftSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     ticketCart: ticketCartReducer,
     classCart: classCartReducer,
     payment: paymentReducer,
+    giftCart: giftCartReducer,
   },
 });
 

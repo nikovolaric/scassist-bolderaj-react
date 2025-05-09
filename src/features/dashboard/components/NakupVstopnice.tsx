@@ -18,8 +18,8 @@ function NakupVstopnice() {
     <div className="flex flex-col gap-6 rounded-xl bg-white px-5 py-8 md:px-6 lg:h-[300px] lg:py-10 xl:h-[364px] xl:gap-12">
       <p className="font-quicksand text-lg font-bold">NAKUP VSTOPNICE</p>
       <p className="md:h-20 lg:h-24 xl:h-28 xl:text-xl">
-        Izbirate lahko med dnevnimi vstopnicami, paketi obiskov in vstopnicami
-        za daljše obdobje.
+        Izbiraš lahko med dnevnimi vstopnicami, paketi obiskov in vstopnicami za
+        daljše obdobje.
       </p>
       <div className="self-end">
         <LinkBtn

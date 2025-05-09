@@ -25,6 +25,11 @@ import MyClasses from "./pages/User/MyClasses";
 import TicketPaymentSuccess from "./pages/User/TicketPaymentSuccess";
 import PickUser from "./pages/User/PickUser";
 import MyInvoices from "./pages/User/MyInvoices";
+import ConfirmMail from "./pages/User/ConfirmMail";
+import PickAgeGroup from "./pages/User/PickAgeGroup";
+import Gifts from "./pages/User/Gifts";
+import GiftCart from "./pages/User/GiftCart";
+import GiftPaymentSuccess from "./pages/User/GiftPaymentSuccess";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +58,7 @@ const router = createBrowserRouter([
         path: "resetpassword/:token",
         Component: ResetPassword,
       },
+      { path: "confirmmail/:token", Component: ConfirmMail },
       {
         path: "setchildauth/:token",
         Component: SetChildAuth,
@@ -116,6 +122,22 @@ const router = createBrowserRouter([
           {
             path: "invoices",
             Component: MyInvoices,
+          },
+          {
+            path: "gifts/pickage",
+            Component: PickAgeGroup,
+          },
+          {
+            path: "gifts/:ageGroup",
+            Component: Gifts,
+          },
+          {
+            path: "gifts/giftcart",
+            Component: GiftCart,
+          },
+          {
+            path: "gifts/giftcart/success",
+            Component: GiftPaymentSuccess,
           },
           {
             path: "child/:childId",

@@ -8,6 +8,7 @@ import { clearPayment } from "../features/dashboard/payments/slices/paymentSlice
 import { clearTicketData } from "../features/dashboard/tickets/slices/ticketCartSlice";
 import { clearClassData } from "../features/dashboard/classes/slices/classCartSlice";
 import Footer from "../components/Footer";
+import { clearGiftData } from "../features/dashboard/gifts/slices/giftSlice";
 
 function DashboardLayout() {
   const { childId } = useParams();
@@ -29,6 +30,9 @@ function DashboardLayout() {
         !pathname.includes("/dashboard/")
       ) {
         dispatch(clearClassData());
+      }
+      if (!pathname.includes("/giftcart")) {
+        dispatch(clearGiftData());
       }
     },
     [childId, pathname, dispatch],

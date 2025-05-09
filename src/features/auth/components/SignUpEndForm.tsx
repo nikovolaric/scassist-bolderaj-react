@@ -10,8 +10,10 @@ import {
 import { FormEvent, useEffect, useState } from "react";
 import { signUpNewUser } from "../../../services/authAPI";
 import LinkBtn from "../../../components/LinkBtn";
+import { useNavigate } from "react-router";
 
 function SignUpEndForm() {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userData = useAppSelector(getSignUpData);
   const [err, setErr] = useState("");
@@ -44,6 +46,7 @@ function SignUpEndForm() {
       }
 
       dispatch(clearSignupData());
+      navigate("/");
     } catch (error) {
       setErr((error as Error).message);
     } finally {

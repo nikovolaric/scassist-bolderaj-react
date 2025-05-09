@@ -55,19 +55,21 @@ function PaymentInfo() {
       </p>
       <div className="flex flex-col gap-4">
         <p className="font-semibold">
-          Vaša prijava na {data.article.name.sl} je bila uspešna.
+          Prijava na {data.article.name.sl} je bila uspešna.
         </p>
         {paymentMethod === "preInvoice" ? (
           <p className="font-medium">
-            Na mail boste prejeli predračun, ki ga je potrebno poravnati v roku
-            5 dni od prijave. Če pa se prijavite manj kot 5 dni pred pričetkom,
-            je predračun potrebno poravnati v roku enega dne.
+            Na elektronski naslov smo poslali predračun, ki ga je potrebno
+            poravnati v roku 5 dni od prijave. Če pa se prijaviš manj kot 5 dni
+            pred pričetkom, je predračun potrebno poravnati v roku enega dne.
           </p>
         ) : (
-          <p className="font-medium">Na mail boste prejeli račun.</p>
+          <p className="font-medium">
+            Na elektronski naslov smo poslali račun.
+          </p>
         )}
         <p className="font-medium">
-          Svoje aktivnosti in vadbe si lahko ogledate pod zavihkom “Moje
+          Svoje aktivnosti in vadbe si lahko ogledaš pod zavihkom “Moje
           aktivnosti in vadbe”.
         </p>
       </div>

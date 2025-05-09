@@ -38,7 +38,7 @@ function MyVisitsThisYear() {
         </select>
       </div>
       <div className="flex flex-col gap-6 text-center">
-        <p className="text-lg font-medium">Bolderaj ste obiskali</p>
+        <p className="text-lg font-medium">Bolderaj si obiskal/a</p>
         <p className="font-quicksand bg-primary mx-auto w-fit rounded-lg px-6 py-1 font-bold">
           {data.results} KRAT
         </p>

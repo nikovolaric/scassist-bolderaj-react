@@ -1,19 +1,15 @@
+import { Link } from "react-router";
+import Header from "../../components/Header";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import LinkBtn from "../../components/LinkBtn";
-import { Link, useParams } from "react-router";
-import Header from "../../components/Header";
 
-function TicketPaymentSuccess() {
-  const { childId } = useParams();
-
+function GiftPaymentSuccess() {
   return (
     <div className="my-16 flex flex-col gap-12">
       <Header />
       <div className="flex flex-col gap-14">
         <h1 className="flex items-center gap-4 text-2xl font-semibold">
-          <Link to={`/dashboard${childId ? `/child/${childId}` : ""}/tickets`}>
-            Nakup vstopnice
-          </Link>{" "}
+          <Link to="/dashboard/gifts/pickage">Plezanje kot darilo</Link>{" "}
           <ChevronRightIcon className="w-6 stroke-3" /> Zaključek nakupa
         </h1>
       </div>
@@ -38,15 +34,12 @@ function PaymentInfo() {
       </p>
       <div className="flex flex-col gap-4">
         <p className="font-semibold">
-          Nakup je bil uspešno izvršen. Na elektronski naslov smo poslali račun.
-        </p>
-        <p className="font-medium">
-          Aktualne vstopnice si lahko ogledaš pod zavihkom “Moje vstopnice in
-          obiski”.
+          Nakup je bil uspešno izvršen. Na elektronski naslov smo poslali račun,
+          skupaj s darilno kodo in darilnim bonom.
         </p>
       </div>
     </div>
   );
 }
 
-export default TicketPaymentSuccess;
+export default GiftPaymentSuccess;

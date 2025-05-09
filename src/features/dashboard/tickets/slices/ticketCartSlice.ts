@@ -4,7 +4,6 @@ interface ITicketCart {
   articles: {
     articleId: string;
     quantity: string;
-    gift: boolean;
   }[];
   company: {
     name: string;
