@@ -1,6 +1,5 @@
 import {
   ChartBarSquareIcon,
-  ChevronDownIcon,
   ChevronRightIcon,
   HomeIcon,
   TicketIcon,
@@ -35,7 +34,7 @@ function NavMenu() {
         className={`bg-neutral drop-shadow-input fixed top-1/2 right-4 z-50 flex -translate-y-1/2 flex-col gap-8 rounded-xl px-8 py-6 font-semibold ${isOpenMenu ? "" : "translate-y-[500%] md:translate-x-[500%] md:-translate-y-1/2"} h-[calc(100dvh-40px)] transition-transform duration-300 md:right-8 md:flex md:flex-col md:justify-between md:py-10 lg:right-20 lg:h-[85dvh] 2xl:right-[calc((100dvw-1280px)/2)]`}
       >
         <ul className="flex h-full flex-col justify-between xl:h-4/5">
-          <li className="mb-2 hidden md:block md:self-end">
+          <li className="mb-2 block self-end">
             <ChevronRightIcon
               className="h-4 w-4 cursor-pointer self-end stroke-3 text-black/50"
               onClick={() => setIsOpenMenu(false)}
@@ -185,10 +184,10 @@ function NavMenu() {
           </li>
         </ul>
         <LogoutBtn />
-        <ChevronDownIcon
+        {/* <ChevronDownIcon
           className="w-4 self-end stroke-3 text-black/50 md:hidden"
           onClick={() => setIsOpenMenu(false)}
-        />
+        /> */}
       </nav>
     </>
   );
