@@ -330,7 +330,7 @@ function PaymentTypeChild() {
         !paymentData.card.expiryMonth ||
         !paymentData.card.expiryYear)
     ) {
-      setErr("Prosim izpolnite vse podatke za plačilo!");
+      setErr("Prosim izpolni vse podatke za plačilo!");
     }
     if (
       isChecked === "" &&

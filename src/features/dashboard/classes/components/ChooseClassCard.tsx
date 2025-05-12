@@ -170,7 +170,7 @@ function ChooseClassCard({ classInfo }: { classInfo: IClassInfo }) {
           <div>
             <p>
               <span className="font-semibold">Zasedenost: </span>
-              {students.length} zasedenih mes od {maxStudents} mest
+              {students.length} zasedenih mest od {maxStudents} mest
             </p>
             <progress value={students.length} max={maxStudents} />
           </div>

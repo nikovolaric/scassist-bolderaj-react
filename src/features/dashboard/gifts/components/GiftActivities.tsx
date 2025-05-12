@@ -17,16 +17,18 @@ function GiftActivities() {
     return <Spinner />;
   }
 
-  return (
-    <div className="flex flex-col gap-4">
-      <p className="font-medium">Aktivnosti</p>
-      <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-x-5 lg:gap-y-6 xl:grid-cols-3">
-        {data.articles.map((article: ITicket) => (
-          <GiftCard key={article._id} article={article} />
-        ))}
+  if (data.articles.length > 0) {
+    return (
+      <div className="flex flex-col gap-4">
+        <p className="font-medium">Aktivnosti</p>
+        <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-x-5 lg:gap-y-6 xl:grid-cols-3">
+          {data.articles.map((article: ITicket) => (
+            <GiftCard key={article._id} article={article} />
+          ))}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default GiftActivities;
