@@ -1,13 +1,13 @@
 import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { FormEvent } from "react";
-import { logoutAction } from "../../../services/authAPI";
+import { logout } from "../../../services/authAPI";
 import { Navigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 import Spinner from "../../../components/Spinner";
 
 function Logout() {
   const { mutate, isPending, data } = useMutation({
-    mutationFn: logoutAction,
+    mutationFn: logout,
   });
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
