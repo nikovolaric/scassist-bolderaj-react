@@ -42,7 +42,7 @@ function MyKids() {
         </div>
       ) : (
         <p className="my-10 font-bold lg:text-lg">
-          Trenutno še nimate dodanih otrok.
+          Trenutno še nimaš dodanih otrok.
         </p>
       )}
       <p className="font-medium lg:text-lg">
