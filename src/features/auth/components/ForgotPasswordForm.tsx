@@ -31,7 +31,7 @@ function ForgotPasswordForm() {
     <div className="flex flex-col gap-8">
       <h1 className="text-2xl font-semibold lg:text-3xl">Pozabljeno geslo</h1>
       <p className="font-medium lg:w-1/2">
-        Vnesite elektronski naslov za obnovitev gesla.
+        Vnesi elektronski naslov za obnovitev gesla.
       </p>
       <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
@@ -40,7 +40,7 @@ function ForgotPasswordForm() {
           </label>
           <input
             type="text"
-            placeholder="Vnesite svoj elektronski naslov"
+            placeholder="Vnesi svoj elektronski naslov"
             className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
             autoComplete="off"
             required
@@ -50,12 +50,15 @@ function ForgotPasswordForm() {
         {err && <p className="font-medium text-red-500">{err}</p>}
         {success ? (
           <div className="border-secondary flex flex-col items-start gap-3 rounded-lg border bg-white px-4 py-5">
-            <p className="from-primary to-secondary drop-shadow-input rounded-lg bg-gradient-to-t px-2.5">
-              i
+            <p className="flex items-center gap-4 font-medium">
+              <span className="from-primary to-secondary drop-shadow-input rounded-lg bg-gradient-to-t px-2.5">
+                i
+              </span>
+              Na elektronski naslov smo poslali povezavo do ponastavive gesla.
             </p>
             <p>
-              V kolikor niste prejeli maila za ponastavitev gesla, se prosimo
-              obrnite na mail podpora@bolderaj.si.
+              V kolikor nisi prejel/a povezave za ponastavitev gesla, se prosimo
+              obrni na podpora@bolderaj.si.
             </p>
           </div>
         ) : (

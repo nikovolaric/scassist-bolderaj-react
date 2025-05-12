@@ -14,7 +14,11 @@ function TicketCardInfo() {
   }
 
   if (data.results === 0) {
-    return <p>Podatki o vstopnici niso na voljo.</p>;
+    return (
+      <p className="text-lg font-medium">
+        Podatki o veljavnih vstopnicah še niso na voljo.
+      </p>
+    );
   }
 
   const { unusedTickets } = data;
@@ -22,7 +26,11 @@ function TicketCardInfo() {
   const ticket = unusedTickets[0];
 
   if (!ticket || !ticket.validUntil) {
-    return <p>Podatki o vstopnici niso na voljo.</p>;
+    return (
+      <p className="text-lg font-medium">
+        Podatki o veljavnih vstopnicah še niso na voljo.
+      </p>
+    );
   }
 
   const daysLeft = Math.ceil(

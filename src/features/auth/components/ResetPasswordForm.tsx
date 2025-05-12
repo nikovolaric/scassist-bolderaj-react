@@ -28,7 +28,7 @@ function ResetPasswordForm() {
 
       setErr("");
       setSuccess(
-        "Geslo uspešno ponastavljeno. Kmalu vas bomo preusmerili na vpisno stran.",
+        "Geslo uspešno ponastavljeno. Kmalu te bomo preusmerili na vpisno stran.",
       );
       setTimeout(function () {
         navigate("/");
@@ -42,19 +42,17 @@ function ResetPasswordForm() {
 
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="text-2xl font-semibold lg:text-3xl">
-        Nastavite novo geslo
-      </h1>
+      <h1 className="text-2xl font-semibold lg:text-3xl">Nastavi novo geslo</h1>
       <p className="font-medium lg:w-1/2">
-        Ustvarite novo geslo, s katerim boste lahko dostopali do svojega računa
-        v aplikaciji Bolderaj.
+        Ustvari novo geslo, s katerim boš lahko dostopal/a do svojega računa v
+        aplikaciji Bolderaj.
       </p>
       <form className="flex flex-col gap-5 lg:w-1/2" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium">Nastavite novo geslo*</label>
+          <label className="text-sm font-medium">Nastavi novo geslo*</label>
           <input
             type="password"
-            placeholder="Vnesite svoje svoj elektornski naslov"
+            placeholder="Vnesi novo geslo"
             className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
             autoComplete="off"
             required
@@ -62,10 +60,10 @@ function ResetPasswordForm() {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-sm font-medium">Potrdite novo geslo*</label>
+          <label className="text-sm font-medium">Potrdi novo geslo*</label>
           <input
             type="password"
-            placeholder="Vnesite svoje svoj elektornski naslov"
+            placeholder="Potrdi novo geslo"
             className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
             autoComplete="off"
             required

@@ -32,13 +32,13 @@ function LoginForm() {
 
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="text-2xl font-semibold">Prijavite se v svoj račun</h1>
+      <h1 className="text-2xl font-semibold">Prijavi se v svoj račun</h1>
       <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
         <div className="flex flex-col gap-1.5">
           <label className="text-sm font-medium">Elektronski naslov</label>
           <input
             type="text"
-            placeholder="Vnesite elektronski naslov"
+            placeholder="Vnesi elektronski naslov"
             className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
             autoComplete="off"
             required
@@ -49,7 +49,7 @@ function LoginForm() {
           <label className="text-sm font-medium">Geslo</label>
           <input
             type="password"
-            placeholder="Vnesite geslo"
+            placeholder="Vnesi geslo"
             className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
             autoComplete="off"
             required
@@ -68,9 +68,9 @@ function LoginForm() {
         {err && <p className="font-medium text-red-500">{err}</p>}
       </form>
       <p className="text-center text-sm">
-        Še niste ustvarili Bolderaj računa?{" "}
+        Še nisi ustvaril Bolderaj računa?{" "}
         <Link to="/signup" className="text-secondary font-bold">
-          Registrirajte se
+          Registriraj se
         </Link>
       </p>
     </div>

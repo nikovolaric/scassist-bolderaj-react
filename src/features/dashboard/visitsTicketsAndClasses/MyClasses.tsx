@@ -10,7 +10,7 @@ function MyClasses() {
     queryFn: () => getMyClasses(2),
   });
 
-  if (isPending) {
+  if (isPending || !data) {
     return <Spinner />;
   }
 
@@ -20,8 +20,8 @@ function MyClasses() {
         <p className="font-quicksand text-lg font-bold lg:text-xl">
           MOJE VADBE IN TEČAJI
         </p>
-        <p className="font-medium">
-          Trenutno niste vpisani na noben tečaj ali vadbo
+        <p className="text-lg font-medium">
+          Trenutno nisi vpisan na nobeno aktivnost ali vadbo.
         </p>
       </div>
     );

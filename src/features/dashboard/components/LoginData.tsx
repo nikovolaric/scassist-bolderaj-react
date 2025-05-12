@@ -140,7 +140,7 @@ function LoginData() {
             <input
               type="password"
               className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-              placeholder="Vnesite trenutno geslo"
+              placeholder="Vnesi trenutno geslo"
               onChange={(e) =>
                 dispatch({ type: "currentPassword", payload: e.target.value })
               }
@@ -153,7 +153,7 @@ function LoginData() {
             <input
               type="password"
               className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-              placeholder="Vnesite novo geslo"
+              placeholder="Vnesi novo geslo"
               onChange={(e) =>
                 dispatch({ type: "newPassword", payload: e.target.value })
               }
@@ -166,7 +166,7 @@ function LoginData() {
             <input
               type="password"
               className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-              placeholder="Potrdite novo geslo"
+              placeholder="Potrdi novo geslo"
               onChange={(e) =>
                 dispatch({
                   type: "newPasswordConfirm",

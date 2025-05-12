@@ -56,7 +56,7 @@ function SignUpEndForm() {
 
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="text-2xl font-semibold lg:text-3xl">Registrirajte se</h1>
+      <h1 className="text-2xl font-semibold lg:text-3xl">Registriraj se</h1>
       <div className="flex flex-col gap-8">
         <p className="flex items-center gap-4 text-lg font-semibold lg:text-xl">
           <span className="bg-primary rounded-lg border border-black px-2.5 py-0.5">
@@ -71,7 +71,7 @@ function SignUpEndForm() {
             </label>
             <input
               type="text"
-              placeholder="Vnesite elektronski naslov"
+              placeholder="Vnesi elektronski naslov"
               className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
               autoComplete="off"
               required={true}
@@ -85,7 +85,7 @@ function SignUpEndForm() {
               </label>
               <input
                 type="password"
-                placeholder="Vnesite geslo"
+                placeholder="Vnesi geslo"
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
                 autoComplete="off"
                 required={true}
@@ -98,7 +98,7 @@ function SignUpEndForm() {
               </label>
               <input
                 type="password"
-                placeholder="Ponovno vnesite geslo"
+                placeholder="Ponovno Vnesi geslo"
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
                 autoComplete="off"
                 required={true}

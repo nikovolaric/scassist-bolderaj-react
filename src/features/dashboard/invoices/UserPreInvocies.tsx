@@ -21,7 +21,7 @@ function UserPreInvocies() {
       <h1 className="text-2xl font-semibold lg:text-3xl">Odprti predračuni</h1>
       {data.preInvoices.length === 0 && (
         <p className="text-lg font-medium">
-          Trenutno nimate neporavnanih predračunov.
+          Trenutno nimaš neporavnanih predračunov.
         </p>
       )}
       {data.preInvoices.length > 0 && (

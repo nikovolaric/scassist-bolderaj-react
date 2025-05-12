@@ -35,7 +35,7 @@ function UserInvocies() {
       </div>
       {data.invoices.length === 0 && (
         <p className="text-lg font-medium">
-          Trenutno še nimate računa v tekočem letu.
+          Trenutno še nimaš računa v tekočem letu.
         </p>
       )}
       {data.invoices.length > 0 && (

@@ -59,12 +59,12 @@ function SignupForm() {
 
   return (
     <div className="flex flex-col gap-8">
-      <h1 className="text-2xl font-semibold lg:text-3xl">Registrirajte se</h1>
+      <h1 className="text-2xl font-semibold lg:text-3xl">Registriraj se</h1>
       <div className="flex flex-col gap-8">
         <p className="font-medium">
-          V kolikor želite registrirati mladoletno osebo, se najprej
-          registrirajte kot starš oz. skrbnik, nato pa postopek registracije
-          otroka pričnete v Moj profil.
+          V kolikor želiš registrirati mladoletno osebo, se najprej registriraj
+          kot starš oz. skrbnik, nato pa postopek registracije otroka prični v
+          Moj profil.
         </p>
         <p className="flex items-center gap-4 text-lg font-semibold lg:text-xl">
           <span className="bg-primary rounded-lg border border-black px-2.5 py-0.5">
@@ -80,7 +80,7 @@ function SignupForm() {
               </label>
               <input
                 type="text"
-                placeholder="Vnesite svoje ime"
+                placeholder="Vnesi svoje ime"
                 value={userData.firstName}
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
                 autoComplete="off"
@@ -94,7 +94,7 @@ function SignupForm() {
               </label>
               <input
                 type="text"
-                placeholder="Vnesite svoj priimek"
+                placeholder="Vnesi svoj priimek"
                 value={userData.lastName}
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
                 autoComplete="off"
@@ -169,7 +169,7 @@ function SignupForm() {
                 </label>
                 <input
                   type="text"
-                  placeholder="Vnesite kontaktni mail starša ali skrbnika"
+                  placeholder="Vnesi kontaktni mail starša ali skrbnika"
                   className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
                   autoComplete="off"
                   onChange={(e) =>
@@ -186,7 +186,7 @@ function SignupForm() {
               </label>
               <input
                 type="text"
-                placeholder="Vnesite naslov bivališča"
+                placeholder="Vnesi naslov bivališča"
                 value={userData.address}
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
                 autoComplete="off"
@@ -200,7 +200,7 @@ function SignupForm() {
               </label>
               <input
                 type="text"
-                placeholder="Vnesite kraj bivališča"
+                placeholder="Vnesi kraj bivališča"
                 value={userData.city}
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
                 autoComplete="off"
@@ -216,7 +216,7 @@ function SignupForm() {
               </label>
               <input
                 type="text"
-                placeholder="Vnesite poštno številko"
+                placeholder="Vnesi poštno številko"
                 value={userData.postalCode}
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
                 autoComplete="off"
@@ -230,7 +230,7 @@ function SignupForm() {
               </label>
               <input
                 type="text"
-                placeholder="Vnesite državo bivališča"
+                placeholder="Vnesi državo bivališča"
                 value={userData.country}
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
                 autoComplete="off"
@@ -244,7 +244,7 @@ function SignupForm() {
               <label className="text-sm font-medium">Telefonska številka</label>
               <input
                 type="text"
-                placeholder="Vnesite telefonsko številko"
+                placeholder="Vnesi telefonsko številko"
                 value={userData.phoneNumber}
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
                 autoComplete="off"
@@ -254,7 +254,7 @@ function SignupForm() {
             <div />
           </div>
           <p>
-            Vaši osebni podatki bodo hranjeni v skladu z Uredbo o varovanju
+            Tvoji osebni podatki bodo hranjeni v skladu z Uredbo o varovanju
             osebnih podatkov. Služili bodo za upravljanje spletne aplikacije
             Bolderaj, za vodenje statističnih evidenc obiska in ostalih namenov,
             opisanih v Splošnem pravilniku o varovanju osebnih podatkov.

@@ -8,12 +8,17 @@ import NavMenu from "../../components/NavMenu";
 import { sendNewConfirmMail } from "../../services/authAPI";
 import { useState } from "react";
 import GiftsSection from "../../features/dashboard/components/GiftsSection";
+import Spinner from "../../components/Spinner";
 
 function Dashboard() {
   const queryClient = useQueryClient();
   const me:
     | { parentOf: { child: string }[]; confirmMailTokenExpires: string }
     | undefined = queryClient.getQueryData(["me"])!;
+
+  if (!me) {
+    return <Spinner />;
+  }
 
   return (
     <>

@@ -1,6 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import NakupVstopnice from "./NakupVstopnice";
 import PrijaveNaTecaj from "./PrijaveNaTecaj";
+import Spinner from "../../../components/Spinner";
 
 function WelcomeSection({ ticketsPage }: { ticketsPage?: boolean }) {
   const queryClient = useQueryClient();
@@ -8,6 +9,10 @@ function WelcomeSection({ ticketsPage }: { ticketsPage?: boolean }) {
   const firstName = queryClient.getQueryData<{ firstName: string }>([
     "me",
   ])?.firstName;
+
+  if (!firstName) {
+    return <Spinner />;
+  }
 
   return (
     <section className="flex flex-col gap-12">

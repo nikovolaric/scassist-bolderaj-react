@@ -46,8 +46,8 @@ function MyKids() {
         </p>
       )}
       <p className="font-medium lg:text-lg">
-        Za svoje družinske člane lahko pregledate aktualne vstopnice, seznam
-        obiskov, urejate prijave na tečaje in vadbe ter opravite nakup vstopnic.
+        Za svoje družinske člane lahko pregledaš aktualne vstopnice, seznam
+        obiskov, urejaš prijave na tečaje in vadbe ter opraviš nakup vstopnic.
       </p>
       {!isOpen ? (
         <button

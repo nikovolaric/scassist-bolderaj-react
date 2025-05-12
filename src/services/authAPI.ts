@@ -254,7 +254,6 @@ export async function sendResetToken(email: string) {
 
     if (!res.ok) {
       const data = await res.json();
-      console.log(data);
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
@@ -345,7 +344,6 @@ export async function sendNewConfirmMail() {
 
     if (!res.ok) {
       const data = await res.json();
-      console.log(data);
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }

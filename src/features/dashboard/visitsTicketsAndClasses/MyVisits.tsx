@@ -22,7 +22,7 @@ function MyVisits({ page }: { page?: boolean }) {
       </p>
       {data.results === 0 && (
         <p className="text-lg font-medium">
-          Trenutno še nimate zabeleženega obiska
+          Trenutno še nimaš zabeleženega obiska
         </p>
       )}
       {data.results > 0 && (

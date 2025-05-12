@@ -159,9 +159,9 @@ function PaymentType() {
         <span className="from-primary to-secondary drop-shadow-btn flex h-6 w-6 flex-none items-center justify-center rounded-lg bg-gradient-to-r font-semibold">
           i
         </span>
-        Nakup vstopnice v spletni aplikaciji je možno izvršiti samo s spletnim
-        plačilom. V kolikor želiš vstopnico kupiti z gotovino, lahko to opraviš
-        v času delovnih ur na blagajni recepcije.
+        Nakup darilnega bona v spletni aplikaciji je možno izvršiti samo s
+        spletnim plačilom. V kolikor želiš darilni bon kupiti z gotovino, lahko
+        to opraviš v času delovnih ur na blagajni recepcije.
       </p>
       <button
         className="from-primary to-secondary drop-shadow-btn hover:to-primary disabled:from-gray disabled:to-gray mt-10 cursor-pointer self-end rounded-lg bg-gradient-to-r px-4 py-3 font-semibold transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-50"
