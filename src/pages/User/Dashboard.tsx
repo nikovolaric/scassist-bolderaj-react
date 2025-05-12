@@ -12,13 +12,11 @@ import Spinner from "../../components/Spinner";
 
 function Dashboard() {
   const queryClient = useQueryClient();
-  const me:
+  const me = queryClient.getQueryData(["me"]) as
     | { parentOf: { child: string }[]; confirmMailTokenExpires: string }
-    | undefined = queryClient.getQueryData(["me"])!;
+    | undefined;
 
-  if (!me) {
-    return <Spinner />;
-  }
+  if (!me) return <Spinner />;
 
   return (
     <>
@@ -33,7 +31,9 @@ function Dashboard() {
         <div className="flex flex-col gap-12 lg:mt-12 lg:gap-24">
           <WelcomeSection />
           <MyClimbingSection />
-          {me.parentOf.length > 0 && <MyChildrenSection />}
+          {Array.isArray(me.parentOf) && me.parentOf.length > 0 && (
+            <MyChildrenSection />
+          )}
           <GiftsSection />
         </div>
       </div>

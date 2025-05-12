@@ -30,6 +30,7 @@ import PickAgeGroup from "./pages/User/PickAgeGroup";
 import Gifts from "./pages/User/Gifts";
 import GiftCart from "./pages/User/GiftCart";
 import GiftPaymentSuccess from "./pages/User/GiftPaymentSuccess";
+import ErrorBoundary from "./pages/User/ErrorBoundry";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,7 @@ const router = createBrowserRouter([
     Component: AppLayout,
     loader: Spinner,
     HydrateFallback: Spinner,
+    ErrorBoundary: ErrorBoundary,
     children: [
       {
         index: true,
