@@ -59,7 +59,7 @@ function MyClasses() {
                   {Array.from(
                     new Set(
                       el.dates.map((day) =>
-                        new Date(day).toLocaleDateString("si-SL", {
+                        new Date(day).toLocaleDateString("sl-SI", {
                           weekday: "long",
                         }),
                       ),
