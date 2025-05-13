@@ -20,7 +20,7 @@ function MyValidTickets() {
       </p>
       {data.results === 0 && (
         <p className="text-lg font-medium">
-          Trenutno nimate veljavnih vstopnic
+          Trenutno nimaš veljavnih vstopnic.
         </p>
       )}
       {data.results > 0 && (

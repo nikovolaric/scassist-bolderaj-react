@@ -100,7 +100,7 @@ function ClassesChoose() {
       </div>
       {classData.classes.length === article.noClasses && (
         <div className="bg-neutral fixed bottom-0 left-0 z-30 flex h-20 w-dvw items-center px-4 md:px-8 lg:px-20">
-          <div className="mx-4 flex items-center justify-end md:mx-8 lg:mx-20 xl:mx-auto xl:w-[1280px]">
+          <div className="mx-4 flex w-full items-center justify-end md:mx-8 lg:mx-20 xl:mx-auto xl:w-[1280px]">
             <LinkBtn to={`${pathname}/payment`} type="primary">
               <p className="flex items-center gap-4">
                 Nadaljuj na plačilo{" "}
@@ -112,7 +112,7 @@ function ClassesChoose() {
       )}
       {!article.noClasses && classData.classes.length === 1 && (
         <div className="bg-neutral fixed bottom-0 left-0 z-30 flex h-20 w-dvw items-center px-4 md:px-8 lg:px-20">
-          <div className="mx-4 flex items-center justify-end md:mx-8 lg:mx-20 xl:mx-auto xl:w-[1280px]">
+          <div className="mx-4 flex w-full items-center justify-end md:mx-8 lg:mx-20 xl:mx-auto xl:w-[1280px]">
             <LinkBtn to={`${pathname}/payment`} type="primary">
               <p className="flex items-center gap-4">
                 Nadaljuj na plačilo{" "}

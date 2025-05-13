@@ -10,7 +10,7 @@ function TicketPaymentSuccess() {
     <div className="my-16 flex flex-col gap-12">
       <Header />
       <div className="flex flex-col gap-14">
-        <h1 className="flex items-center gap-4 text-2xl font-semibold">
+        <h1 className="flex items-center gap-4 font-semibold">
           <Link to={`/dashboard${childId ? `/child/${childId}` : ""}/tickets`}>
             Nakup vstopnice
           </Link>{" "}

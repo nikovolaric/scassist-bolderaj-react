@@ -96,7 +96,7 @@ function MyClass({
                 month: "2-digit",
                 year: "numeric",
               })}, od ${classinfo.hours.join(" - ")}`
-            : `${new Date(classinfo.dates[0]).toLocaleDateString("si-SL", {
+            : `${new Date(classinfo.dates[0]).toLocaleDateString("sl-SI", {
                 weekday: "long",
               })}, ${classinfo.hours.join(" - ")}`}
         </p>

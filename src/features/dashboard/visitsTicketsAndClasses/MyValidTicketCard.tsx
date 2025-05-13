@@ -49,7 +49,7 @@ function MyValidTicketCard({ ticket }: { ticket: iValidTicket }) {
             <p>
               {used
                 ? `Vstopnica velja še ${daysLeft} dni`
-                : `Vstpnico je potrebno aktivirati v ${daysLeft} dneh`}
+                : `Vstopnico je potrebno aktivirati v ${daysLeft} dneh`}
             </p>
             <progress max={duration} value={duration - daysLeft} />
             <p className="self-end text-sm">
