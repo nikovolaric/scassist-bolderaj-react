@@ -211,7 +211,7 @@ function PaymentType({
               }}
             >
               <PayPalButtons
-                createOrder={(data, actions) => {
+                createOrder={(_, actions) => {
                   return actions.order.create({
                     purchase_units: [
                       {
@@ -224,7 +224,7 @@ function PaymentType({
                     intent: "CAPTURE",
                   });
                 }}
-                onApprove={(data, actions) => {
+                onApprove={(_, actions) => {
                   return actions.order!.capture().then((details) => {
                     console.log("Plačilo uspešno:", details);
 
