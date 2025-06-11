@@ -17,6 +17,7 @@ const giftCartSlice = createSlice({
   reducers: {
     setGiftArticles: (state, action) => {
       state.articles = [...state.articles, action.payload];
+      localStorage.setItem("articles", JSON.stringify(state.articles));
     },
 
     clearGiftData: () => initialState,

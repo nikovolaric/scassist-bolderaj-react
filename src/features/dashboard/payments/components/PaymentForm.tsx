@@ -127,16 +127,8 @@ function PaymentForm() {
       widgetScript.crossOrigin = "anonymous";
       widgetScript.integrity = data.data.integrity;
 
-      if (ticketCart.articles.length > 0) {
-        localStorage.setItem("articles", JSON.stringify(ticketCart.articles));
-      }
-
       if (ticketCart.company) {
         localStorage.setItem("company", JSON.stringify(ticketCart.company));
-      }
-
-      if (giftCart.articles) {
-        localStorage.setItem("articles", JSON.stringify(giftCart.articles));
       }
 
       document.body.appendChild(widgetScript);

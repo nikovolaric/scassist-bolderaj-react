@@ -31,6 +31,7 @@ const ticketCartSlice = createSlice({
   reducers: {
     setArticles: (state, action) => {
       state.articles = [...state.articles, action.payload];
+      localStorage.setItem("articles", JSON.stringify(state.articles));
     },
     setCompanyName: (state, action) => {
       state.company.name = action.payload;
