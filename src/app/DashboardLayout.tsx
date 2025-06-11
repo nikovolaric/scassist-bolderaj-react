@@ -34,6 +34,9 @@ function DashboardLayout() {
       if (!pathname.includes("/giftcart")) {
         dispatch(clearGiftData());
       }
+      if (pathname === "/dashboard") {
+        localStorage.clear();
+      }
     },
     [childId, pathname, dispatch],
   );

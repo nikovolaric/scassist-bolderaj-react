@@ -83,7 +83,6 @@ function SignupForm() {
                 placeholder="Vnesi svoje ime"
                 value={userData.firstName}
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-                autoComplete="off"
                 required
                 onChange={(e) => dispatch(setFirstName(e.target.value))}
               />
@@ -97,7 +96,6 @@ function SignupForm() {
                 placeholder="Vnesi svoj priimek"
                 value={userData.lastName}
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-                autoComplete="off"
                 required
                 onChange={(e) => dispatch(setLastName(e.target.value))}
               />
@@ -111,7 +109,6 @@ function SignupForm() {
               <div className="flex items-center justify-between">
                 <select
                   className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-                  autoComplete="off"
                   required
                   onChange={(e) => setDay(e.target.value)}
                 >
@@ -124,7 +121,6 @@ function SignupForm() {
                 </select>
                 <select
                   className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-                  autoComplete="off"
                   required
                   onChange={(e) => setMonth(e.target.value)}
                 >
@@ -144,7 +140,6 @@ function SignupForm() {
                 </select>
                 <select
                   className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-                  autoComplete="off"
                   required
                   onChange={(e) => setYear(e.target.value)}
                 >
@@ -171,8 +166,7 @@ function SignupForm() {
                   type="text"
                   placeholder="Vnesi kontaktni mail starša ali skrbnika"
                   className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-                  autoComplete="off"
-                  onChange={(e) =>
+                                    onChange={(e) =>
                     dispatch(setParentContactMail(e.target.value))
                   }
                 />
@@ -181,60 +175,44 @@ function SignupForm() {
           </div>
           <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:gap-5">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">
-                Naslov bivališča <span className="text-red-500">*</span>
-              </label>
+              <label className="text-sm font-medium">Naslov bivališča</label>
               <input
                 type="text"
                 placeholder="Vnesi naslov bivališča"
                 value={userData.address}
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-                autoComplete="off"
-                required
                 onChange={(e) => dispatch(setAddress(e.target.value))}
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">
-                Kraj bivališča <span className="text-red-500">*</span>
-              </label>
+              <label className="text-sm font-medium">Kraj bivališča</label>
               <input
                 type="text"
                 placeholder="Vnesi kraj bivališča"
                 value={userData.city}
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-                autoComplete="off"
-                required
                 onChange={(e) => dispatch(setCity(e.target.value))}
               />
             </div>
           </div>
           <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:gap-5">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">
-                Poštna številka <span className="text-red-500">*</span>
-              </label>
+              <label className="text-sm font-medium">Poštna številka</label>
               <input
                 type="text"
                 placeholder="Vnesi poštno številko"
                 value={userData.postalCode}
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-                autoComplete="off"
-                required
                 onChange={(e) => dispatch(setPostalCode(e.target.value))}
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">
-                Država <span className="text-red-500">*</span>
-              </label>
+              <label className="text-sm font-medium">Država</label>
               <input
                 type="text"
                 placeholder="Vnesi državo bivališča"
                 value={userData.country}
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-                autoComplete="off"
-                required
                 onChange={(e) => dispatch(setCountry(e.target.value))}
               />
             </div>
@@ -247,22 +225,24 @@ function SignupForm() {
                 placeholder="Vnesi telefonsko številko"
                 value={userData.phoneNumber}
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-                autoComplete="off"
                 onChange={(e) => dispatch(setPhoneNumber(e.target.value))}
               />
             </div>
             <div />
           </div>
           <p>
-            Tvoji osebni podatki bodo hranjeni v skladu z Uredbo o varovanju
-            osebnih podatkov. Služili bodo za upravljanje spletne aplikacije
-            Bolderaj, za vodenje statističnih evidenc obiska in ostalih namenov,
-            opisanih v Splošnem pravilniku o varovanju osebnih podatkov.
+            V kolikor v vnosna polja vnesete zahtevane osebne podatke in
+            kliknete na gumb za oddajo registracije, bo družba Bolderaj d.o.o.
+            vnesene podatke shranila in obdelovala za namene vodenja
+            uporabniškega računa in nudenja pripadajočih funkcionalnosti
+            aplikacije ter nekomercialnega obveščanja. Več glede obdelave
+            osebnih podatkov si lahko preberete na tej povezavi.
           </p>
-          <div className="flex items-center gap-2">
+          <div className="flex items-start gap-2">
             <input
               type="checkbox"
               name="agreesToterms"
+              className="mt-1.5 cursor-pointer"
               checked={userData.agreesToTerms}
               required
               onChange={(e) =>
@@ -272,7 +252,24 @@ function SignupForm() {
               }
             />
             <label className="font-medium">
-              Prebral sem in se strinjam s pogoji poslovanja.
+              Prebral/-a sem in se strinjam s Splošnimi pogoji poslovanja, ki
+              med drugim urejajo nakupe in koriščenje vstopnic ter pristop k
+              vodenim vadbam. <span className="text-red-500">*</span>
+            </label>
+          </div>
+          <div className="flex items-start gap-2">
+            <input
+              type="checkbox"
+              name="agreesToterms"
+              className="mt-1.5 cursor-pointer"
+              checked={userData.agreesToTerms}
+              required
+            />
+            <label className="font-medium">
+              Prebral/-a sem in se strinjam s Pravili in pogoji uporabe
+              plezalnega centra Bolderaj, ki določajo hišni red in pogoje
+              uporabe plezalnega centra Bolderaj.{" "}
+              <span className="text-red-500">*</span>
             </label>
           </div>
           {err && <p className="font-medium text-red-500">{err}</p>}

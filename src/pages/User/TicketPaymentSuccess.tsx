@@ -1,10 +1,51 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import LinkBtn from "../../components/LinkBtn";
-import { Link, useParams } from "react-router";
+import { Link, useParams, useSearchParams } from "react-router";
 import Header from "../../components/Header";
+import { useEffect } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { buyArticlesOnline } from "../../services/articlesAPI";
+import Spinner from "../../components/Spinner";
 
 function TicketPaymentSuccess() {
+  const [searchParams] = useSearchParams();
+  const checkoutId = searchParams.get("id");
   const { childId } = useParams();
+  const { mutate, isPending } = useMutation({
+    mutationFn: buyArticlesOnline,
+    onSuccess: (data) => {
+      if (data instanceof Error) {
+        throw data;
+      } else {
+        localStorage.removeItem("articles");
+        localStorage.removeItem("company");
+      }
+    },
+    onError: (error) => {
+      console.log((error as Error).message);
+    },
+  });
+
+  useEffect(
+    function () {
+      const articles = JSON.parse(localStorage.getItem("articles") as string);
+      const company = JSON.parse(localStorage.getItem("company") as string);
+
+      if (checkoutId) {
+        mutate({
+          articles,
+          company,
+          id: childId,
+          checkoutId,
+        });
+      }
+    },
+    [checkoutId],
+  );
+
+  if (isPending) {
+    return <Spinner />;
+  }
 
   return (
     <div className="my-16 flex flex-col gap-12">
@@ -22,7 +63,7 @@ function TicketPaymentSuccess() {
         <LinkBtn to="/dashboard" type="primary">
           <p className="flex items-center gap-4">
             <ChevronLeftIcon className="w-4 stroke-3" />
-            Nazaj na oglasno desko
+            Nazaj na domačo stran
           </p>
         </LinkBtn>
       </div>

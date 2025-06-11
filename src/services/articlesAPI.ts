@@ -1,11 +1,11 @@
 export async function getArticles(
-  label: string,
+  label: string | string[],
   ageGroup?: string,
   type?: string,
 ) {
   try {
     const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/articles/getvisible?label=${label}${ageGroup ? `&ageGroup=${ageGroup}` : ""}${type ? `&type=${type}` : ""}`,
+      `${import.meta.env.VITE_API_URL}/articles/getvisible?label=${label instanceof Array ? `${label[0]}&label=${label[1]}` : label}${ageGroup ? `&ageGroup=${ageGroup}` : ""}${type ? `&type=${type}` : ""}`,
       {
         method: "GET",
         credentials: "include",
@@ -56,12 +56,13 @@ export async function buyArticlesOnline({
   paymentData,
   company,
   id,
+  checkoutId,
 }: {
   articles: {
     articleId: string;
     quantity: string;
   }[];
-  paymentData: {
+  paymentData?: {
     card: {
       holder: string;
       number: string;
@@ -79,6 +80,7 @@ export async function buyArticlesOnline({
     taxNumber: string;
   };
   id?: string;
+  checkoutId?: string;
 }) {
   try {
     const res = await fetch(
@@ -89,12 +91,13 @@ export async function buyArticlesOnline({
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ articles, paymentData, company }),
+        body: JSON.stringify({ articles, paymentData, company, checkoutId }),
       },
     );
 
     if (!res.ok) {
       const data = await res.json();
+      console.log(data);
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
@@ -137,23 +140,13 @@ export async function getGiftArticles(ageGroup: string, label: string) {
 
 export async function buyGiftOnline({
   articles,
-  paymentData,
   company,
+  checkoutId,
 }: {
   articles: {
     articleId: string;
     quantity: string;
   }[];
-  paymentData: {
-    card: {
-      holder: string;
-      number: string;
-      expiryMonth: string;
-      expiryYear: string;
-      cvv: string;
-    };
-    amount: string;
-  };
   company?: {
     name: string;
     address: string;
@@ -161,6 +154,7 @@ export async function buyGiftOnline({
     city: string;
     taxNumber: string;
   };
+  checkoutId?: string;
 }) {
   try {
     const res = await fetch(
@@ -171,12 +165,13 @@ export async function buyGiftOnline({
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ articles, paymentData, company }),
+        body: JSON.stringify({ articles, company, checkoutId }),
       },
     );
 
     if (!res.ok) {
       const data = await res.json();
+      console.log(data);
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }

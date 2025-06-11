@@ -54,10 +54,13 @@ export async function getChildClasses(id: string) {
   }
 }
 
-export async function getMultipleDateClasses(ageGroup?: string) {
+export async function getMultipleDateClasses(
+  article: string,
+  ageGroup?: string,
+) {
   try {
     const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/classes/multipledates${ageGroup ? `?ageGroup=${ageGroup}` : "?ageGroup=adult"}`,
+      `${import.meta.env.VITE_API_URL}/classes/multipledates?article=${article}${ageGroup ? `&ageGroup=${ageGroup}` : "&ageGroup=adult"}`,
       {
         method: "GET",
         credentials: "include",
@@ -82,10 +85,10 @@ export async function getMultipleDateClasses(ageGroup?: string) {
   }
 }
 
-export async function getSingleDateClasses(ageGroup?: string) {
+export async function getSingleDateClasses(article: string, ageGroup?: string) {
   try {
     const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/classes/singledates${ageGroup ? `?ageGroup=${ageGroup}` : "?ageGroup=adult"}`,
+      `${import.meta.env.VITE_API_URL}/classes/singledates?article=${article}${ageGroup ? `&ageGroup=${ageGroup}` : "&ageGroup=adult"}`,
       {
         method: "GET",
         credentials: "include",
@@ -113,7 +116,7 @@ export async function getSingleDateClasses(ageGroup?: string) {
 export async function signUpForClassOnline({
   classCart,
   company,
-  paymentData,
+  checkoutId,
 }: {
   classCart: {
     classes: string[];
@@ -127,16 +130,7 @@ export async function signUpForClassOnline({
     city: string;
     taxNumber: string;
   };
-  paymentData?: {
-    card: {
-      holder: string;
-      number: string;
-      expiryMonth: string;
-      expiryYear: string;
-      cvv: string;
-    };
-    amount: string;
-  };
+  checkoutId?: string;
 }) {
   try {
     const res = await fetch(
@@ -147,7 +141,11 @@ export async function signUpForClassOnline({
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ articles: classCart, company, paymentData }),
+        body: JSON.stringify({
+          articles: classCart,
+          company,
+          checkoutId,
+        }),
       },
     );
 
@@ -167,8 +165,8 @@ export async function signUpForClassOnline({
 export async function signUpChildForClassOnline({
   classCart,
   company,
-  paymentData,
   childId,
+  checkoutId,
 }: {
   classCart: {
     classes: string[];
@@ -182,17 +180,8 @@ export async function signUpChildForClassOnline({
     city: string;
     taxNumber: string;
   };
-  paymentData?: {
-    card: {
-      holder: string;
-      number: string;
-      expiryMonth: string;
-      expiryYear: string;
-      cvv: string;
-    };
-    amount: string;
-  };
   childId: string;
+  checkoutId?: string;
 }) {
   try {
     const res = await fetch(
@@ -203,7 +192,7 @@ export async function signUpChildForClassOnline({
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ articles: classCart, company, paymentData }),
+        body: JSON.stringify({ articles: classCart, company, checkoutId }),
       },
     );
 

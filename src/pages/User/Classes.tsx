@@ -43,7 +43,7 @@ function Classes() {
 
   const { data, isLoading } = useQuery({
     queryKey: ["classArticles", ageGroup],
-    queryFn: () => getArticles("A", ageGroup),
+    queryFn: () => getArticles(["A", "VV"], ageGroup),
     enabled: !isPending,
   });
 

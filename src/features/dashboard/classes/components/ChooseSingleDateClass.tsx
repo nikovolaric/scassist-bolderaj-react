@@ -4,7 +4,7 @@ import ChooseClassCard, { IClassInfo } from "./ChooseClassCard";
 import { useParams } from "react-router";
 
 function ChooseSingleDateClass() {
-  const { childId } = useParams();
+  const { id, childId } = useParams();
   const queryClient = useQueryClient();
 
   const ageGroup = childId
@@ -15,7 +15,7 @@ function ChooseSingleDateClass() {
 
   const { data, isPending } = useQuery({
     queryKey: ["classesSingle"],
-    queryFn: () => getSingleDateClasses(ageGroup),
+    queryFn: () => getSingleDateClasses(id!, ageGroup),
   });
 
   if (isPending) {

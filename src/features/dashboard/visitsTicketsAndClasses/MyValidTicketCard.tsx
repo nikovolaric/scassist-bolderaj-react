@@ -40,7 +40,7 @@ function MyValidTicketCard({ ticket }: { ticket: iValidTicket }) {
             </p>
             <progress max={visits} value={visits - visitsLeft} />
             <p className="self-end text-sm">
-              Preostane vam še {visitsLeft} vstopnic.
+              Preostane ti še {visitsLeft} vstopnic.
             </p>
           </>
         )}
@@ -61,7 +61,7 @@ function MyValidTicketCard({ ticket }: { ticket: iValidTicket }) {
           <>
             <p>0 obiskov 1 vstopnice</p>
             <progress max={1} value={0} />
-            <p className="self-end text-sm">Preostane vam še 1 vstopnica.</p>
+            <p className="self-end text-sm">Preostane ti še 1 vstopnica.</p>
           </>
         )}
       </div>

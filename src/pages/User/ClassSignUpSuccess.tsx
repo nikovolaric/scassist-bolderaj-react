@@ -1,15 +1,79 @@
-import { Link, useParams } from "react-router";
+import { Link, useParams, useSearchParams } from "react-router";
 import { useAppSelector } from "../../app/hooks";
 import Header from "../../components/Header";
 import { getClassCart } from "../../features/dashboard/classes/slices/classCartSlice";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getOneArticle } from "../../services/articlesAPI";
 import Spinner from "../../components/Spinner";
 import LinkBtn from "../../components/LinkBtn";
+import {
+  signUpChildForClassOnline,
+  signUpForClassOnline,
+} from "../../services/classAPI";
+import { useEffect } from "react";
 
 function ClassSignUpSuccess() {
+  const [searchParams] = useSearchParams();
+  const checkoutId = searchParams.get("id");
   const { childId } = useParams();
+  const { mutate, isPending } = useMutation({
+    mutationFn: signUpForClassOnline,
+    onSuccess: (data) => {
+      if (data instanceof Error) {
+        throw data;
+      } else {
+        localStorage.removeItem("classCart");
+        localStorage.removeItem("company");
+      }
+    },
+    onError: (error) => {
+      console.log((error as Error).message);
+    },
+  });
+
+  const { mutate: mutateChild, isPending: pendingChild } = useMutation({
+    mutationFn: signUpChildForClassOnline,
+    onSuccess: (data) => {
+      if (data instanceof Error) {
+        throw data;
+      } else {
+        localStorage.removeItem("classCart");
+        localStorage.removeItem("company");
+      }
+    },
+    onError: (error) => {
+      console.log((error as Error).message);
+    },
+  });
+
+  useEffect(
+    function () {
+      const classCart = JSON.parse(localStorage.getItem("classCart") as string);
+      const company = JSON.parse(localStorage.getItem("company") as string);
+      if (checkoutId && !childId) {
+        mutate({
+          classCart,
+          company,
+          checkoutId,
+        });
+      }
+
+      if (checkoutId && childId) {
+        mutateChild({
+          classCart,
+          company,
+          childId,
+          checkoutId,
+        });
+      }
+    },
+    [checkoutId, childId],
+  );
+
+  if (isPending || pendingChild) {
+    return <Spinner />;
+  }
 
   return (
     <div className="my-16 flex flex-col gap-12">
@@ -27,7 +91,7 @@ function ClassSignUpSuccess() {
         <LinkBtn to="/dashboard" type="primary">
           <p className="flex items-center gap-4">
             <ChevronLeftIcon className="w-4 stroke-3" />
-            Nazaj na oglasno desko
+            Nazaj na domačno stran
           </p>
         </LinkBtn>
       </div>

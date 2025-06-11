@@ -8,12 +8,10 @@ import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router";
 import PaymentForm from "../../features/dashboard/payments/components/PaymentForm";
-import {
-  getPaymentData,
-  setAmount,
-} from "../../features/dashboard/payments/slices/paymentSlice";
+import { setAmount } from "../../features/dashboard/payments/slices/paymentSlice";
 import CompanyInvoiceForm from "../../features/dashboard/payments/components/CompanyInvoiceForm";
 import { getMyChild } from "../../services/userAPI";
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 function OnlineCart() {
   const { childId } = useParams();
@@ -103,102 +101,163 @@ function OnlineCart() {
         <div className="mt- mt-10 flex flex-col gap-8 rounded-xl bg-white px-4 py-6 md:px-8 lg:mt-16 lg:py-10">
           <CompanyInvoiceForm />
         </div>
-        <PaymentType />
+        <PaymentType
+          amount={(
+            data.article.priceDDV * Number(ticketCart.articles[0].quantity)
+          ).toFixed(2)}
+          childId={childId}
+          articles={ticketCart.articles}
+          company={ticketCart.company}
+        />
       </div>
     </div>
   );
 }
 
-function PaymentType() {
-  const { childId } = useParams();
-  const { pathname } = useLocation();
+function PaymentType({
+  amount,
+  articles,
+  company,
+  childId,
+}: {
+  amount: string;
+  articles: { articleId: string; quantity: string }[];
+  company: {
+    name: string;
+    address: string;
+    postalCode: string;
+    city: string;
+    taxNumber: string;
+  };
+  childId?: string;
+}) {
   const navigate = useNavigate();
-  const paymentData = useAppSelector(getPaymentData);
-  const ticketCart = useAppSelector(getTicketCart);
-  const [error, setError] = useState("");
+  const { pathname } = useLocation();
+  const [payment, setPayment] = useState("");
   const { mutate, isPending } = useMutation({
     mutationFn: buyArticlesOnline,
     onSuccess: (data) => {
       if (data instanceof Error) {
         throw data;
       } else {
-        navigate(`${pathname}/success`);
+        localStorage.removeItem("articles");
+        localStorage.removeItem("company");
       }
     },
     onError: (error) => {
-      setError((error as Error).message);
+      console.log((error as Error).message);
     },
   });
 
-  function handleClick() {
-    if (
-      !paymentData.amount ||
-      !paymentData.card.number ||
-      !paymentData.card.holder ||
-      !paymentData.card.cvv ||
-      !paymentData.card.expiryMonth ||
-      !paymentData.card.expiryYear
-    ) {
-      setError("Prosim vnesite vse potrebne podatke za plačilo");
-      return;
-    }
-    mutate({
-      articles: ticketCart.articles,
-      paymentData,
-      company: ticketCart.company,
-      id: childId,
-    });
-  }
+  if (isPending) return <Spinner />;
 
   return (
     <>
       <p className="mt-10 font-medium lg:mt-16">
-        Vnesi podatke za spletno plačilo
+        Izberi način plačila in dokončaj nakup
       </p>
       <div className="mt-2 flex flex-col gap-8 rounded-xl bg-white px-4 py-6 md:px-8 lg:pb-10">
         <p className="font-semibold">Znesek želim poravnati:</p>
         <div className="flex flex-col gap-7">
           <div className="flex items-center gap-3">
             <label className="cursor-pointer">
-              <input type="checkbox" className="peer hidden" value="" />
+              <input
+                type="checkbox"
+                className="peer hidden"
+                value=""
+                onChange={(e) => setPayment(e.target.value)}
+              />
               <div className="bg-neutral flex h-6 w-6 items-center justify-center rounded-lg border border-black/75 transition-all duration-75">
                 <span
-                  className={`bg-primary border-gray h-4 w-4 rounded-full border`}
+                  className={
+                    payment === ""
+                      ? `bg-primary border-gray h-4 w-4 rounded-full border`
+                      : ""
+                  }
                 />
               </div>
             </label>
-            <p className="font-medium">S plačilno kartico</p>
+            <p className="font-medium">s plačilno kartico</p>
           </div>
           <PaymentForm />
-          {error && (
-            <p className="mx-4 font-medium text-red-500 lg:mx-auto lg:w-3/4">
-              {error}
-            </p>
-          )}
         </div>
+        <div className="flex items-center gap-3">
+          <label className="cursor-pointer">
+            <input
+              type="checkbox"
+              className="peer hidden"
+              value="paypal"
+              onChange={(e) => setPayment(e.target.value)}
+            />
+            <div className="bg-neutral flex h-6 w-6 items-center justify-center rounded-lg border border-black/75 transition-all duration-75">
+              <span
+                className={
+                  payment === "paypal"
+                    ? `bg-primary border-gray h-4 w-4 rounded-full border`
+                    : ""
+                }
+              />
+            </div>
+          </label>
+          <p className="font-medium">s PayPal-om</p>
+        </div>
+        {payment === "paypal" && (
+          <div className="lg:mx-auto lg:w-1/2">
+            <PayPalScriptProvider
+              options={{
+                clientId: import.meta.env.VITE_PAYPAL_CLIENTID,
+                currency: "EUR",
+                disableFunding: "card",
+              }}
+            >
+              <PayPalButtons
+                createOrder={(data, actions) => {
+                  return actions.order.create({
+                    purchase_units: [
+                      {
+                        amount: {
+                          currency_code: "EUR",
+                          value: amount,
+                        },
+                      },
+                    ],
+                    intent: "CAPTURE",
+                  });
+                }}
+                onApprove={(data, actions) => {
+                  return actions.order!.capture().then((details) => {
+                    console.log("Plačilo uspešno:", details);
+
+                    mutate({
+                      articles,
+                      company,
+                      id: childId,
+                    });
+
+                    navigate(`${pathname}/success`);
+                  });
+                }}
+                onCancel={() => {
+                  navigate(pathname);
+                }}
+                onError={(err) => {
+                  console.error("Napaka pri plačilu:", err);
+                  alert("Plačilo ni uspelo.");
+                }}
+              />
+            </PayPalScriptProvider>
+          </div>
+        )}
       </div>
       <p className="mt-10 flex gap-4">
         <span className="from-primary to-secondary drop-shadow-btn flex h-6 w-6 flex-none items-center justify-center rounded-lg bg-gradient-to-r font-semibold">
           i
         </span>
         Nakup vstopnice v spletni aplikaciji je možno izvršiti samo s spletnim
-        plačilom. V kolikor želiš vstopnico kupiti z gotovino, lahko to opraviš
-        v času delovnih ur na blagajni recepcije.
+        plačilom. V kolikor želiš vstopnico kupiti z gotovino ali plačilno
+        kartico kartico, lahko to opraviš v času delovnih ur na blagajni
+        recepcije.
       </p>
-      <button
-        className="from-primary to-secondary drop-shadow-btn hover:to-primary disabled:from-gray disabled:to-gray mt-10 cursor-pointer self-end rounded-lg bg-gradient-to-r px-4 py-3 font-semibold transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-50"
-        onClick={handleClick}
-        disabled={isPending}
-      >
-        {isPending ? (
-          "Postopek je v teku..."
-        ) : (
-          <p className="flex items-center gap-4">
-            Zaključi nakup
-            <ChevronRightIcon className="w-6 stroke-3" />
-          </p>
-        )}
-      </button>
     </>
   );
 }

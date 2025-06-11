@@ -15,13 +15,11 @@ import {
 import Header from "../../components/Header";
 import Spinner from "../../components/Spinner";
 import { getOneArticle } from "../../services/articlesAPI";
-import PaymentForm from "../../features/dashboard/payments/components/PaymentForm";
-import {
-  getPaymentData,
-  setAmount,
-} from "../../features/dashboard/payments/slices/paymentSlice";
+import { setAmount } from "../../features/dashboard/payments/slices/paymentSlice";
 import CompanyInvoiceForm from "../../features/dashboard/payments/components/CompanyInvoiceForm";
 import { getTicketCart } from "../../features/dashboard/tickets/slices/ticketCartSlice";
+import ClassPaymentForm from "../../features/dashboard/payments/components/ClassPaymentForm";
+import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 
 function ClassPayment() {
   const navigate = useNavigate();
@@ -81,9 +79,7 @@ function PaymentType() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const classCart = useAppSelector(getClassCart);
-  const paymentData = useAppSelector(getPaymentData);
   const ticketCart = useAppSelector(getTicketCart);
-  const [err, setErr] = useState("");
   const [isChecked, setIsChecked] = useState<string | undefined>(undefined);
 
   const { mutate, isPending: isPendingBtn } = useMutation({
@@ -127,28 +123,6 @@ function PaymentType() {
   async function handleClick() {
     if (isChecked === "preInvoice") {
       mutate({ classCart, company: ticketCart.company });
-    }
-    if (
-      isChecked === "" &&
-      (!paymentData.amount ||
-        !paymentData.card.number ||
-        !paymentData.card.holder ||
-        !paymentData.card.cvv ||
-        !paymentData.card.expiryMonth ||
-        !paymentData.card.expiryYear)
-    ) {
-      setErr("Prosim izpolnite vse podatke za plačilo!");
-    }
-    if (
-      isChecked === "" &&
-      paymentData.amount &&
-      paymentData.card.number &&
-      paymentData.card.holder &&
-      paymentData.card.cvv &&
-      paymentData.card.expiryMonth &&
-      paymentData.card.expiryYear
-    ) {
-      mutate({ classCart, company: ticketCart.company, paymentData });
     }
   }
 
@@ -217,14 +191,10 @@ function PaymentType() {
                 />
               </div>
             </label>
-            <p className="font-medium">S plačilno kartico</p>
+            <p className="font-medium">s plačilno kartico</p>
           </div>
-          {isChecked === "" && <PaymentForm />}
-          {err && (
-            <p className="mx-4 font-medium text-red-500 lg:mx-auto lg:w-4/5 xl:w-3/4">
-              {err}
-            </p>
-          )}
+          {/* {isChecked === "" && <PaymentForm />} */}
+          <ClassPaymentForm />
           <div className="flex gap-3">
             <label className="cursor-pointer">
               <input
@@ -236,34 +206,101 @@ function PaymentType() {
               />
               <div className="bg-neutral flex h-6 w-6 items-center justify-center rounded-lg border border-black/75 transition-all duration-75">
                 <span
-                  className={`${isChecked ? "bg-primary border-gray border" : ""} h-4 w-4 rounded-full`}
+                  className={`${isChecked === "preInvoice" ? "bg-primary border-gray border" : ""} h-4 w-4 rounded-full`}
                 />
               </div>
             </label>
             <div className="flex flex-col gap-2">
-              <p className="font-medium">Po predračunu</p>
+              <p className="font-medium">po predračunu</p>
               <p className="text-sm font-medium text-black/50">
                 Znesek lahko poravnaš tudi v času delovnih ur, na recepciji
                 plezalnega centra, pred pričetkom tečaja.
               </p>
             </div>
           </div>
+          <div className="flex items-center gap-3">
+            <label className="cursor-pointer">
+              <input
+                type="checkbox"
+                className="peer hidden"
+                value="paypal"
+                onChange={(e) => setIsChecked(e.target.value)}
+              />
+              <div className="bg-neutral flex h-6 w-6 items-center justify-center rounded-lg border border-black/75 transition-all duration-75">
+                <span
+                  className={
+                    isChecked === "paypal"
+                      ? `bg-primary border-gray h-4 w-4 rounded-full border`
+                      : ""
+                  }
+                />
+              </div>
+            </label>
+            <p className="font-medium">s PayPal-om</p>
+          </div>
+          {isChecked === "paypal" && (
+            <div className="lg:mx-auto lg:w-1/2">
+              <PayPalScriptProvider
+                options={{
+                  clientId: import.meta.env.VITE_PAYPAL_CLIENTID,
+                  currency: "EUR",
+                  disableFunding: "card",
+                }}
+              >
+                <PayPalButtons
+                  createOrder={(data, actions) => {
+                    return actions.order.create({
+                      purchase_units: [
+                        {
+                          amount: {
+                            currency_code: "EUR",
+                            value: article.endDate
+                              ? article.classPriceData.priceDDV
+                              : article.priceDDV,
+                          },
+                        },
+                      ],
+                      intent: "CAPTURE",
+                    });
+                  }}
+                  onApprove={(data, actions) => {
+                    return actions.order!.capture().then((details) => {
+                      console.log("Plačilo uspešno:", details);
+
+                      mutate({ classCart, company: ticketCart.company });
+
+                      navigate(`${pathname}/success`);
+                    });
+                  }}
+                  onCancel={() => {
+                    navigate(pathname);
+                  }}
+                  onError={(err) => {
+                    console.error("Napaka pri plačilu:", err);
+                    alert("Plačilo ni uspelo.");
+                  }}
+                />
+              </PayPalScriptProvider>
+            </div>
+          )}
         </div>
       </div>
-      <button
-        className="from-primary to-secondary drop-shadow-btn hover:to-primary disabled:from-gray disabled:to-gray mt-10 cursor-pointer self-end rounded-lg bg-gradient-to-r px-4 py-3 font-semibold transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-50"
-        onClick={handleClick}
-        disabled={isPendingBtn || isChecked === undefined}
-      >
-        {!isPendingBtn ? (
-          <p className="flex items-center gap-4">
-            Zaključi prijavo
-            <ChevronRightIcon className="w-6 stroke-3" />
-          </p>
-        ) : (
-          "Postopek je v teku..."
-        )}
-      </button>
+      {isChecked === "preInvoice" && (
+        <button
+          className="from-primary to-secondary drop-shadow-btn hover:to-primary disabled:from-gray disabled:to-gray mt-10 cursor-pointer self-end rounded-lg bg-gradient-to-r px-4 py-3 font-semibold transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-50"
+          onClick={handleClick}
+          disabled={isPendingBtn || isChecked === undefined}
+        >
+          {!isPendingBtn ? (
+            <p className="flex items-center gap-4">
+              Zaključi prijavo
+              <ChevronRightIcon className="w-6 stroke-3" />
+            </p>
+          ) : (
+            "Postopek je v teku..."
+          )}
+        </button>
+      )}
     </div>
   );
 }
@@ -274,9 +311,7 @@ function PaymentTypeChild() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const classCart = useAppSelector(getClassCart);
-  const paymentData = useAppSelector(getPaymentData);
   const ticketCart = useAppSelector(getTicketCart);
-  const [err, setErr] = useState("");
   const [isChecked, setIsChecked] = useState<string | undefined>(undefined);
 
   const { mutate, isPending: isPendingBtn } = useMutation({
@@ -320,33 +355,6 @@ function PaymentTypeChild() {
   async function handleClick() {
     if (isChecked === "preInvoice") {
       mutate({ classCart, company: ticketCart.company, childId: childId! });
-    }
-    if (
-      isChecked === "" &&
-      (!paymentData.amount ||
-        !paymentData.card.number ||
-        !paymentData.card.holder ||
-        !paymentData.card.cvv ||
-        !paymentData.card.expiryMonth ||
-        !paymentData.card.expiryYear)
-    ) {
-      setErr("Prosim izpolni vse podatke za plačilo!");
-    }
-    if (
-      isChecked === "" &&
-      paymentData.amount &&
-      paymentData.card.number &&
-      paymentData.card.holder &&
-      paymentData.card.cvv &&
-      paymentData.card.expiryMonth &&
-      paymentData.card.expiryYear
-    ) {
-      mutate({
-        classCart,
-        paymentData,
-        company: ticketCart.company,
-        childId: childId!,
-      });
     }
   }
 
@@ -408,14 +416,10 @@ function PaymentTypeChild() {
                 />
               </div>
             </label>
-            <p className="font-medium">S plačilno kartico</p>
+            <p className="font-medium">s plačilno kartico</p>
           </div>
-          {isChecked === "" && <PaymentForm />}
-          {err && (
-            <p className="mx-4 font-medium text-red-500 lg:mx-auto lg:w-4/5 xl:w-3/4">
-              {err}
-            </p>
-          )}
+          <ClassPaymentForm />
+          {/* {isChecked === "" && <PaymentForm />} */}
           <div className="flex gap-3">
             <label className="cursor-pointer">
               <input
@@ -432,7 +436,7 @@ function PaymentTypeChild() {
               </div>
             </label>
             <div className="flex flex-col gap-2">
-              <p className="font-medium">Po predračunu</p>
+              <p className="font-medium">po predračunu</p>
               <p className="text-sm font-medium text-black/50">
                 Znesek lahko poravnaš tudi v času delovnih ur, na recepciji
                 plezalnega centra, pred pričetkom tečaja.

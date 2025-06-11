@@ -40,7 +40,6 @@ function LoginForm() {
             type="text"
             placeholder="Vnesi elektronski naslov"
             className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-            autoComplete="off"
             required
             onChange={(e) => setEmail(e.target.value)}
           />

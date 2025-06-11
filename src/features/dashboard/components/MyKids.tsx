@@ -33,7 +33,7 @@ function MyKids() {
 
   return (
     <div className="flex flex-col gap-3 lg:gap-4">
-      <p className="font-medium">Moji družinski člani</p>
+      <p className="font-medium">Mladoletne osebe</p>
       {data.length ? (
         <div className="flex flex-col gap-4">
           {data.map((el: { child: IChild }) => (
@@ -42,12 +42,12 @@ function MyKids() {
         </div>
       ) : (
         <p className="my-10 font-bold lg:text-lg">
-          Trenutno še nimaš dodanih otrok.
+          Trenutno še nimaš dodanih mladoletnih oseb.
         </p>
       )}
       <p className="font-medium lg:text-lg">
-        Za svoje družinske člane lahko pregledaš aktualne vstopnice, seznam
-        obiskov, urejaš prijave na tečaje in vadbe ter opraviš nakup vstopnic.
+        Za mladoletne osebe lahko pregledaš aktualne vstopnice, seznam obiskov,
+        urejaš prijave na tečaje in vadbe ter opraviš nakup vstopnic.
       </p>
       {!isOpen ? (
         <button
@@ -55,7 +55,7 @@ function MyKids() {
           onClick={() => setIsOpen(true)}
         >
           <p className="flex items-center gap-4">
-            Dodaj otroka <ChevronRightIcon className="h-4 stroke-3" />
+            Dodaj mladoletno osebo <ChevronRightIcon className="h-4 stroke-3" />
           </p>
         </button>
       ) : (

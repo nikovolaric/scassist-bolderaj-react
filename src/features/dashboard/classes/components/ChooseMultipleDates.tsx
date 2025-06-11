@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useParams } from "react-router";
 
 function ChooseMultipleDates() {
-  const { childId } = useParams();
+  const { id, childId } = useParams();
   const queryClient = useQueryClient();
 
   const ageGroup = childId
@@ -17,7 +17,7 @@ function ChooseMultipleDates() {
 
   const { data, isPending } = useQuery({
     queryKey: ["classesMultiple"],
-    queryFn: () => getMultipleDateClasses(ageGroup),
+    queryFn: () => getMultipleDateClasses(id!, ageGroup),
   });
 
   if (isPending) {

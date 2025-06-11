@@ -16,6 +16,7 @@ interface IInitialState {
   city: string;
   postalCode: string;
   country: string;
+  infoIsTrue: boolean;
   agreesToTerms: boolean;
   day: string;
   month: string;
@@ -31,6 +32,7 @@ type Action =
   | { type: "city"; payload: string }
   | { type: "postalCode"; payload: string }
   | { type: "country"; payload: string }
+  | { type: "infoIsTrue"; payload: string }
   | { type: "agreesToTerms"; payload: string }
   | { type: "day"; payload: string }
   | { type: "month"; payload: string }
@@ -45,6 +47,7 @@ const initialState: IInitialState = {
   city: "",
   postalCode: "",
   country: "",
+  infoIsTrue: false,
   agreesToTerms: false,
   day: "",
   month: "",
@@ -89,6 +92,12 @@ function reducer(state: IInitialState, action: Action): IInitialState {
       return {
         ...state,
         country: action.payload,
+      };
+    }
+    case "infoIsTrue": {
+      return {
+        ...state,
+        infoIsTrue: action.payload === "on" ? true : false,
       };
     }
     case "agreesToTerms": {
@@ -144,6 +153,7 @@ function ChildSignUpForm({
       city,
       postalCode,
       country,
+      infoIsTrue,
       agreesToTerms,
       day,
       month,
@@ -193,6 +203,7 @@ function ChildSignUpForm({
         city,
         postalCode,
         country,
+        infoIsTrue,
         agreesToTerms,
       };
 
@@ -221,7 +232,7 @@ function ChildSignUpForm({
         onClick={() => setIsOpen(false)}
       />
       <div className="flex flex-col gap-8 lg:mx-auto lg:w-4/5">
-        <p className="font-semibold">Osebni podatki</p>
+        <p className="font-semibold">Podatki o mladoletni osebi</p>
         <form className="flex flex-col gap-6" onSubmit={handleSubmit}>
           <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 lg:gap-x-16">
             <div className="flex flex-col gap-1.5">
@@ -372,15 +383,38 @@ function ChildSignUpForm({
               />
             </div>
           </div>
-          <div className="flex items-center gap-4">
+          <div className="flex items-start gap-4">
             <input
               type="checkbox"
               required
+              className="mt-1.5 cursor-pointer"
+              onChange={(e) =>
+                dispatch({ type: "infoIsTrue", payload: e.target.value })
+              }
+            />
+            <label>
+              Izjavljam, da sem zakoniti skrbnik/-ca oz. garant s pisnim
+              pooblastilom skrbnika zgoraj navedene mladoletne osebe in da so
+              podatki, ki sem jih navedel oziroma navedla, točni.
+              <span className="text-red-500">*</span>
+            </label>
+          </div>
+          <div className="flex items-start gap-4">
+            <input
+              type="checkbox"
+              required
+              className="mt-1.5 cursor-pointer"
               onChange={(e) =>
                 dispatch({ type: "agreesToTerms", payload: e.target.value })
               }
             />
-            <label>Strinjam se s pogoji uporabe otroka</label>
+            <label>
+              Prebral/-a sem in se strinjam s Splošnimi pogoji poslovanja in
+              Pravili in pogoji uporabe plezalnega centra Bolderaj, ki določajo
+              hišni red in pogoje uporabe plezalnega centra Bolderaj ter v imenu
+              zadevne mladoletne osebe soglašam z njihovim spoštovanje{" "}
+              <span className="text-red-500">*</span>
+            </label>
           </div>
           {err && <p className="self-end font-medium text-red-500">{err}</p>}
 
@@ -388,7 +422,7 @@ function ChildSignUpForm({
             className="from-primary to-secondary drop-shadow-btn hover:to-primary disabled:bg-gray mt-4 cursor-pointer self-end rounded-lg bg-gradient-to-r px-4 py-3 font-semibold transition-colors duration-300 disabled:cursor-not-allowed"
             disabled={isLoading}
           >
-            {isLoading ? "..." : "Ustvari otrokov profil"}
+            {isLoading ? "..." : "Ustvari profil mladoletne osebe"}
           </button>
         </form>
       </div>

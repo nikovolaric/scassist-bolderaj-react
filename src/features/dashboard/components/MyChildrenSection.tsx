@@ -16,7 +16,7 @@ function MyChildrenSection() {
 
   return (
     <section className="flex flex-col gap-12">
-      <h1 className="text-2xl font-semibold">Moji družinski člani</h1>
+      <h1 className="text-2xl font-semibold">Mladoletne osebe</h1>
       <div className="flex flex-col gap-6 lg:gap-10">
         {data.map((el: { child: { firstName: string; id: string } }) => (
           <Child key={el.child.id} child={el.child} />

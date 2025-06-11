@@ -37,7 +37,7 @@ function CompanyInvoiceForm() {
             />
           </div>
         </label>
-        <p className="font-medium">Želim račun na podjetje</p>
+        <p className="font-medium">Želim račun na podjetje.</p>
       </div>
       {isChecked && <InvoiceForm />}
     </div>

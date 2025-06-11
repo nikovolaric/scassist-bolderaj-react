@@ -95,6 +95,7 @@ export async function createChild(child: {
   city: string;
   postalCode: string;
   country: string;
+  infoIsTrue: boolean;
   agreesToTerms: boolean;
 }) {
   try {

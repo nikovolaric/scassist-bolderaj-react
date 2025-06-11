@@ -18,7 +18,7 @@ function WelcomeSection({ ticketsPage }: { ticketsPage?: boolean }) {
     <section className="flex flex-col gap-12">
       {!ticketsPage && (
         <h1 className="text-2xl font-semibold lg:text-3xl">
-          Dobrodošli v Bolderaj, {firstName}!
+          Živijo, {firstName}!
         </h1>
       )}
       <div className="flex flex-col gap-4 md:grid md:grid-cols-2 md:gap-x-5 md:gap-y-6 xl:grid-cols-3">

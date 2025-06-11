@@ -44,7 +44,7 @@ function NavMenu() {
             className={`rounded-lg px-3.5 py-2 ${pathname === "/dashboard" ? "bg-primary" : ""}`}
           >
             <NavLink to="/dashboard" className="flex items-center gap-6">
-              <HomeIcon className="h-6 stroke-2" /> Oglasna deska
+              <HomeIcon className="h-6 stroke-2" /> Domača stran
             </NavLink>
           </li>
           <li className="px-3.5 py-2">

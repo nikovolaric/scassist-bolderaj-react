@@ -55,7 +55,7 @@ function PickUser() {
                 </div>
               </label>
               <p className="font-semibold">
-                {me?.firstName}, <span className="font-normal">(jaz)</span>
+                {me?.firstName} <span className="font-normal">(jaz)</span>
               </p>
             </div>
             {data.map(
