@@ -5,7 +5,7 @@ export async function getArticles(
 ) {
   try {
     const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/articles/getvisible?label=${label instanceof Array ? `${label[0]}&label=${label[1]}` : label}${ageGroup ? `&ageGroup=${ageGroup}` : ""}${type ? `&type=${type}` : ""}`,
+      `${import.meta.env.VITE_API_URL}/articles/getvisibleusers?label=${label instanceof Array ? `${label[0]}&label=${label[1]}` : label}${ageGroup ? `&ageGroup=${ageGroup}` : ""}${type ? `&type=${type}` : ""}`,
       {
         method: "GET",
         credentials: "include",
