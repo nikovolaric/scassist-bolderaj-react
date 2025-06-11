@@ -149,7 +149,7 @@ function PaymentForm() {
 
   return (
     <form
-      action={`http://localhost:5173${pathname}/success`}
+      action={`${import.meta.env.VITE_API_URL}${pathname}/success`}
       className="paymentWidgets"
       data-brands="VISA MASTER"
     ></form>
