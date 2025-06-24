@@ -208,6 +208,7 @@ function PaymentType({
                 clientId: import.meta.env.VITE_PAYPAL_CLIENTID,
                 currency: "EUR",
                 disableFunding: "card",
+                enableFunding: "applepay",
               }}
             >
               <PayPalButtons
