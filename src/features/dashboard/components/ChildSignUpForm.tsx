@@ -409,11 +409,25 @@ function ChildSignUpForm({
               }
             />
             <label>
-              Prebral/-a sem in se strinjam s Splošnimi pogoji poslovanja in
-              Pravili in pogoji uporabe plezalnega centra Bolderaj, ki določajo
-              hišni red in pogoje uporabe plezalnega centra Bolderaj ter v imenu
-              zadevne mladoletne osebe soglašam z njihovim spoštovanje{" "}
-              <span className="text-red-500">*</span>
+              Prebral/-a sem in se strinjam s{" "}
+              <a
+                href="https://bolderaj.si/splosni-pogoji-poslovanja/"
+                target="_blank"
+                className="cursor-pointer font-medium hover:underline"
+              >
+                Splošnimi pogoji poslovanja
+              </a>{" "}
+              in{" "}
+              <a
+                href="https://bolderaj.si/pravila-in-pogoji-uporabe-plezalnega-centra-bolderaj/"
+                target="_blank"
+                className="cursor-pointer font-medium hover:underline"
+              >
+                Pravili in pogoji uporabe plezalnega centra Bolderaj
+              </a>
+              , ki določajo hišni red in pogoje uporabe plezalnega centra
+              Bolderaj ter v imenu zadevne mladoletne osebe soglašam z njihovim
+              spoštovanje <span className="text-red-500">*</span>
             </label>
           </div>
           {err && <p className="self-end font-medium text-red-500">{err}</p>}

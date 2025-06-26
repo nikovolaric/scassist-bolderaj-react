@@ -236,7 +236,15 @@ function SignupForm() {
             vnesene podatke shranila in obdelovala za namene vodenja
             uporabniškega računa in nudenja pripadajočih funkcionalnosti
             aplikacije ter nekomercialnega obveščanja. Več glede obdelave
-            osebnih podatkov si lahko preberete na tej povezavi.
+            osebnih podatkov si lahko preberete na tej{" "}
+            <a
+              href="https://bolderaj.si/varovanje-osebnih-podatkov/"
+              target="_blank"
+              className="cursor-pointer font-medium hover:underline"
+            >
+              povezavi
+            </a>
+            .
           </p>
           <div className="flex items-start gap-2">
             <input
@@ -252,9 +260,16 @@ function SignupForm() {
               }
             />
             <label className="font-medium">
-              Prebral/-a sem in se strinjam s Splošnimi pogoji poslovanja, ki
-              med drugim urejajo nakupe in koriščenje vstopnic ter pristop k
-              vodenim vadbam. <span className="text-red-500">*</span>
+              Prebral/-a sem in se strinjam s{" "}
+              <a
+                href="https://bolderaj.si/splosni-pogoji-poslovanja/"
+                target="_blank"
+                className="cursor-pointer font-medium hover:underline"
+              >
+                Splošnimi pogoji poslovanja
+              </a>
+              , ki med drugim urejajo nakupe in koriščenje vstopnic ter pristop
+              k vodenim vadbam. <span className="text-red-500">*</span>
             </label>
           </div>
           <div className="flex items-start gap-2">
@@ -266,7 +281,14 @@ function SignupForm() {
               required
             />
             <label className="font-medium">
-              Prebral/-a sem in se strinjam s Pravili in pogoji uporabe
+              Prebral/-a sem in se strinjam s{" "}
+              <a
+                href="https://bolderaj.si/pravila-in-pogoji-uporabe-plezalnega-centra-bolderaj/"
+                target="_blank"
+                className="cursor-pointer font-medium hover:underline"
+              >
+                Pravili in pogoji uporabe
+              </a>
               plezalnega centra Bolderaj, ki določajo hišni red in pogoje
               uporabe plezalnega centra Bolderaj.{" "}
               <span className="text-red-500">*</span>
