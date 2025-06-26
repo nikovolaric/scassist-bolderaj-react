@@ -264,7 +264,7 @@ function SignupForm() {
               <a
                 href="https://bolderaj.si/splosni-pogoji-poslovanja/"
                 target="_blank"
-                className="cursor-pointer font-medium hover:underline"
+                className="cursor-pointer font-bold hover:underline"
               >
                 Splošnimi pogoji poslovanja
               </a>
@@ -285,10 +285,10 @@ function SignupForm() {
               <a
                 href="https://bolderaj.si/pravila-in-pogoji-uporabe-plezalnega-centra-bolderaj/"
                 target="_blank"
-                className="cursor-pointer font-medium hover:underline"
+                className="cursor-pointer font-bold hover:underline"
               >
                 Pravili in pogoji uporabe
-              </a>
+              </a>{" "}
               plezalnega centra Bolderaj, ki določajo hišni red in pogoje
               uporabe plezalnega centra Bolderaj.{" "}
               <span className="text-red-500">*</span>
