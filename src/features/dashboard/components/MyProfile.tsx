@@ -1,14 +1,17 @@
 import MyKids from "./MyKids";
 import LoginData from "./LoginData";
 import OsebniPodatki from "./OsebniPodatki";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { getMe } from "../../../services/userAPI";
 
 function MyProfile() {
-  const queryClient = useQueryClient();
-  const me = queryClient.getQueryData<{ age: number }>(["me"]);
+  const { data, isPending } = useQuery({
+    queryKey: ["me"],
+    queryFn: getMe,
+  });
 
-  if (!me) {
-    return <p>Nekaj je šlo narobe</p>;
+  if (isPending) {
+    return <p>...</p>;
   }
 
   return (
@@ -16,7 +19,7 @@ function MyProfile() {
       <h2 className="text-2xl font-semibold lg:text-3xl">Moj profil</h2>
       <OsebniPodatki />
       <LoginData />
-      {me.age > 18 && <MyKids />}
+      {data.age > 18 && <MyKids />}
     </div>
   );
 }

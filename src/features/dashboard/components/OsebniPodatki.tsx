@@ -129,6 +129,7 @@ function OsebniPodatki() {
       }
 
       setErr("");
+      setIsOpenSub(false);
       setIsEditing(false);
     } catch (error) {
       setErr((error as Error).message);
@@ -197,7 +198,7 @@ function OsebniPodatki() {
               className="drop-shadow-input border-gray w-full rounded-lg border bg-white px-3.5 py-2.5"
               placeholder="Izberi podkategorijo"
               disabled
-              value={climbingOptions[climbingAbility || me.climbingAbility!]}
+              value={climbingOptions[climbingAbility ?? me.climbingAbility!]}
             />
             {isEditing && (
               <ChevronDownIcon
@@ -210,7 +211,7 @@ function OsebniPodatki() {
                 {climbingOptions.map((climbingOption, i) => (
                   <div key={i} className="flex items-center gap-2">
                     <span
-                      className={`h-6 w-6 cursor-pointer rounded-lg border border-black/50 ${(climbingAbility || me.climbingAbility!) === i ? "bg-primary/50" : ""}`}
+                      className={`h-6 w-6 cursor-pointer rounded-lg border border-black/50 ${(climbingAbility ?? me.climbingAbility!) === i ? "bg-primary/50" : ""}`}
                       onClick={() => {
                         dispatch({ type: "climbingAbility", payload: i });
                       }}
@@ -325,109 +326,5 @@ function OsebniPodatki() {
     </div>
   );
 }
-
-// function EditPersonalData({me}:{me:IUser}){
-//   return <div className="flex flex-col gap-3">
-//   <p className="font-semibold">Osebni podatki</p>
-//   <form className="flex flex-col gap-6 rounded-xl bg-white px-5 py-4 lg:px-20 lg:py-16">
-//     <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5">
-//       <div className="flex flex-col gap-1.5">
-//         <label className="text-sm font-medium">Ime</label>
-//         <input
-//           type="text"
-//           value={me.firstName}
-//                     className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
-//         />
-//       </div>
-//       <div className="flex flex-col gap-1.5">
-//         <label className="text-sm font-medium">Priimek</label>
-//         <input
-//           type="text"
-//           value={me.lastName}
-//                     className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
-//         />
-//       </div>
-//     </div>
-//     <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5">
-//       <div className="flex flex-col gap-1.5">
-//         <label className="text-sm font-medium">Datum rojstva</label>
-//         <input
-//           type="text"
-//           value={new Date(me.birthDate).toLocaleDateString("sl-SI", {
-//             day: "2-digit",
-//             year: "numeric",
-//             month: "2-digit",
-//           })}
-//           disabled
-//           className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
-//         />
-//         <div className="hidden lg:block" />
-//       </div>
-//     </div>
-//     <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5">
-//       <div className="flex flex-col gap-1.5">
-//         <label className="text-sm font-medium">Naslov bivališča</label>
-//         <input
-//           type="text"
-//           value={me.address}
-//           disabled
-//           className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
-//         />
-//       </div>
-
-//       <div className="flex flex-col gap-1.5">
-//         <label className="text-sm font-medium">Kraj bivališča</label>
-//         <input
-//           type="text"
-//           value={me.city}
-//           disabled
-//           className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
-//         />
-//       </div>
-//     </div>
-//     <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5">
-//       <div className="flex flex-col gap-1.5">
-//         <label className="text-sm font-medium">Poštna številka</label>
-//         <input
-//           type="text"
-//           value={me.postalCode}
-//           disabled
-//           className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
-//         />
-//       </div>
-
-//       <div className="flex flex-col gap-1.5">
-//         <label className="text-sm font-medium">Država</label>
-//         <input
-//           type="text"
-//           value={me.country}
-//           disabled
-//           className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
-//         />
-//       </div>
-//     </div>
-//     <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5">
-//       <div className="flex flex-col gap-1.5">
-//         <label className="text-sm font-medium">Telefonska številka</label>
-//         <input
-//           type="text"
-//           value={me.phoneNumber}
-//           disabled={me.phoneNumber !== undefined}
-//           className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
-//         />
-//       </div>
-//       <div className="flex flex-col gap-1.5">
-//         <label className="text-sm font-medium">Elektronski naslov</label>
-//         <input
-//           type="text"
-//           value={me.email}
-//           disabled
-//           className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
-//         />
-//       </div>
-//     </div>
-//   </form>
-// </div>
-// }
 
 export default OsebniPodatki;
