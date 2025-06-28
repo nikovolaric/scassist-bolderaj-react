@@ -5,15 +5,14 @@ export async function getMe() {
       credentials: "include",
     });
 
+    const data = await res.json();
+
     if (!res.ok) {
-      const data = await res.json();
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
-      throw Error(data.message);
+      return data;
     }
-
-    const data = await res.json();
 
     return data.me;
   } catch (error) {

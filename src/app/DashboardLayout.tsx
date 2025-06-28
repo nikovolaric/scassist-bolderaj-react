@@ -1,6 +1,6 @@
 import { Suspense, useEffect } from "react";
 import Spinner from "../components/Spinner";
-import { Outlet, useLocation, useNavigate, useParams } from "react-router";
+import { Navigate, Outlet, useLocation, useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getMe } from "../services/userAPI";
 import { useAppDispatch } from "./hooks";
@@ -11,7 +11,6 @@ import Footer from "../components/Footer";
 import { clearGiftData } from "../features/dashboard/gifts/slices/giftSlice";
 
 function DashboardLayout() {
-  const navigate = useNavigate();
   const { childId } = useParams();
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
@@ -46,8 +45,8 @@ function DashboardLayout() {
     return <Spinner />;
   }
 
-  if (!data) {
-    navigate("/");
+  if (!data.firstName) {
+    return <Navigate to={"/"} />;
   }
 
   return (
