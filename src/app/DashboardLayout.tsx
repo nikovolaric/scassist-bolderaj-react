@@ -1,8 +1,6 @@
 import { Suspense, useEffect } from "react";
 import Spinner from "../components/Spinner";
-import { Navigate, Outlet, useLocation, useParams } from "react-router";
-import { useQuery } from "@tanstack/react-query";
-import { getMe } from "../services/userAPI";
+import { Outlet, useLocation, useParams } from "react-router";
 import { useAppDispatch } from "./hooks";
 import { clearPayment } from "../features/dashboard/payments/slices/paymentSlice";
 import { clearTicketData } from "../features/dashboard/tickets/slices/ticketCartSlice";
@@ -14,10 +12,6 @@ function DashboardLayout() {
   const { childId } = useParams();
   const { pathname } = useLocation();
   const dispatch = useAppDispatch();
-  const { data, isPending } = useQuery({
-    queryKey: ["me"],
-    queryFn: getMe,
-  });
 
   useEffect(
     function () {
@@ -26,7 +20,7 @@ function DashboardLayout() {
         dispatch(clearTicketData());
       }
       if (
-        !pathname.includes("/classes/") ||
+        !pathname.includes("/classes/") &&
         !pathname.includes("/dashboard/")
       ) {
         dispatch(clearClassData());
@@ -40,14 +34,6 @@ function DashboardLayout() {
     },
     [childId, pathname, dispatch],
   );
-
-  if (isPending) {
-    return <Spinner />;
-  }
-
-  if (!data.firstName) {
-    return <Navigate to={"/"} />;
-  }
 
   return (
     <Suspense fallback={<Spinner />}>

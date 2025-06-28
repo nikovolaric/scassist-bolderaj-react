@@ -35,147 +35,147 @@ import ErrorBoundary from "./pages/User/ErrorBoundry";
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: AppLayout,
+    element: <AppLayout />,
     loader: Spinner,
     HydrateFallback: Spinner,
     ErrorBoundary: ErrorBoundary,
     children: [
       {
         index: true,
-        Component: Login,
+        element: <Login />,
       },
       {
         path: "signup",
-        Component: SignUp,
+        element: <SignUp />,
       },
       {
         path: "signup/end",
-        Component: SignUpEnd,
+        element: <SignUpEnd />,
       },
       {
         path: "forgotpassword",
-        Component: ForgotPassword,
+        element: <ForgotPassword />,
       },
       {
         path: "resetpassword/:token",
-        Component: ResetPassword,
+        element: <ResetPassword />,
       },
-      { path: "confirmmail/:token", Component: ConfirmMail },
+      { path: "confirmmail/:token", element: <ConfirmMail /> },
       {
         path: "setchildauth/:token",
-        Component: SetChildAuth,
+        element: <SetChildAuth />,
       },
       {
         path: "dashboard",
-        Component: DashboardLayout,
+        element: <DashboardLayout />,
         children: [
           {
             index: true,
-            Component: Dashboard,
+            element: <Dashboard />,
           },
           {
             path: "me",
-            Component: DashboardMe,
+            element: <DashboardMe />,
           },
           {
             path: "tickets",
-            Component: Tickets,
+            element: <Tickets />,
           },
           {
             path: "tickets/pickuser",
-            Component: PickUser,
+            element: <PickUser />,
           },
           {
             path: "tickets/ticketcart",
-            Component: OnlineCart,
+            element: <OnlineCart />,
           },
           {
             path: "tickets/ticketcart/success",
-            Component: TicketPaymentSuccess,
+            element: <TicketPaymentSuccess />,
           },
           {
             path: "classes",
-            Component: Classes,
+            element: <Classes />,
           },
           {
             path: "classes/pickuser",
-            Component: PickUser,
+            element: <PickUser />,
           },
           {
             path: "classes/:id",
-            Component: ClassesChoose,
+            element: <ClassesChoose />,
           },
           {
             path: "classes/:id/payment",
-            Component: ClassPayment,
+            element: <ClassPayment />,
           },
           {
             path: "classes/:id/payment/success",
-            Component: ClassSignUpSuccess,
+            element: <ClassSignUpSuccess />,
           },
           {
             path: "mytickets",
-            Component: MyTickets,
+            element: <MyTickets />,
           },
           {
             path: "myclasses",
-            Component: MyClasses,
+            element: <MyClasses />,
           },
           {
             path: "invoices",
-            Component: MyInvoices,
+            element: <MyInvoices />,
           },
           {
             path: "gifts/pickage",
-            Component: PickAgeGroup,
+            element: <PickAgeGroup />,
           },
           {
             path: "gifts/:ageGroup",
-            Component: Gifts,
+            element: <Gifts />,
           },
           {
             path: "gifts/giftcart",
-            Component: GiftCart,
+            element: <GiftCart />,
           },
           {
             path: "gifts/giftcart/success",
-            Component: GiftPaymentSuccess,
+            element: <GiftPaymentSuccess />,
           },
           {
             path: "child/:childId",
-            Component: ChildDashboardLayout,
+            element: <ChildDashboardLayout />,
             children: [
               {
                 index: true,
-                Component: ChildDashboard,
+                element: <ChildDashboard />,
               },
               {
                 path: "tickets",
-                Component: Tickets,
+                element: <Tickets />,
               },
               {
                 path: "tickets/ticketcart",
-                Component: OnlineCart,
+                element: <OnlineCart />,
               },
               {
                 path: "tickets/ticketcart/success",
-                Component: TicketPaymentSuccess,
+                element: <TicketPaymentSuccess />,
               },
               {
                 path: "classes",
-                Component: Classes,
+                element: <Classes />,
               },
               {
                 path: "classes/:id",
-                Component: ClassesChoose,
+                element: <ClassesChoose />,
               },
               {
                 path: "classes/:id/payment",
-                Component: ClassPayment,
+                element: <ClassPayment />,
               },
               {
                 path: "classes/:id/payment/success",
-                Component: ClassSignUpSuccess,
+                element: <ClassSignUpSuccess />,
               },
             ],
           },

@@ -2,8 +2,17 @@ import { ChevronLeftIcon } from "@heroicons/react/24/outline";
 import LinkBtn from "./LinkBtn";
 import Logo from "./Logo";
 import NavMenu from "./NavMenu";
+import { useQuery } from "@tanstack/react-query";
+import { getMe } from "../services/userAPI";
+import { Navigate } from "react-router";
 
 function Header() {
+  const { data, isPending } = useQuery({ queryKey: ["me"], queryFn: getMe });
+
+  if (!isPending && !data?.firstName) {
+    return <Navigate to={"/"} />;
+  }
+
   return (
     <header className="flex flex-col gap-14 lg:gap-20">
       <div className="flex items-center justify-between">

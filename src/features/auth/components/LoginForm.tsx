@@ -1,18 +1,26 @@
 import { FormEvent, useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, Navigate, useNavigate } from "react-router";
 import { loginAction } from "../../../services/authAPI";
+import { useQuery } from "@tanstack/react-query";
+import { getMe } from "../../../services/userAPI";
 
 function LoginForm() {
   const navigate = useNavigate();
-  const [isPending, setIsPending] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { data, isPending } = useQuery({ queryKey: ["me"], queryFn: getMe });
+
+  if (!isPending && data?.firstName) {
+    return <Navigate to={"/dashboard"} />;
+  }
+
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     try {
       e.preventDefault();
-      setIsPending(true);
+      setIsLoading(true);
 
       const data = await loginAction({ email, password });
 
@@ -24,7 +32,7 @@ function LoginForm() {
     } catch (error) {
       setErr((error as Error).message);
     } finally {
-      setIsPending(false);
+      setIsLoading(false);
     }
   }
 
@@ -59,9 +67,9 @@ function LoginForm() {
         </Link>
         <button
           className="from-primary to-secondary drop-shadow-btn hover:to-primary disabled:bg-gray cursor-pointer rounded-lg bg-gradient-to-r px-4 py-3 font-semibold transition-colors duration-300 disabled:cursor-not-allowed"
-          disabled={isPending}
+          disabled={isLoading}
         >
-          {isPending ? "..." : "Prijavi se"}
+          {isLoading ? "..." : "Prijavi se"}
         </button>
         {err && <p className="font-medium text-red-500">{err}</p>}
       </form>
