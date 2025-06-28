@@ -9,6 +9,7 @@ import { useState } from "react";
 import GiftsSection from "../../features/dashboard/components/GiftsSection";
 import Spinner from "../../components/Spinner";
 import { getMe } from "../../services/userAPI";
+import { Navigate } from "react-router";
 
 function Dashboard() {
   const { data, isPending } = useQuery({
@@ -17,6 +18,10 @@ function Dashboard() {
   });
 
   if (isPending) return <Spinner />;
+
+  if (!data.firstName) {
+    return <Navigate to={"/"} />;
+  }
 
   return (
     <>
