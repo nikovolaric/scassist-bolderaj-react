@@ -220,16 +220,16 @@ function PaymentType({
                       {
                         amount: {
                           currency_code: "EUR",
-                          value: amount,
+                          value: parseFloat(amount).toFixed(2),
                         },
                       },
                     ],
                     intent: "CAPTURE",
                   });
                 }}
-                onApprove={async (_, actions) => {
+                onApprove={async (data, actions) => {
                   if (!actions.order) {
-                    alert("Napaka: Order ne obstaja.");
+                    alert(data);
                     return;
                   }
 
