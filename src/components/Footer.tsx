@@ -53,7 +53,7 @@ function Footer() {
             </p>
             <p className="flex items-center gap-4">
               <ChatBubbleLeftRightIcon className="text-secondary w-6 flex-none stroke-2" />
-              podpora@bolderaj.si
+              info@bolderaj.si
             </p>
           </div>
         </div>
