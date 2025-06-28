@@ -42,14 +42,12 @@ function DashboardLayout() {
     [childId, pathname, dispatch],
   );
 
-  useEffect(() => {
-    if (!isPending && !data?.firstName) {
-      navigate("/");
-    }
-  }, [isPending, data, navigate]);
-
   if (isPending) {
     return <Spinner />;
+  }
+
+  if (!data.firstName) {
+    navigate("/");
   }
 
   return (
