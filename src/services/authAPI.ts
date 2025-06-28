@@ -72,10 +72,10 @@ export async function signUpNewUser(signUpData: ISignUp) {
       credentials: "include",
       body: JSON.stringify(signUpData),
     });
+    const data = await res.json();
+    console.log(data);
 
     if (!res.ok) {
-      const data = await res.json();
-
       if (data.error.statusCode === 500) {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }

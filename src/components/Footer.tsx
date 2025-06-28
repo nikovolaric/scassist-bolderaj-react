@@ -29,10 +29,10 @@ function Footer() {
                 <ChatBubbleLeftIcon className="text-secondary w-6 flex-none stroke-2" />
                 info@bolderaj.si
               </p>
-              <p className="flex items-center gap-4">
+              <a className="flex items-center gap-4" href="phone:0038641718828">
                 <PhoneIcon className="text-secondary w-6 flex-none stroke-2" />
-                01 000 0000
-              </p>
+                041 718 828
+              </a>
             </div>
           </div>
           <div className="flex w-60 flex-col gap-8 lg:gap-14">

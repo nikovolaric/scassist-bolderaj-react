@@ -26,12 +26,12 @@ function NavMenu() {
       <BottomMenu toggleMenu={toggleMenu} />
       {isOpenMenu && (
         <div
-          className="fixed top-0 left-0 z-40 h-dvh w-dvw bg-black/50"
+          className="fixed top-0 left-0 z-[800] h-dvh w-dvw bg-black/50"
           onClick={() => setIsOpenMenu(false)}
         ></div>
       )}
       <nav
-        className={`bg-neutral drop-shadow-input fixed top-1/2 right-4 z-50 flex -translate-y-1/2 flex-col gap-8 rounded-xl px-8 py-6 font-semibold ${isOpenMenu ? "" : "translate-y-[500%] md:translate-x-[500%] md:-translate-y-1/2"} h-[calc(100dvh-40px)] transition-transform duration-300 md:right-8 md:flex md:flex-col md:justify-between md:py-10 lg:right-20 lg:h-[85dvh] 2xl:right-[calc((100dvw-1280px)/2)]`}
+        className={`bg-neutral drop-shadow-input fixed top-1/2 right-4 z-[999] flex -translate-y-1/2 flex-col gap-8 rounded-xl px-8 py-6 font-semibold ${isOpenMenu ? "" : "translate-y-[500%] md:translate-x-[500%] md:-translate-y-1/2"} h-[calc(100dvh-40px)] transition-transform duration-300 md:right-8 md:flex md:flex-col md:justify-between md:py-10 lg:right-20 lg:h-[85dvh] 2xl:right-[calc((100dvw-1280px)/2)]`}
       >
         <ul className="flex h-full flex-col justify-between xl:h-4/5">
           <li className="mb-2 block self-end">
@@ -266,7 +266,7 @@ function BottomMenu({
   const { pathname } = useLocation();
 
   return (
-    <div className="bg-neutral fixed bottom-1 left-1/2 z-30 flex w-[92dvw] -translate-x-1/2 items-center justify-around rounded-xl px-4 py-4 drop-shadow-[0.5px_0.5px_4px_rgba(0,0,0,0.25)] md:hidden">
+    <div className="bg-neutral fixed bottom-1 left-1/2 z-[500] flex w-[92dvw] -translate-x-1/2 items-center justify-around rounded-xl px-4 py-4 drop-shadow-[0.5px_0.5px_4px_rgba(0,0,0,0.25)] md:hidden">
       <button className="flex-none" onClick={() => navigate("/dashboard")}>
         <HomeIcon
           className={`${pathname === "/dashboard" ? "text-secondary" : "text-black/50"} w-6`}
