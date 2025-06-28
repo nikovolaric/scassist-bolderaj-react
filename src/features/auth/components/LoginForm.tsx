@@ -1,19 +1,21 @@
 import { FormEvent, useState } from "react";
-import { Link, Navigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { loginAction } from "../../../services/authAPI";
 import { useMutation } from "@tanstack/react-query";
 
 function LoginForm() {
+  const navigate = useNavigate();
   const [err, setErr] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { mutate, isPending, data } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: loginAction,
     onSuccess: (data) => {
       if (data instanceof Error) {
         throw data;
       }
+      navigate("/dashboard");
     },
     onError: (error) => {
       setErr(error.message);
@@ -26,9 +28,9 @@ function LoginForm() {
     mutate({ email, password });
   }
 
-  if (data && !data.error) {
-    return <Navigate to="/dashboard" replace />;
-  }
+  // if (data && !data.error) {
+  //   return <Navigate to="/dashboard" replace />;
+  // }
 
   return (
     <div className="flex flex-col gap-8">

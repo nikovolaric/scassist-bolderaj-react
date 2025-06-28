@@ -123,7 +123,7 @@ function PaymentForm() {
   useEffect(() => {
     if (!isPending && data?.data?.id) {
       const widgetScript = document.createElement("script");
-      widgetScript.src = `https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=${data.data.id}`;
+      widgetScript.src = `https://eu-prod.oppwa.com/v1/paymentWidgets.js?checkoutId=${data.data.id}`;
       widgetScript.crossOrigin = "anonymous";
       widgetScript.integrity = data.data.integrity;
 
