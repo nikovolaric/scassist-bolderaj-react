@@ -11,14 +11,14 @@ function LoginForm() {
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     try {
-      setIsPending(true);
       e.preventDefault();
+      setIsPending(true);
 
-      await loginAction({ email, password });
+      const data = await loginAction({ email, password });
 
-      // if (data.status !== "success") {
-      //   throw Error(data.message);
-      // }
+      if (data.status !== "success") {
+        throw Error(data.message);
+      }
 
       navigate("/dashboard");
     } catch (error) {
