@@ -43,7 +43,7 @@ function OnlineCart() {
           setAmount(
             (
               data.article.priceDDV * Number(ticketCart.articles[0].quantity)
-            ).toString(),
+            ).toFixed(2),
           ),
         );
       }
@@ -226,6 +226,12 @@ function PaymentType({
                   });
                 }}
                 onApprove={(_, actions) => {
+                  if (!actions.order) {
+                    console.error("PayPal actions.order manjkajo.");
+                    alert("Napaka pri potrditvi naročila.");
+                    return Promise.resolve();
+                  }
+
                   return actions.order!.capture().then((details) => {
                     console.log("Plačilo uspešno:", details);
 
