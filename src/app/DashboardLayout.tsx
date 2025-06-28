@@ -46,7 +46,7 @@ function DashboardLayout() {
     return <Spinner />;
   }
 
-  if (data instanceof Error) {
+  if (!data) {
     navigate("/");
   }
 
