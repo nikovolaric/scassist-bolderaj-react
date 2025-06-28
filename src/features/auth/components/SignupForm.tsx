@@ -196,6 +196,7 @@ function SignupForm() {
                         onClick={() => {
                           setAbility(i);
                           dispatch(setClimbingAbility(i));
+                          setIsOpenSub(false);
                         }}
                       ></span>
                       {climbingOption}
