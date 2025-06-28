@@ -21,7 +21,9 @@ function Logout() {
   }
 
   if (data && data.status === "success") {
-    return <Navigate to="/" replace />;
+    setTimeout(function () {
+      return <Navigate to="/" replace />;
+    }, 1000);
   }
 
   return (
