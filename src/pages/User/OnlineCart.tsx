@@ -133,6 +133,8 @@ function PaymentType({
 }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  const [isLoading, setIsLoading] = useState(false);
   const [payment, setPayment] = useState("");
   const { mutate, isPending } = useMutation({
     mutationFn: buyArticlesOnline,
@@ -225,24 +227,31 @@ function PaymentType({
                     intent: "CAPTURE",
                   });
                 }}
-                onApprove={(_, actions) => {
+                onApprove={async (_, actions) => {
                   if (!actions.order) {
-                    console.error("PayPal actions.order manjkajo.");
-                    alert("Napaka pri potrditvi naročila.");
-                    return Promise.resolve();
+                    alert("Napaka: Order ne obstaja.");
+                    return;
                   }
 
-                  return actions.order!.capture().then((details) => {
-                    console.log("Plačilo uspešno:", details);
+                  try {
+                    setIsLoading(true);
+                    const details = await actions.order.capture();
 
-                    mutate({
+                    console.log("✅ Plačilo uspešno:", details);
+
+                    await mutate({
                       articles,
                       company,
                       id: childId,
                     });
 
                     navigate(`${pathname}/success`);
-                  });
+                  } catch (err) {
+                    console.error("Napaka med obdelavo plačila:", err);
+                    alert((err as Error).message);
+                  } finally {
+                    setIsLoading(false);
+                  }
                 }}
                 onCancel={() => {
                   navigate(pathname);
@@ -251,6 +260,7 @@ function PaymentType({
                   console.error("Napaka pri plačilu:", err);
                   alert("Plačilo ni uspelo.");
                 }}
+                disabled={isLoading}
               />
             </PayPalScriptProvider>
           </div>
