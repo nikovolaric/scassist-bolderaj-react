@@ -3,9 +3,10 @@ import AuthLogo from "../../features/auth/components/AuthLogo";
 import LoginForm from "../../features/auth/components/LoginForm";
 import { getMe } from "../../services/userAPI";
 import Spinner from "../../components/Spinner";
-import { Navigate } from "react-router";
+import { useNavigate } from "react-router";
 
 function Login() {
+  const navigate = useNavigate();
   const { data, isPending } = useQuery({
     queryKey: ["me"],
     queryFn: getMe,
@@ -16,7 +17,7 @@ function Login() {
   }
 
   if (!(data instanceof Error) && !data.role.includes("admin")) {
-    return <Navigate to="/dashboard" replace />;
+    navigate("/dashboard");
   }
 
   return (

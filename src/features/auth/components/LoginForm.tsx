@@ -1,31 +1,31 @@
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { loginAction } from "../../../services/authAPI";
-import { useMutation } from "@tanstack/react-query";
 
 function LoginForm() {
   const navigate = useNavigate();
+  const [isPending, setIsPending] = useState(false);
   const [err, setErr] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { mutate, isPending } = useMutation({
-    mutationFn: loginAction,
-    onSuccess: (data) => {
-      if (data instanceof Error) {
-        throw data;
-      }
-      navigate("/dashboard");
-    },
-    onError: (error) => {
-      setErr(error.message);
-    },
-  });
-
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
-    e.preventDefault();
+    try {
+      setIsPending(true);
+      e.preventDefault();
 
-    mutate({ email, password });
+      const data = await loginAction({ email, password });
+
+      if (data instanceof Error) {
+        throw Error(data.message);
+      }
+
+      navigate("/dashboard");
+    } catch (error) {
+      setErr((error as Error).message);
+    } finally {
+      setIsPending(false);
+    }
   }
 
   // if (data && !data.error) {
