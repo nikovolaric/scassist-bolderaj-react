@@ -1,4 +1,4 @@
-import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import { FormEvent, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import {
@@ -7,6 +7,7 @@ import {
   setAgreesToTerms,
   setBirthDate,
   setCity,
+  setClimbingAbility,
   setCountry,
   setFirstName,
   setLastName,
@@ -24,6 +25,19 @@ function SignupForm() {
   const [year, setYear] = useState("");
   // const [age, setAge] = useState<number>(100);
   const [err, setErr] = useState("");
+  const [isOpenSub, setIsOpenSub] = useState(false);
+  const [ability, setAbility] = useState(0);
+
+  const climbingOptions = [
+    "0 - brez plezalnega znanja",
+    "1 - zelo lahko (3-4)",
+    "2 - lahko (4-5B)",
+    "3 - zmerno (5B-6A+)",
+    "4 - srednje težko (6A+-6C)",
+    "5 - težko (6C-7A+)",
+    "6 - zelo težko (7A+-7C)",
+    "7 - ekstremno (več kot 7C)",
+  ];
 
   useEffect(() => {
     if (day && month && year) {
@@ -157,21 +171,37 @@ function SignupForm() {
                 </select>
               </div>
             </div>
-            {/* {age >= 15 && age < 18 && (
-              <div className="flex flex-col gap-1.5">
-                <label className="text-sm font-medium">
-                  Kontaktni mail starša ali skrbnika
-                </label>
-                <input
-                  type="text"
-                  placeholder="Vnesi kontaktni mail starša ali skrbnika"
-                  className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
-                                    onChange={(e) =>
-                    dispatch(setParentContactMail(e.target.value))
-                  }
-                />
-              </div>
-            )} */}
+            <div className="relative z-50 flex flex-col gap-1">
+              <p className="text-sm font-medium">
+                Plezalno znanje<span className="text-red-500">*</span>
+              </p>
+              <input
+                className="drop-shadow-input border-gray w-full rounded-lg border bg-white px-3.5 py-2.5"
+                placeholder="Izberi podkategorijo"
+                disabled
+                value={climbingOptions[ability]}
+              />
+              <ChevronDownIcon
+                className={`absolute right-4 bottom-3 w-5 cursor-pointer stroke-2 ${isOpenSub ? "rotate-180" : ""}`}
+                onClick={() => setIsOpenSub((isOpen) => !isOpen)}
+              />
+              {isOpenSub && (
+                <div className="absolute top-[110%] left-0 flex w-full flex-col gap-2 rounded-lg border border-black/20 bg-white px-4 py-2 shadow-xs">
+                  {climbingOptions.map((climbingOption, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <span
+                        className={`h-6 w-6 cursor-pointer rounded-lg border border-black/50 ${ability === i ? "bg-primary/50" : ""}`}
+                        onClick={() => {
+                          setAbility(i);
+                          dispatch(setClimbingAbility(i));
+                        }}
+                      ></span>
+                      {climbingOption}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
           <div className="flex flex-col gap-5 lg:grid lg:grid-cols-2 lg:gap-5">
             <div className="flex flex-col gap-1.5">

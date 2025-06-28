@@ -37,6 +37,7 @@ function LoginForm() {
           <input
             type="text"
             placeholder="Vnesi elektronski naslov"
+            name="email"
             className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
             required
             onChange={(e) => setEmail(e.target.value)}

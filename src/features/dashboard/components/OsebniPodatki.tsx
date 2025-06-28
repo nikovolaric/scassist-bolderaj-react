@@ -1,6 +1,7 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { FormEvent, useReducer, useState } from "react";
 import { updateMe } from "../../../services/userAPI";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 
 interface IUser {
   firstName: string | undefined;
@@ -12,6 +13,7 @@ interface IUser {
   country: string | undefined;
   phoneNumber: string | undefined;
   email: string | undefined;
+  climbingAbility: number | undefined;
 }
 
 const initialState: IUser = {
@@ -23,6 +25,7 @@ const initialState: IUser = {
   country: undefined,
   phoneNumber: undefined,
   email: undefined,
+  climbingAbility: undefined,
 };
 
 type Action =
@@ -33,7 +36,8 @@ type Action =
   | { type: "postalCode"; payload: string }
   | { type: "country"; payload: string }
   | { type: "phoneNumber"; payload: string }
-  | { type: "email"; payload: string };
+  | { type: "email"; payload: string }
+  | { type: "climbingAbility"; payload: number };
 
 function reducer(state: IUser, action: Action) {
   switch (action.type) {
@@ -61,6 +65,9 @@ function reducer(state: IUser, action: Action) {
     case "email": {
       return { ...state, email: action.payload };
     }
+    case "climbingAbility": {
+      return { ...state, climbingAbility: Number(action.payload) };
+    }
     default: {
       return state;
     }
@@ -68,6 +75,17 @@ function reducer(state: IUser, action: Action) {
 }
 
 function OsebniPodatki() {
+  const climbingOptions = [
+    "0 - brez plezalnega znanja",
+    "1 - zelo lahko (3-4)",
+    "2 - lahko (4-5B)",
+    "3 - zmerno (5B-6A+)",
+    "4 - srednje težko (6A+-6C)",
+    "5 - težko (6C-7A+)",
+    "6 - zelo težko (7A+-7C)",
+    "7 - ekstremno (več kot 7C)",
+  ];
+
   const [
     {
       firstName,
@@ -78,11 +96,13 @@ function OsebniPodatki() {
       country,
       phoneNumber,
       email,
+      climbingAbility,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isOpenSub, setIsOpenSub] = useState(false);
   const [err, setErr] = useState("");
   const queryClient = useQueryClient();
   const me = queryClient.getQueryData<IUser>(["me"]);
@@ -101,6 +121,7 @@ function OsebniPodatki() {
         country,
         phoneNumber,
         email,
+        climbingAbility,
       );
 
       if (data instanceof Error) {
@@ -169,7 +190,36 @@ function OsebniPodatki() {
               disabled
               className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
             />
-            <div className="hidden lg:block" />
+          </div>
+          <div className="relative z-50 flex flex-col gap-1">
+            <p className="text-sm font-medium">Plezalno znanje</p>
+            <input
+              className="drop-shadow-input border-gray w-full rounded-lg border bg-white px-3.5 py-2.5"
+              placeholder="Izberi podkategorijo"
+              disabled
+              value={climbingOptions[climbingAbility || me.climbingAbility!]}
+            />
+            {isEditing && (
+              <ChevronDownIcon
+                className={`absolute right-4 bottom-3 w-5 cursor-pointer stroke-2 ${isOpenSub ? "rotate-180" : ""}`}
+                onClick={() => setIsOpenSub((isOpen) => !isOpen)}
+              />
+            )}
+            {isOpenSub && (
+              <div className="absolute top-[110%] left-0 flex w-full flex-col gap-2 rounded-lg border border-black/20 bg-white px-4 py-2 shadow-xs">
+                {climbingOptions.map((climbingOption, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <span
+                      className={`h-6 w-6 cursor-pointer rounded-lg border border-black/50 ${(climbingAbility || me.climbingAbility!) === i ? "bg-primary/50" : ""}`}
+                      onClick={() => {
+                        dispatch({ type: "climbingAbility", payload: i });
+                      }}
+                    ></span>
+                    {climbingOption}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5">

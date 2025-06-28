@@ -17,6 +17,7 @@ export interface ISignUp {
   parentContact: {
     email: string;
   };
+  climbingAbility: number;
 }
 
 const initialState = {
@@ -36,6 +37,7 @@ const initialState = {
   parentContact: {
     email: "",
   },
+  climbingAbility: 1,
 };
 
 const signUpSlice = createSlice({
@@ -84,6 +86,9 @@ const signUpSlice = createSlice({
     setParentContactMail: (state, action) => {
       state.parentContact.email = action.payload;
     },
+    setClimbingAbility: (state, action) => {
+      state.climbingAbility = action.payload;
+    },
     clearSignupData: () => initialState,
   },
 });
@@ -103,6 +108,7 @@ export const {
   setPostalCode,
   setCountry,
   setParentContactMail,
+  setClimbingAbility,
   clearSignupData,
 } = signUpSlice.actions;
 

@@ -82,6 +82,7 @@ export async function updateMe(
   country?: string,
   phoneNumber?: string,
   email?: string,
+  climbingAbility?: number,
 ) {
   try {
     const res = await fetch(`${import.meta.env.VITE_API_URL}/users/updateme`, {
@@ -99,6 +100,7 @@ export async function updateMe(
         country,
         phoneNumber,
         email,
+        climbingAbility,
       }),
     });
 
