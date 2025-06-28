@@ -46,7 +46,7 @@ function DashboardLayout() {
     return <Spinner />;
   }
 
-  if (!data.firstName) {
+  if (!data) {
     navigate("/");
   }
 
