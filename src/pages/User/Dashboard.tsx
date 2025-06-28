@@ -17,8 +17,6 @@ function Dashboard() {
     queryFn: getMe,
   });
 
-  console.log(import.meta.env.VITE_FRONTEND_URL);
-
   if (isPending) return <Spinner />;
 
   if (!data.firstName) {
