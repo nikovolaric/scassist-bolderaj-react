@@ -14,11 +14,11 @@ function LoginForm() {
       setIsPending(true);
       e.preventDefault();
 
-      const data = await loginAction({ email, password });
+      await loginAction({ email, password });
 
-      if (data instanceof Error) {
-        throw Error(data.message);
-      }
+      // if (data.status !== "success") {
+      //   throw Error(data.message);
+      // }
 
       navigate("/dashboard");
     } catch (error) {
@@ -27,10 +27,6 @@ function LoginForm() {
       setIsPending(false);
     }
   }
-
-  // if (data && !data.error) {
-  //   return <Navigate to="/dashboard" replace />;
-  // }
 
   return (
     <div className="flex flex-col gap-8">
