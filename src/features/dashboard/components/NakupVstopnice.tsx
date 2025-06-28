@@ -16,8 +16,8 @@ function NakupVstopnice({ me }: { me: { parentOf: { child: string }[] } }) {
         <LinkBtn
           to={
             me.parentOf && me.parentOf.length > 0
-              ? "/dashboard/tickets"
-              : "/dashboard/tickets/pickuser"
+              ? "/dashboard/tickets/pickuser"
+              : "/dashboard/tickets"
           }
           type="primary"
         >

@@ -3,7 +3,6 @@ import {
   ChatBubbleLeftRightIcon,
   PhoneIcon,
 } from "@heroicons/react/24/outline";
-import { Link } from "react-router";
 
 function Footer() {
   return (
@@ -60,22 +59,30 @@ function Footer() {
         </div>
       </div>
       <div className="bg-primary/45 flex w-full items-center justify-between px-4 py-3 text-xs font-semibold md:px-8 lg:justify-center lg:gap-16 lg:px-20 lg:text-base">
-        <Link to="/dashboard" className="underline">
-          Splošni pogoji
-        </Link>
-        <Link to="/dashboard" className="underline">
-          Pogoji spletnih nakupov
-        </Link>
-        <Link to="/dashboard" className="underline">
+        <a
+          href="https://bolderaj.si/splosni-pogoji-poslovanja/"
+          target="_blank"
+          className="underline"
+        >
+          Splošni pogoji poslovanja
+        </a>
+        <a
+          href="https://bolderaj.si/pravila-in-pogoji-uporabe-plezalnega-centra-bolderaj/"
+          target="_blank"
+          className="underline"
+        >
+          Pravila in pogoji uporabe plezalnega centra
+        </a>
+        {/* <a href="/" target="_blank" className="underline">
           Nastavitve piškotkov
-        </Link>
+        </a> */}
       </div>
-      <p className="w-full max-w-[1440px] px-4 text-center md:px-8 md:text-right lg:px-20 xl:mx-auto">
+      {/* <p className="w-full max-w-[1440px] px-4 text-center md:px-8 md:text-right lg:px-20 xl:mx-auto">
         Oblikovanje in razvoj:{" "}
         <a href="https://www.lamastrategies.com" target="_blank">
           LAMA Strategies
         </a>
-      </p>
+      </p> */}
     </footer>
   );
 }

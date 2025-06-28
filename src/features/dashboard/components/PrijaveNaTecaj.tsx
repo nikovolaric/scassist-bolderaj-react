@@ -15,8 +15,8 @@ function PrijaveNaTecaj({ me }: { me: { parentOf?: { child: string }[] } }) {
         <LinkBtn
           to={
             me.parentOf && me.parentOf.length > 0
-              ? "/dashboard/classes"
-              : "/dashboard/classes/pickuser"
+              ? "/dashboard/classes/pickuser"
+              : "/dashboard/classes"
           }
           type="primary"
         >
