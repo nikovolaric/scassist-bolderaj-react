@@ -1,19 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
 import NakupVstopnice from "./NakupVstopnice";
 import PrijaveNaTecaj from "./PrijaveNaTecaj";
-import Spinner from "../../../components/Spinner";
-import { getMe } from "../../../services/userAPI";
 
-function WelcomeSection({ ticketsPage }: { ticketsPage?: boolean }) {
-  const { data, isPending } = useQuery({
-    queryKey: ["me"],
-    queryFn: getMe,
-  });
-
-  if (isPending) {
-    return <Spinner />;
-  }
-
+function WelcomeSection({
+  data,
+  ticketsPage,
+}: {
+  data: { firstName: string; parentOf: { child: string }[] };
+  ticketsPage?: boolean;
+}) {
   return (
     <section className="flex flex-col gap-12">
       {!ticketsPage && (

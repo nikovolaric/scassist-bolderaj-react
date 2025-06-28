@@ -29,7 +29,7 @@ function Dashboard() {
           <NavMenu />
         </div>
         <div className="flex flex-col gap-12 lg:mt-12 lg:gap-24">
-          <WelcomeSection />
+          <WelcomeSection data={data} />
           <MyClimbingSection />
           {Array.isArray(data.parentOf) && data.parentOf.length > 0 && (
             <MyChildrenSection />
