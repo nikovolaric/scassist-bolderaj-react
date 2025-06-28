@@ -23,10 +23,10 @@ function SignupForm() {
   const [day, setDay] = useState("");
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
-  // const [age, setAge] = useState<number>(100);
   const [err, setErr] = useState("");
   const [isOpenSub, setIsOpenSub] = useState(false);
   const [ability, setAbility] = useState(0);
+  const [agree, setAgree] = useState(false);
 
   const climbingOptions = [
     "0 - brez plezalnega znanja",
@@ -67,6 +67,8 @@ function SignupForm() {
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    if (!userData.agreesToTerms || !agree) return;
 
     navigate("/signup/end");
   }
@@ -277,18 +279,14 @@ function SignupForm() {
             .
           </p>
           <div className="flex items-start gap-2">
-            <input
-              type="checkbox"
-              name="agreesToterms"
-              className="mt-1.5 cursor-pointer"
-              checked={userData.agreesToTerms}
-              required
-              onChange={(e) =>
+            <span
+              className={`h-5 w-5 flex-none cursor-pointer rounded-lg border border-black/50 ${userData.agreesToTerms ? "bg-primary/50" : "bg-white"}`}
+              onClick={() => {
                 dispatch(
-                  setAgreesToTerms(e.target.value === "on" ? true : false),
-                )
-              }
-            />
+                  setAgreesToTerms(!userData.agreesToTerms ? true : false),
+                );
+              }}
+            ></span>
             <label className="font-medium">
               Prebral/-a sem in se strinjam s{" "}
               <a
@@ -303,13 +301,12 @@ function SignupForm() {
             </label>
           </div>
           <div className="flex items-start gap-2">
-            <input
-              type="checkbox"
-              name="agreesToterms"
-              className="mt-1.5 cursor-pointer"
-              checked={userData.agreesToTerms}
-              required
-            />
+            <span
+              className={`h-5 w-5 flex-none cursor-pointer rounded-lg border border-black/50 ${agree ? "bg-primary/50" : "bg-white"}`}
+              onClick={() => {
+                setAgree((agree) => !agree);
+              }}
+            ></span>
             <label className="font-medium">
               Prebral/-a sem in se strinjam s{" "}
               <a

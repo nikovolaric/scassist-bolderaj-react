@@ -118,7 +118,7 @@ function SignUpEndForm() {
                 </label>
                 <input
                   type="password"
-                  placeholder="Ponovno Vnesi geslo"
+                  placeholder="Ponovno vnesi geslo"
                   className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 outline-none"
                   autoComplete="off"
                   required={true}

@@ -29,7 +29,7 @@ function Footer() {
                 <ChatBubbleLeftIcon className="text-secondary w-6 flex-none stroke-2" />
                 info@bolderaj.si
               </p>
-              <a className="flex items-center gap-4" href="phone:0038641718828">
+              <a className="flex items-center gap-4" href="tel:+38641718828">
                 <PhoneIcon className="text-secondary w-6 flex-none stroke-2" />
                 041 718 828
               </a>
