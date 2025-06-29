@@ -134,7 +134,6 @@ function PaymentType({
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
-  const [isLoading, setIsLoading] = useState(false);
   const [payment, setPayment] = useState("");
   const { mutate, isPending } = useMutation({
     mutationFn: buyArticlesOnline,
@@ -216,42 +215,27 @@ function PaymentType({
               <PayPalButtons
                 createOrder={(_, actions) => {
                   return actions.order.create({
+                    intent: "CAPTURE",
                     purchase_units: [
                       {
                         amount: {
                           currency_code: "EUR",
-                          value: parseFloat(amount).toFixed(2),
+                          value: amount,
                         },
                       },
                     ],
-                    intent: "CAPTURE",
                   });
                 }}
-                onApprove={async (data, actions) => {
-                  if (!actions.order) {
-                    alert(data);
-                    return;
-                  }
+                onApprove={async (_, actions) => {
+                  await actions.order?.capture();
 
-                  try {
-                    setIsLoading(true);
-                    const details = await actions.order.capture();
+                  mutate({
+                    articles,
+                    company,
+                    id: childId,
+                  });
 
-                    console.log("✅ Plačilo uspešno:", details);
-
-                    await mutate({
-                      articles,
-                      company,
-                      id: childId,
-                    });
-
-                    navigate(`${pathname}/success`);
-                  } catch (err) {
-                    console.error("Napaka med obdelavo plačila:", err);
-                    alert((err as Error).message);
-                  } finally {
-                    setIsLoading(false);
-                  }
+                  navigate(`${pathname}/success`);
                 }}
                 onCancel={() => {
                   navigate(pathname);
@@ -260,7 +244,6 @@ function PaymentType({
                   console.error("Napaka pri plačilu:", err);
                   alert("Plačilo ni uspelo.");
                 }}
-                disabled={isLoading}
               />
             </PayPalScriptProvider>
           </div>

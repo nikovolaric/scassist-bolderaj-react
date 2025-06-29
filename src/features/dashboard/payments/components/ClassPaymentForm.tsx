@@ -27,7 +27,7 @@ function ClassPaymentForm() {
   useEffect(() => {
     if (!isPending && data?.data?.id) {
       const widgetScript = document.createElement("script");
-      widgetScript.src = `https://eu-test.oppwa.com/v1/paymentWidgets.js?checkoutId=${data.data.id}`;
+      widgetScript.src = `https://eu-prod.oppwa.com/v1/paymentWidgets.js?checkoutId=${data.data.id}`;
       widgetScript.crossOrigin = "anonymous";
       widgetScript.integrity = data.data.integrity;
 
@@ -45,7 +45,7 @@ function ClassPaymentForm() {
 
   return (
     <form
-      action={`http://localhost:5173${pathname}/success`}
+      action={`${import.meta.env.VITE_FRONTEND_URL}/${pathname}/success`}
       className="paymentWidgets"
       data-brands="VISA MASTER"
     ></form>

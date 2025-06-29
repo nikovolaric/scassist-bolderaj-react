@@ -33,7 +33,7 @@ function GiftCart() {
           setAmount(
             (
               data.article.priceDDV * Number(giftCart.articles[0].quantity)
-            ).toString(),
+            ).toFixed(2),
           ),
         );
       }
@@ -188,6 +188,7 @@ function PaymentType({
                 clientId: import.meta.env.VITE_PAYPAL_CLIENTID,
                 currency: "EUR",
                 disableFunding: "card",
+                enableFunding: "applepay",
               }}
             >
               <PayPalButtons
@@ -204,17 +205,15 @@ function PaymentType({
                     intent: "CAPTURE",
                   });
                 }}
-                onApprove={(_, actions) => {
-                  return actions.order!.capture().then((details) => {
-                    console.log("Plačilo uspešno:", details);
+                onApprove={async (_, actions) => {
+                  await actions.order?.capture();
 
-                    mutate({
-                      articles,
-                      company,
-                    });
-
-                    navigate(`${pathname}/success`);
+                  mutate({
+                    articles,
+                    company,
                   });
+
+                  navigate(`${pathname}/success`);
                 }}
                 onCancel={() => {
                   navigate(pathname);

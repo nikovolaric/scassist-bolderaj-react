@@ -193,7 +193,6 @@ function PaymentType() {
             </label>
             <p className="font-medium">s plačilno kartico</p>
           </div>
-          {/* {isChecked === "" && <PaymentForm />} */}
           <ClassPaymentForm />
           <div className="flex gap-3">
             <label className="cursor-pointer">
@@ -255,22 +254,20 @@ function PaymentType() {
                           amount: {
                             currency_code: "EUR",
                             value: article.endDate
-                              ? article.classPriceData.priceDDV
-                              : article.priceDDV,
+                              ? article.classPriceData.priceDDV.toFixed(2)
+                              : article.priceDDV.toFixed(2),
                           },
                         },
                       ],
                       intent: "CAPTURE",
                     });
                   }}
-                  onApprove={(_, actions) => {
-                    return actions.order!.capture().then((details) => {
-                      console.log("Plačilo uspešno:", details);
+                  onApprove={async (_, actions) => {
+                    await actions.order?.capture();
 
-                      mutate({ classCart, company: ticketCart.company });
+                    mutate({ classCart, company: ticketCart.company });
 
-                      navigate(`${pathname}/success`);
-                    });
+                    navigate(`${pathname}/success`);
                   }}
                   onCancel={() => {
                     navigate(pathname);
@@ -419,7 +416,53 @@ function PaymentTypeChild() {
             <p className="font-medium">s plačilno kartico</p>
           </div>
           <ClassPaymentForm />
-          {/* {isChecked === "" && <PaymentForm />} */}
+          {isChecked === "paypal" && (
+            <div className="lg:mx-auto lg:w-1/2">
+              <PayPalScriptProvider
+                options={{
+                  clientId: import.meta.env.VITE_PAYPAL_CLIENTID,
+                  currency: "EUR",
+                  disableFunding: "card",
+                }}
+              >
+                <PayPalButtons
+                  createOrder={(_, actions) => {
+                    return actions.order.create({
+                      purchase_units: [
+                        {
+                          amount: {
+                            currency_code: "EUR",
+                            value: article.endDate
+                              ? article.classPriceData.priceDDV.toFixed(2)
+                              : article.priceDDV.toFixed(2),
+                          },
+                        },
+                      ],
+                      intent: "CAPTURE",
+                    });
+                  }}
+                  onApprove={async (_, actions) => {
+                    await actions.order?.capture();
+
+                    mutate({
+                      classCart,
+                      company: ticketCart.company,
+                      childId: childId!,
+                    });
+
+                    navigate(`${pathname}/success`);
+                  }}
+                  onCancel={() => {
+                    navigate(pathname);
+                  }}
+                  onError={(err) => {
+                    console.error("Napaka pri plačilu:", err);
+                    alert("Plačilo ni uspelo.");
+                  }}
+                />
+              </PayPalScriptProvider>
+            </div>
+          )}
           <div className="flex gap-3">
             <label className="cursor-pointer">
               <input
