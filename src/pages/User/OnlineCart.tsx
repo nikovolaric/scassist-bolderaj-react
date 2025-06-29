@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import Header from "../../components/Header";
 import { getTicketCart } from "../../features/dashboard/tickets/slices/ticketCartSlice";
@@ -135,22 +135,6 @@ function PaymentType({
   const { pathname } = useLocation();
 
   const [payment, setPayment] = useState("");
-  const { mutate, isPending } = useMutation({
-    mutationFn: buyArticlesOnline,
-    onSuccess: (data) => {
-      if (data instanceof Error) {
-        throw data;
-      } else {
-        localStorage.removeItem("articles");
-        localStorage.removeItem("company");
-      }
-    },
-    onError: (error) => {
-      console.log((error as Error).message);
-    },
-  });
-
-  if (isPending) return <Spinner />;
 
   return (
     <>
@@ -229,12 +213,15 @@ function PaymentType({
                 onApprove={async (_, actions) => {
                   await actions.order?.capture();
 
-                  mutate({
+                  await buyArticlesOnline({
                     articles,
                     company,
                     id: childId,
+                    paymentMethod: "paypal",
                   });
 
+                  localStorage.removeItem("articles");
+                  localStorage.removeItem("company");
                   navigate(`${pathname}/success`);
                 }}
                 onCancel={() => {

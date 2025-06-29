@@ -57,6 +57,7 @@ export async function buyArticlesOnline({
   company,
   id,
   checkoutId,
+  paymentMethod,
 }: {
   articles: {
     articleId: string;
@@ -81,6 +82,7 @@ export async function buyArticlesOnline({
   };
   id?: string;
   checkoutId?: string;
+  paymentMethod?: string;
 }) {
   try {
     const res = await fetch(
@@ -91,7 +93,13 @@ export async function buyArticlesOnline({
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ articles, paymentData, company, checkoutId }),
+        body: JSON.stringify({
+          articles,
+          paymentData,
+          company,
+          checkoutId,
+          paymentMethod,
+        }),
       },
     );
 
@@ -134,7 +142,7 @@ export async function getGiftArticles(ageGroup: string, label: string) {
 
     return data;
   } catch (error) {
-    return error as Error;
+    throw error as Error;
   }
 }
 
@@ -142,6 +150,7 @@ export async function buyGiftOnline({
   articles,
   company,
   checkoutId,
+  paymentMethod,
 }: {
   articles: {
     articleId: string;
@@ -155,6 +164,7 @@ export async function buyGiftOnline({
     taxNumber: string;
   };
   checkoutId?: string;
+  paymentMethod?: string;
 }) {
   try {
     const res = await fetch(
@@ -165,7 +175,7 @@ export async function buyGiftOnline({
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ articles, company, checkoutId }),
+        body: JSON.stringify({ articles, company, checkoutId, paymentMethod }),
       },
     );
 

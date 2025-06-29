@@ -265,7 +265,10 @@ function PaymentType() {
                   onApprove={async (_, actions) => {
                     await actions.order?.capture();
 
-                    mutate({ classCart, company: ticketCart.company });
+                    await signUpForClassOnline({
+                      classCart,
+                      company: ticketCart.company,
+                    });
 
                     navigate(`${pathname}/success`);
                   }}
@@ -444,7 +447,7 @@ function PaymentTypeChild() {
                   onApprove={async (_, actions) => {
                     await actions.order?.capture();
 
-                    mutate({
+                    await signUpChildForClassOnline({
                       classCart,
                       company: ticketCart.company,
                       childId: childId!,

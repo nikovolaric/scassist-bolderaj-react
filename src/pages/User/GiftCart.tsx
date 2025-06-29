@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { buyGiftOnline, getOneArticle } from "../../services/articlesAPI";
 import { getGiftCart } from "../../features/dashboard/gifts/slices/giftSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -114,22 +114,6 @@ function PaymentType({
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [payment, setPayment] = useState("");
-  const { mutate, isPending } = useMutation({
-    mutationFn: buyGiftOnline,
-    onSuccess: (data) => {
-      if (data instanceof Error) {
-        throw data;
-      } else {
-        localStorage.removeItem("articles");
-        localStorage.removeItem("company");
-      }
-    },
-    onError: (error) => {
-      console.log((error as Error).message);
-    },
-  });
-
-  if (isPending) return <Spinner />;
 
   return (
     <>
@@ -208,10 +192,14 @@ function PaymentType({
                 onApprove={async (_, actions) => {
                   await actions.order?.capture();
 
-                  mutate({
+                  await buyGiftOnline({
                     articles,
                     company,
+                    paymentMethod: "paypal",
                   });
+
+                  localStorage.removeItem("articles");
+                  localStorage.removeItem("company");
 
                   navigate(`${pathname}/success`);
                 }}
