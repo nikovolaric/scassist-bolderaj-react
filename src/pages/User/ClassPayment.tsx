@@ -426,6 +426,7 @@ function PaymentTypeChild() {
                   clientId: import.meta.env.VITE_PAYPAL_CLIENTID,
                   currency: "EUR",
                   disableFunding: "card",
+                  enableFunding: "applepay",
                 }}
               >
                 <PayPalButtons
@@ -460,7 +461,6 @@ function PaymentTypeChild() {
                   }}
                   onError={(err) => {
                     console.error("Napaka pri plačilu:", err);
-                    alert("Plačilo ni uspelo.");
                   }}
                 />
               </PayPalScriptProvider>

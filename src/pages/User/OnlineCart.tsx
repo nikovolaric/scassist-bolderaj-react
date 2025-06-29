@@ -229,7 +229,6 @@ function PaymentType({
                 }}
                 onError={(err) => {
                   console.error("Napaka pri plačilu:", err);
-                  alert("Plačilo ni uspelo.");
                 }}
               />
             </PayPalScriptProvider>
