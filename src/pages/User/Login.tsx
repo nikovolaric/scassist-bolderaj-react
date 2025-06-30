@@ -4,6 +4,7 @@ import LoginForm from "../../features/auth/components/LoginForm";
 import { getMe } from "../../services/userAPI";
 import Spinner from "../../components/Spinner";
 import { useNavigate } from "react-router";
+import { useEffect } from "react";
 
 function Login() {
   const navigate = useNavigate();
@@ -12,12 +13,17 @@ function Login() {
     queryFn: getMe,
   });
 
+  useEffect(
+    function () {
+      if (!isPending && data.firstName) {
+        navigate("/dashboard");
+      }
+    },
+    [isPending, data, navigate],
+  );
+
   if (isPending) {
     return <Spinner />;
-  }
-
-  if (!(data instanceof Error) && !data.role.includes("admin")) {
-    navigate("/dashboard");
   }
 
   return (

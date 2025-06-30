@@ -19,16 +19,14 @@ export async function loginAction({
         password,
       }),
     });
+    const data = await res.json();
 
     if (!res.ok) {
-      const data = await res.json();
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
       throw Error(data.message);
     }
-
-    const data = await res.json();
 
     return data;
   } catch (error) {
@@ -48,7 +46,7 @@ export async function logout() {
 
     if (!res.ok) {
       const data = await res.json();
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
       throw Error(data.message);
@@ -76,7 +74,7 @@ export async function signUpNewUser(signUpData: ISignUp) {
     console.log(data);
 
     if (!res.ok) {
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
 
@@ -114,7 +112,7 @@ export async function createChild(child: {
     if (!res.ok) {
       const data = await res.json();
 
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
 
@@ -148,7 +146,7 @@ export async function sendChildAuthMail({
     if (!res.ok) {
       const data = await res.json();
 
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
 
@@ -187,7 +185,7 @@ export async function setChildAuth({
 
     if (!res.ok) {
       const data = await res.json();
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
 
@@ -224,7 +222,7 @@ export async function updatePassword(
 
     if (!res.ok) {
       const data = await res.json();
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
       throw Error(data.message);
@@ -255,7 +253,7 @@ export async function sendResetToken(email: string) {
 
     if (!res.ok) {
       const data = await res.json();
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
       throw Error(data.message);
@@ -291,7 +289,7 @@ export async function resetPassword(
 
     if (!res.ok) {
       const data = await res.json();
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
       throw Error(data.message);
@@ -316,7 +314,7 @@ export async function confirmMail(token: string) {
 
     if (!res.ok) {
       const data = await res.json();
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
       throw Error(data.message);
@@ -345,7 +343,7 @@ export async function sendNewConfirmMail() {
 
     if (!res.ok) {
       const data = await res.json();
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error("Napaka na strežniku! Prosim poskusite kasneje.");
       }
       throw Error(data.message);
