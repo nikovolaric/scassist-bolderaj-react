@@ -94,16 +94,7 @@ function DownloadInvoiceCard({
     try {
       setIsLoading(true);
 
-      const data = await downloadMyInvoice(id);
-
-      if (data instanceof Error) return data;
-
-      const url = URL.createObjectURL(data);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `${invoiceData.businessPremises}-${invoiceData.deviceNo}-${invoiceData.invoiceNo}-${invoiceData.year}.pdf`;
-      a.click();
-      URL.revokeObjectURL(url);
+      await downloadMyInvoice(id);
     } catch (error) {
       console.log(error as Error);
     } finally {

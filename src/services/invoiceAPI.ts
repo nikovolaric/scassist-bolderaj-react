@@ -42,9 +42,9 @@ export async function downloadMyInvoice(id: string) {
       throw Error(data.message);
     }
 
-    const data = await res.blob();
-
-    return data;
+    const blob = await res.blob();
+    const url = URL.createObjectURL(blob);
+    window.open(url, "_blank");
   } catch (error) {
     return error as Error;
   }
