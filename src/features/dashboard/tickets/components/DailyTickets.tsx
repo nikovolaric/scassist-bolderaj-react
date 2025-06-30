@@ -29,8 +29,8 @@ function DailyTickets() {
   useEffect(
     function () {
       if (!me) return;
-      if (me.age < 18) {
-        setAgeGroup(me.ageGroup);
+      if (me.age < 26) {
+        setAgeGroup(me.ageGroup[0]);
       } else {
         setAgeGroup("adult");
       }
