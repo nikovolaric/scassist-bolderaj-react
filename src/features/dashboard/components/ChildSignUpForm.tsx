@@ -401,7 +401,7 @@ function ChildSignUpForm({
                   dispatch({ type: "address", payload: e.target.value })
                 }
                 disabled={asParent}
-                defaultValue={asParent ? data.address : ""}
+                value={asParent ? data.address : undefined}
               />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -413,7 +413,7 @@ function ChildSignUpForm({
                   dispatch({ type: "city", payload: e.target.value })
                 }
                 disabled={asParent}
-                defaultValue={asParent ? data.city : ""}
+                value={asParent ? data.city : undefined}
               />
             </div>
           </div>
@@ -427,7 +427,7 @@ function ChildSignUpForm({
                   dispatch({ type: "postalCode", payload: e.target.value })
                 }
                 disabled={asParent}
-                defaultValue={asParent ? data.postalCode : ""}
+                value={asParent ? data.postalCode : undefined}
               />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -439,7 +439,7 @@ function ChildSignUpForm({
                   dispatch({ type: "country", payload: e.target.value })
                 }
                 disabled={asParent}
-                defaultValue={asParent ? data.country : ""}
+                value={asParent ? data.country : undefined}
               />
             </div>
           </div>
@@ -464,23 +464,6 @@ function ChildSignUpForm({
                   dispatch({
                     type: "country",
                     payload: data.country,
-                  });
-                } else {
-                  dispatch({
-                    type: "address",
-                    payload: "",
-                  });
-                  dispatch({
-                    type: "city",
-                    payload: "",
-                  });
-                  dispatch({
-                    type: "postalCode",
-                    payload: "",
-                  });
-                  dispatch({
-                    type: "country",
-                    payload: "",
                   });
                 }
               }}
