@@ -30,7 +30,7 @@ function MyClasses() {
   return (
     <div className="flex flex-col gap-6 rounded-xl bg-white px-5 py-8 md:px-6 lg:py-10 xl:gap-12">
       <p className="font-quicksand text-lg font-bold lg:text-xl">
-        MOJE VADBE IN TEČAJI
+        MOJE AKTIVNOSTI IN VADBE
       </p>
       <div className="flex flex-col gap-6">
         {data.classes.map(

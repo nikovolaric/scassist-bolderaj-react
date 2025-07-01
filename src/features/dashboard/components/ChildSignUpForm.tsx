@@ -401,7 +401,7 @@ function ChildSignUpForm({
                   dispatch({ type: "address", payload: e.target.value })
                 }
                 disabled={asParent}
-                value={asParent ? data.address : ""}
+                defaultValue={asParent ? data.address : ""}
               />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -413,7 +413,7 @@ function ChildSignUpForm({
                   dispatch({ type: "city", payload: e.target.value })
                 }
                 disabled={asParent}
-                value={asParent ? data.city : ""}
+                defaultValue={asParent ? data.city : ""}
               />
             </div>
           </div>
@@ -427,7 +427,7 @@ function ChildSignUpForm({
                   dispatch({ type: "postalCode", payload: e.target.value })
                 }
                 disabled={asParent}
-                value={asParent ? data.postalCode : ""}
+                defaultValue={asParent ? data.postalCode : ""}
               />
             </div>
             <div className="flex flex-col gap-1.5">
@@ -439,7 +439,7 @@ function ChildSignUpForm({
                   dispatch({ type: "country", payload: e.target.value })
                 }
                 disabled={asParent}
-                value={asParent ? data.country : ""}
+                defaultValue={asParent ? data.country : ""}
               />
             </div>
           </div>
