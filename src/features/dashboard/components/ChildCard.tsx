@@ -5,8 +5,27 @@ import ChildLoginDataForm from "./ChildLoginDataForm";
 
 function ChildCard({ child }: { child: IChild }) {
   const [isOpen, setIsOpen] = useState(false);
-  const { firstName, lastName, birthDate, address, city, postalCode, country } =
-    child;
+  const {
+    firstName,
+    lastName,
+    birthDate,
+    address,
+    city,
+    postalCode,
+    country,
+    climbingAbility,
+  } = child;
+
+  const climbingOptions = [
+    "0 - brez plezalnega znanja",
+    "1 - zelo lahko (3-4)",
+    "2 - lahko (4-5B)",
+    "3 - zmerno (5B-6A+)",
+    "4 - srednje težko (6A+-6C)",
+    "5 - težko (6C-7A+)",
+    "6 - zelo težko (7A+-7C)",
+    "7 - ekstremno (več kot 7C)",
+  ];
 
   return (
     <div className="flex flex-col gap-16 rounded-xl bg-white px-4 py-7 lg:px-6 lg:py-9">
@@ -67,6 +86,15 @@ function ChildCard({ child }: { child: IChild }) {
                     className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
                   />
                   <div className="hidden lg:block" />
+                </div>
+                <div className="relative z-50 flex flex-col gap-1">
+                  <p className="text-sm font-medium">Plezalno znanje</p>
+                  <input
+                    className="drop-shadow-input border-gray w-full rounded-lg border bg-white px-3.5 py-2.5"
+                    placeholder="Izberi podkategorijo"
+                    disabled
+                    value={climbingOptions[climbingAbility ?? 0]}
+                  />
                 </div>
               </div>
               <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 lg:gap-x-16">

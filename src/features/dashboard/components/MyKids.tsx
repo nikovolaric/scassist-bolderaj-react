@@ -18,6 +18,7 @@ export interface IChild {
   phoneNumber: string | undefined;
   email: string | undefined;
   password: string;
+  climbingAbility: number;
 }
 
 function MyKids() {

@@ -95,6 +95,7 @@ export async function createChild(child: {
   country: string;
   infoIsTrue: boolean;
   agreesToTerms: boolean;
+  climbingAbility: number;
 }) {
   try {
     const res = await fetch(

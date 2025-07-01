@@ -4,10 +4,12 @@ import {
   SetStateAction,
   useEffect,
   useReducer,
+  useState,
 } from "react";
 import { createChild } from "../../../services/authAPI";
-import { useQueryClient } from "@tanstack/react-query";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { ChevronDownIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { getMe } from "../../../services/userAPI";
 
 interface IInitialState {
   firstName: string;
@@ -21,6 +23,7 @@ interface IInitialState {
   day: string;
   month: string;
   year: string;
+  climbingAbility: number;
   err: string;
   isLoading: boolean;
 }
@@ -32,11 +35,12 @@ type Action =
   | { type: "city"; payload: string }
   | { type: "postalCode"; payload: string }
   | { type: "country"; payload: string }
-  | { type: "infoIsTrue"; payload: string }
-  | { type: "agreesToTerms"; payload: string }
+  | { type: "infoIsTrue"; payload: boolean }
+  | { type: "agreesToTerms"; payload: boolean }
   | { type: "day"; payload: string }
   | { type: "month"; payload: string }
   | { type: "year"; payload: string }
+  | { type: "climbingAbility"; payload: number }
   | { type: "loading"; payload: boolean }
   | { type: "error"; payload: string };
 
@@ -53,6 +57,7 @@ const initialState: IInitialState = {
   month: "",
   year: "",
   err: "",
+  climbingAbility: 0,
   isLoading: false,
 };
 
@@ -97,13 +102,13 @@ function reducer(state: IInitialState, action: Action): IInitialState {
     case "infoIsTrue": {
       return {
         ...state,
-        infoIsTrue: action.payload === "on" ? true : false,
+        infoIsTrue: action.payload,
       };
     }
     case "agreesToTerms": {
       return {
         ...state,
-        agreesToTerms: action.payload === "on" ? true : false,
+        agreesToTerms: action.payload,
       };
     }
     case "day": {
@@ -122,6 +127,12 @@ function reducer(state: IInitialState, action: Action): IInitialState {
       return {
         ...state,
         year: action.payload,
+      };
+    }
+    case "climbingAbility": {
+      return {
+        ...state,
+        climbingAbility: action.payload,
       };
     }
     case "error": {
@@ -144,6 +155,12 @@ function ChildSignUpForm({
 }: {
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) {
+  const { data } = useQuery({
+    queryKey: ["me"],
+    queryFn: getMe,
+  });
+
+  const [asParent, setAsParent] = useState(false);
   const queryClient = useQueryClient();
   const [
     {
@@ -158,11 +175,26 @@ function ChildSignUpForm({
       day,
       month,
       year,
+      climbingAbility,
       err,
       isLoading,
     },
     dispatch,
   ] = useReducer(reducer, initialState);
+
+  const [ability, setAbility] = useState(0);
+  const [isOpenSub, setIsOpenSub] = useState(false);
+
+  const climbingOptions = [
+    "0 - brez plezalnega znanja",
+    "1 - zelo lahko (3-4)",
+    "2 - lahko (4-5B)",
+    "3 - zmerno (5B-6A+)",
+    "4 - srednje težko (6A+-6C)",
+    "5 - težko (6C-7A+)",
+    "6 - zelo težko (7A+-7C)",
+    "7 - ekstremno (več kot 7C)",
+  ];
 
   useEffect(() => {
     if (day && month && year) {
@@ -205,6 +237,7 @@ function ChildSignUpForm({
         country,
         infoIsTrue,
         agreesToTerms,
+        climbingAbility,
       };
 
       const result = await createChild(newChild);
@@ -325,73 +358,145 @@ function ChildSignUpForm({
                 </select>
               </div>
             </div>
+            <div className="relative z-50 flex flex-col gap-1">
+              <p className="text-sm font-medium">
+                Plezalno znanje<span className="text-red-500">*</span>
+              </p>
+              <input
+                className="drop-shadow-input border-gray w-full rounded-lg border bg-white px-3.5 py-2.5"
+                placeholder="Izberi podkategorijo"
+                disabled
+                value={climbingOptions[ability]}
+              />
+              <ChevronDownIcon
+                className={`absolute right-4 bottom-3 w-5 cursor-pointer stroke-2 ${isOpenSub ? "rotate-180" : ""}`}
+                onClick={() => setIsOpenSub((isOpen) => !isOpen)}
+              />
+              {isOpenSub && (
+                <div className="absolute top-[110%] left-0 flex w-full flex-col gap-2 rounded-lg border border-black/20 bg-white px-4 py-2 shadow-xs">
+                  {climbingOptions.map((climbingOption, i) => (
+                    <div key={i} className="flex items-center gap-2">
+                      <span
+                        className={`h-6 w-6 cursor-pointer rounded-lg border border-black/50 ${ability === i ? "bg-primary/50" : ""}`}
+                        onClick={() => {
+                          setAbility(i);
+                          dispatch({ type: "climbingAbility", payload: i });
+                          setIsOpenSub(false);
+                        }}
+                      ></span>
+                      {climbingOption}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
           <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 lg:gap-x-16">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">
-                Naslov bivališča <span className="text-red-500">*</span>
-              </label>
+              <label className="text-sm font-medium">Naslov bivališča</label>
               <input
                 type="text"
-                required
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
                 onChange={(e) =>
                   dispatch({ type: "address", payload: e.target.value })
                 }
+                disabled={asParent}
+                value={asParent ? data.address : ""}
               />
             </div>
-
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">
-                Kraj bivališča <span className="text-red-500">*</span>
-              </label>
+              <label className="text-sm font-medium">Kraj bivališča</label>
               <input
                 type="text"
-                required
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
                 onChange={(e) =>
                   dispatch({ type: "city", payload: e.target.value })
                 }
+                disabled={asParent}
+                value={asParent ? data.city : ""}
               />
             </div>
           </div>
           <div className="flex flex-col gap-6 md:grid md:grid-cols-2 md:gap-5 lg:gap-x-16">
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">
-                Poštna številka <span className="text-red-500">*</span>
-              </label>
+              <label className="text-sm font-medium">Poštna številka</label>
               <input
                 type="text"
-                required
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
                 onChange={(e) =>
                   dispatch({ type: "postalCode", payload: e.target.value })
                 }
+                disabled={asParent}
+                value={asParent ? data.postalCode : ""}
               />
             </div>
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium">
-                Država <span className="text-red-500">*</span>
-              </label>
+              <label className="text-sm font-medium">Država</label>
               <input
                 type="text"
-                required
                 className="drop-shadow-input border-gray rounded-lg border bg-white px-3.5 py-2.5 disabled:cursor-not-allowed"
                 onChange={(e) =>
                   dispatch({ type: "country", payload: e.target.value })
                 }
+                disabled={asParent}
+                value={asParent ? data.country : ""}
               />
             </div>
           </div>
           <div className="flex items-start gap-4">
-            <input
-              type="checkbox"
-              required
-              className="mt-1.5 cursor-pointer"
-              onChange={(e) =>
-                dispatch({ type: "infoIsTrue", payload: e.target.value })
-              }
-            />
+            <span
+              className={`h-5 w-5 flex-none cursor-pointer rounded-lg border border-black/50 ${asParent ? "bg-primary/50" : "bg-white"}`}
+              onClick={() => {
+                setAsParent((asParent) => !asParent);
+                if (!asParent) {
+                  dispatch({
+                    type: "address",
+                    payload: data.address,
+                  });
+                  dispatch({
+                    type: "city",
+                    payload: data.city,
+                  });
+                  dispatch({
+                    type: "postalCode",
+                    payload: data.postalCode,
+                  });
+                  dispatch({
+                    type: "country",
+                    payload: data.country,
+                  });
+                } else {
+                  dispatch({
+                    type: "address",
+                    payload: "",
+                  });
+                  dispatch({
+                    type: "city",
+                    payload: "",
+                  });
+                  dispatch({
+                    type: "postalCode",
+                    payload: "",
+                  });
+                  dispatch({
+                    type: "country",
+                    payload: "",
+                  });
+                }
+              }}
+            ></span>
+            <label>Podatki o bivališču se enaki kot pri meni.</label>
+          </div>
+          <div className="flex items-start gap-4">
+            <span
+              className={`h-5 w-5 flex-none cursor-pointer rounded-lg border border-black/50 ${infoIsTrue ? "bg-primary/50" : "bg-white"}`}
+              onClick={() => {
+                dispatch({
+                  type: "infoIsTrue",
+                  payload: !infoIsTrue ? true : false,
+                });
+              }}
+            ></span>
             <label>
               Izjavljam, da sem zakoniti skrbnik/-ca oz. garant s pisnim
               pooblastilom skrbnika zgoraj navedene mladoletne osebe in da so
@@ -400,14 +505,15 @@ function ChildSignUpForm({
             </label>
           </div>
           <div className="flex items-start gap-4">
-            <input
-              type="checkbox"
-              required
-              className="mt-1.5 cursor-pointer"
-              onChange={(e) =>
-                dispatch({ type: "agreesToTerms", payload: e.target.value })
-              }
-            />
+            <span
+              className={`h-5 w-5 flex-none cursor-pointer rounded-lg border border-black/50 ${agreesToTerms ? "bg-primary/50" : "bg-white"}`}
+              onClick={() => {
+                dispatch({
+                  type: "agreesToTerms",
+                  payload: !agreesToTerms ? true : false,
+                });
+              }}
+            ></span>
             <label>
               Prebral/-a sem in se strinjam s{" "}
               <a
