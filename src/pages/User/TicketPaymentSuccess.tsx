@@ -2,13 +2,14 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
 import LinkBtn from "../../components/LinkBtn";
 import { Link, useParams, useSearchParams } from "react-router";
 import Header from "../../components/Header";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { buyArticlesOnline } from "../../services/articlesAPI";
 import Spinner from "../../components/Spinner";
 
 function TicketPaymentSuccess() {
   const [searchParams] = useSearchParams();
+  const hasMutated = useRef(false);
   const checkoutId = searchParams.get("id");
   const { childId } = useParams();
   const { mutate, isPending } = useMutation({
@@ -28,16 +29,18 @@ function TicketPaymentSuccess() {
 
   useEffect(
     function () {
-      const articles = JSON.parse(localStorage.getItem("articles") as string);
-      const company = JSON.parse(localStorage.getItem("company") as string);
+      if (checkoutId && !hasMutated.current) {
+        const articles = JSON.parse(localStorage.getItem("articles") as string);
+        const company = JSON.parse(localStorage.getItem("company") as string);
 
-      if (checkoutId) {
         mutate({
           articles,
           company,
           id: childId,
           checkoutId,
         });
+
+        hasMutated.current = true;
       }
     },
     [checkoutId],
