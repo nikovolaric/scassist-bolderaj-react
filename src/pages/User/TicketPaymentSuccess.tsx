@@ -38,6 +38,7 @@ function TicketPaymentSuccess() {
           company,
           id: childId,
           checkoutId,
+          paymentMethod: "online",
         });
 
         hasMutated.current = true;

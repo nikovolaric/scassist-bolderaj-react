@@ -34,6 +34,7 @@ function GiftPaymentSuccess() {
           articles,
           company,
           checkoutId,
+          paymentMethod: "online",
         });
       }
     },
