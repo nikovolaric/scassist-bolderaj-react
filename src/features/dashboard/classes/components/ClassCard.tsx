@@ -19,7 +19,7 @@ export interface IClassArticle {
 
 function ClassCard({ classInfo }: { classInfo: IClassArticle }) {
   const { childId } = useParams();
-  const { name, endDate, classPriceData, _id, priceDDV } = classInfo;
+  const { name, startDate, endDate, classPriceData, _id, priceDDV } = classInfo;
 
   return (
     <div className="flex flex-col gap-8 rounded-xl bg-white px-4 py-6">
@@ -30,7 +30,7 @@ function ClassCard({ classInfo }: { classInfo: IClassArticle }) {
         <p>
           <span className="font-semibold">Trajanje: </span>
           {endDate
-            ? `${new Date().toLocaleDateString("sl-SI", {
+            ? `${new Date(startDate).toLocaleDateString("sl-SI", {
                 day: "2-digit",
                 month: "2-digit",
                 year: "numeric",

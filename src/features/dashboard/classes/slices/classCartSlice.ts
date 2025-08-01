@@ -28,7 +28,10 @@ const classCartSlice = createSlice({
     clearOneClass: (state, action) => {
       state.classes = state.classes.filter((el) => el !== action.payload);
     },
-    clearClassData: () => initialState,
+    clearClassData: () => {
+      localStorage.removeItem("classCart");
+      return initialState;
+    },
   },
 });
 

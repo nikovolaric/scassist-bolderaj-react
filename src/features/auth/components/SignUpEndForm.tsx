@@ -25,14 +25,22 @@ function SignUpEndForm() {
       } else {
         setErr("");
       }
+
+      if (/[čČšŠžŽđĐćĆęń]/.test(userData.email)) {
+        setErr("Nedovoljeni znaki v elektronskem naslovu!");
+      }
     },
-    [userData.password],
+    [userData.password, userData.email],
   );
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
       setIsLoading(true);
+
+      if (/[čČšŠžŽđĐćĆęń]/.test(userData.email)) {
+        throw new Error("Nedovoljeni znaki v elektronskem naslovu!");
+      }
 
       if (userData.password !== userData.passwordConfirm) {
         throw new Error("Gesli se ne ujemata!");

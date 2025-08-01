@@ -25,22 +25,22 @@ function ChooseMultipleDates() {
   }
 
   const mondays = data.classes.filter(
-    (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 0,
-  );
-  const tuesdays = data.classes.filter(
     (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 1,
   );
-  const wednesdays = data.classes.filter(
+  const tuesdays = data.classes.filter(
     (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 2,
   );
-  const thursdays = data.classes.filter(
+  const wednesdays = data.classes.filter(
     (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 3,
   );
-  const fridays = data.classes.filter(
+  const thursdays = data.classes.filter(
     (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 4,
   );
-  const saturdays = data.classes.filter(
+  const fridays = data.classes.filter(
     (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 5,
+  );
+  const saturdays = data.classes.filter(
+    (el: { dates: string[] }) => new Date(el.dates[0]).getDay() === 6,
   );
 
   if (data.classes.length === 0) {

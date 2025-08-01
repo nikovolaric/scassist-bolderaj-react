@@ -11,10 +11,11 @@ import {
   signUpChildForClassOnline,
   signUpForClassOnline,
 } from "../../services/classAPI";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 function ClassSignUpSuccess() {
   const [searchParams] = useSearchParams();
+  const hasMutated = useRef(false);
   const checkoutId = searchParams.get("id");
   const { childId } = useParams();
   const { mutate, isPending } = useMutation({
@@ -51,21 +52,25 @@ function ClassSignUpSuccess() {
     function () {
       const classCart = JSON.parse(localStorage.getItem("classCart") as string);
       const company = JSON.parse(localStorage.getItem("company") as string);
-      if (checkoutId && !childId) {
+      if (checkoutId && !childId && !hasMutated.current) {
         mutate({
-          classCart,
+          classCart: { ...classCart, paymentMethod: "online" },
           company,
           checkoutId,
         });
+
+        hasMutated.current = true;
       }
 
-      if (checkoutId && childId) {
+      if (checkoutId && childId && !hasMutated.current) {
         mutateChild({
-          classCart,
+          classCart: { ...classCart, paymentMethod: "online" },
           company,
           childId,
           checkoutId,
         });
+
+        hasMutated.current = true;
       }
     },
     [checkoutId, childId],

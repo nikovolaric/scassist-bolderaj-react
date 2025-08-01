@@ -7,7 +7,7 @@ import {
   setPaymentMethod,
 } from "../../features/dashboard/classes/slices/classCartSlice";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueries, useQuery } from "@tanstack/react-query";
 import {
   signUpChildForClassOnline,
   signUpForClassOnline,
@@ -20,20 +20,24 @@ import CompanyInvoiceForm from "../../features/dashboard/payments/components/Com
 import { getTicketCart } from "../../features/dashboard/tickets/slices/ticketCartSlice";
 import ClassPaymentForm from "../../features/dashboard/payments/components/ClassPaymentForm";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { getMe, getMyChild } from "../../services/userAPI";
 
 function ClassPayment() {
   const navigate = useNavigate();
   const { id, childId } = useParams();
   const dispatch = useAppDispatch();
   const classCart = useAppSelector(getClassCart);
-  const queryClient = useQueryClient();
-  const me = queryClient.getQueryData<{
-    firstName: string;
-    parentOf: unknown[];
-  }>(["me"])!;
-  const child = queryClient.getQueryData<{
-    myChild: { firstName: string; age: string };
-  }>(["child"])?.myChild;
+
+  const [{ data: me, isPending: isPendingMe }, { data: child }] = useQueries({
+    queries: [
+      { queryKey: ["me"], queryFn: getMe },
+      {
+        queryKey: ["child"],
+        queryFn: () => getMyChild(childId!),
+        enabled: !!childId,
+      },
+    ],
+  });
 
   useEffect(
     function () {
@@ -44,6 +48,10 @@ function ClassPayment() {
     },
     [id, dispatch, navigate, classCart],
   );
+
+  if (isPendingMe) {
+    return <Spinner />;
+  }
 
   return (
     <div className="my-16 flex flex-col">
@@ -80,7 +88,7 @@ function PaymentType() {
   const dispatch = useAppDispatch();
   const classCart = useAppSelector(getClassCart);
   const ticketCart = useAppSelector(getTicketCart);
-  const [isChecked, setIsChecked] = useState<string | undefined>(undefined);
+  const [isChecked, setIsChecked] = useState<string>("");
 
   const { mutate, isPending: isPendingBtn } = useMutation({
     mutationFn: signUpForClassOnline,
@@ -141,7 +149,7 @@ function PaymentType() {
         {article.endDate && (
           <p>
             <span className="font-semibold">Trajanje: </span>{" "}
-            {new Date().toLocaleDateString("sl-SI", {
+            {new Date(article.startDate).toLocaleDateString("sl-SI", {
               day: "2-digit",
               month: "2-digit",
               year: "numeric",
@@ -266,7 +274,7 @@ function PaymentType() {
                     await actions.order?.capture();
 
                     await signUpForClassOnline({
-                      classCart,
+                      classCart: { ...classCart, paymentMethod: "paypal" },
                       company: ticketCart.company,
                     });
 
@@ -371,7 +379,7 @@ function PaymentTypeChild() {
         {article.endDate && (
           <p>
             <span className="font-semibold">Trajanje: </span>{" "}
-            {new Date().toLocaleDateString("sl-SI", {
+            {new Date(article.startDate).toLocaleDateString("sl-SI", {
               day: "2-digit",
               month: "2-digit",
               year: "numeric",
@@ -387,13 +395,7 @@ function PaymentTypeChild() {
         <p className="bg-primary/35 rounded-xl px-4 py-3 md:justify-self-end">
           Skupaj za plačilo:{" "}
           <span className="font-semibold">
-            {(article.endDate
-              ? article.classPriceData.priceDDV
-              : article.priceDDV
-            )
-              .toFixed(2)
-              .replace(".", ",")}{" "}
-            €
+            {article.classPriceData.priceDDV.toFixed(2).replace(".", ",")} €
           </span>
         </p>
       </div>
@@ -449,7 +451,7 @@ function PaymentTypeChild() {
                     await actions.order?.capture();
 
                     await signUpChildForClassOnline({
-                      classCart,
+                      classCart: { ...classCart, paymentMethod: "paypal" },
                       company: ticketCart.company,
                       childId: childId!,
                     });

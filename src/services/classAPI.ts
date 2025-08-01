@@ -10,7 +10,7 @@ export async function getMyClasses(limit?: number) {
 
     if (!res.ok) {
       const data = await res.json();
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error(
           "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
         );
@@ -38,7 +38,7 @@ export async function getChildClasses(id: string) {
 
     if (!res.ok) {
       const data = await res.json();
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error(
           "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
         );
@@ -59,8 +59,19 @@ export async function getMultipleDateClasses(
   ageGroup?: string,
 ) {
   try {
+    const params = new URLSearchParams();
+
+    params.append("hiddenUsers", "false");
+    params.append("article", article);
+
+    if (ageGroup) {
+      params.append("ageGroup", ageGroup);
+    } else {
+      params.append("ageGroup", "adult");
+    }
+
     const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/classes/multipledates?article=${article}${ageGroup ? `&ageGroup=${ageGroup}` : "&ageGroup=adult"}`,
+      `${import.meta.env.VITE_API_URL}/classes/multipledates?${params.toString()}`,
       {
         method: "GET",
         credentials: "include",
@@ -69,7 +80,7 @@ export async function getMultipleDateClasses(
 
     if (!res.ok) {
       const data = await res.json();
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error(
           "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
         );
@@ -87,8 +98,19 @@ export async function getMultipleDateClasses(
 
 export async function getSingleDateClasses(article: string, ageGroup?: string) {
   try {
+    const params = new URLSearchParams();
+
+    params.append("hiddenUsers", "false");
+    params.append("article", article);
+
+    if (ageGroup) {
+      params.append("ageGroup", ageGroup);
+    } else {
+      params.append("ageGroup", "adult");
+    }
+
     const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/classes/singledates?article=${article}${ageGroup ? `&ageGroup=${ageGroup}` : "&ageGroup=adult"}`,
+      `${import.meta.env.VITE_API_URL}/classes/singledates?${params.toString()}`,
       {
         method: "GET",
         credentials: "include",
@@ -97,7 +119,7 @@ export async function getSingleDateClasses(article: string, ageGroup?: string) {
 
     if (!res.ok) {
       const data = await res.json();
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error(
           "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
         );
@@ -148,13 +170,16 @@ export async function signUpForClassOnline({
         }),
       },
     );
+    const data = await res.json();
 
     if (!res.ok) {
-      const data = await res.json();
+      if (data.status === "error") {
+        throw new Error(
+          "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
+        );
+      }
       throw Error(data.message);
     }
-
-    const data = await res.json();
 
     return data;
   } catch (error) {

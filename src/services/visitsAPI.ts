@@ -10,7 +10,7 @@ export async function getMyLastVisits(limit: number) {
 
     if (!res.ok) {
       const data = await res.json();
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error(
           "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
         );
@@ -38,7 +38,7 @@ export async function getChildLastVisits(id: string, limit: number) {
 
     if (!res.ok) {
       const data = await res.json();
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error(
           "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
         );
@@ -66,7 +66,7 @@ export async function getYearlyVisitNo(year: string) {
 
     if (!res.ok) {
       const data = await res.json();
-      if (data.error.statusCode === 500) {
+      if (data.status === "error") {
         throw new Error(
           "Nekaj je šlo narobe na strežniku! Poiskusite kasneje!",
         );

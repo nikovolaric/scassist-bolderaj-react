@@ -214,6 +214,7 @@ function OsebniPodatki() {
                       className={`h-6 w-6 cursor-pointer rounded-lg border border-black/50 ${(climbingAbility ?? me.climbingAbility!) === i ? "bg-primary/50" : ""}`}
                       onClick={() => {
                         dispatch({ type: "climbingAbility", payload: i });
+                        setIsOpenSub(false);
                       }}
                     ></span>
                     {climbingOption}

@@ -67,7 +67,7 @@ function ClassesChoose() {
             {article.endDate && (
               <p>
                 <span className="font-semibold">Trajanje: </span>{" "}
-                {new Date().toLocaleDateString("sl-SI", {
+                {new Date(article.startDate).toLocaleDateString("sl-SI", {
                   day: "2-digit",
                   month: "2-digit",
                   year: "numeric",
@@ -83,13 +83,7 @@ function ClassesChoose() {
             <p className="bg-primary/35 rounded-xl px-4 py-3 md:justify-self-end">
               Cena:{" "}
               <span className="font-semibold">
-                {(article.endDate
-                  ? article.classPriceData.priceDDV
-                  : article.priceDDV
-                )
-                  .toFixed(2)
-                  .replace(".", ",")}{" "}
-                €
+                {article.classPriceData.priceDDV.toFixed(2).replace(".", ",")} €
               </span>
             </p>
           </div>

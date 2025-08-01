@@ -25,6 +25,9 @@ function DashboardLayout() {
       ) {
         dispatch(clearClassData());
       }
+      if (pathname === "/dashboard/classes") {
+        dispatch(clearClassData());
+      }
       if (!pathname.includes("/giftcart")) {
         dispatch(clearGiftData());
       }

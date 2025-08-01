@@ -27,7 +27,7 @@ function ClassPaymentForm() {
   useEffect(() => {
     if (!isPending && data?.data?.id) {
       const widgetScript = document.createElement("script");
-      widgetScript.src = `https://eu-prod.oppwa.com/v1/paymentWidgets.js?checkoutId=${data.data.id}`;
+      widgetScript.src = `${import.meta.env.VITE_HOBEX_URL}/v1/paymentWidgets.js?checkoutId=${data.data.id}`;
       widgetScript.crossOrigin = "anonymous";
       widgetScript.integrity = data.data.integrity;
 
