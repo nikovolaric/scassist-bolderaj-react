@@ -32,7 +32,7 @@ function ClassPayment() {
     queries: [
       { queryKey: ["me"], queryFn: getMe },
       {
-        queryKey: ["child"],
+        queryKey: ["child", childId],
         queryFn: () => getMyChild(childId!),
         enabled: !!childId,
       },
@@ -71,7 +71,7 @@ function ClassPayment() {
               Nakupujem za:{" "}
               {!childId
                 ? `${me.firstName} (jaz)`
-                : `${child?.firstName} (${child?.age} let)`}
+                : `${child.myChild.firstName} (${child.myChild.age} let)`}
             </p>
           )}
         </div>
@@ -320,7 +320,7 @@ function PaymentTypeChild() {
   const dispatch = useAppDispatch();
   const classCart = useAppSelector(getClassCart);
   const ticketCart = useAppSelector(getTicketCart);
-  const [isChecked, setIsChecked] = useState<string | undefined>(undefined);
+  const [isChecked, setIsChecked] = useState<string | undefined>("");
 
   const { mutate, isPending: isPendingBtn } = useMutation({
     mutationFn: signUpChildForClassOnline,
@@ -421,6 +421,49 @@ function PaymentTypeChild() {
             <p className="font-medium">s plačilno kartico</p>
           </div>
           <ClassPaymentForm />
+          <div className="flex gap-3">
+            <label className="cursor-pointer">
+              <input
+                type="checkbox"
+                className="peer hidden"
+                checked={isChecked === "preInvoice"}
+                onChange={handleChange}
+                value="preInvoice"
+              />
+              <div className="bg-neutral flex h-6 w-6 items-center justify-center rounded-lg border border-black/75 transition-all duration-75">
+                <span
+                  className={`${isChecked === "preInvoice" ? "bg-primary border border-black/75" : ""} h-4 w-4 rounded-full`}
+                />
+              </div>
+            </label>
+            <div className="flex flex-col gap-2">
+              <p className="font-medium">po predračunu</p>
+              <p className="text-sm font-medium text-black/50">
+                Znesek lahko poravnaš tudi v času delovnih ur, na recepciji
+                plezalnega centra, pred pričetkom tečaja.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <label className="cursor-pointer">
+              <input
+                type="checkbox"
+                className="peer hidden"
+                value="paypal"
+                onChange={(e) => setIsChecked(e.target.value)}
+              />
+              <div className="bg-neutral flex h-6 w-6 items-center justify-center rounded-lg border border-black/75 transition-all duration-75">
+                <span
+                  className={
+                    isChecked === "paypal"
+                      ? `bg-primary border-gray h-4 w-4 rounded-full border`
+                      : ""
+                  }
+                />
+              </div>
+            </label>
+            <p className="font-medium">s PayPal-om</p>
+          </div>
           {isChecked === "paypal" && (
             <div className="lg:mx-auto lg:w-1/2">
               <PayPalScriptProvider
@@ -468,45 +511,24 @@ function PaymentTypeChild() {
               </PayPalScriptProvider>
             </div>
           )}
-          <div className="flex gap-3">
-            <label className="cursor-pointer">
-              <input
-                type="checkbox"
-                className="peer hidden"
-                checked={isChecked === "preInvoice"}
-                onChange={handleChange}
-                value="preInvoice"
-              />
-              <div className="bg-neutral flex h-6 w-6 items-center justify-center rounded-lg border border-black/75 transition-all duration-75">
-                <span
-                  className={`${isChecked ? "bg-primary border border-black/75" : ""} h-4 w-4 rounded-full`}
-                />
-              </div>
-            </label>
-            <div className="flex flex-col gap-2">
-              <p className="font-medium">po predračunu</p>
-              <p className="text-sm font-medium text-black/50">
-                Znesek lahko poravnaš tudi v času delovnih ur, na recepciji
-                plezalnega centra, pred pričetkom tečaja.
-              </p>
-            </div>
-          </div>
         </div>
       </div>
-      <button
-        className="from-primary to-secondary drop-shadow-btn hover:to-primary disabled:from-gray disabled:to-gray cursor-pointer self-end rounded-lg bg-gradient-to-r px-4 py-3 font-semibold transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-50"
-        onClick={handleClick}
-        disabled={isPendingBtn || isChecked === undefined}
-      >
-        {!isPendingBtn ? (
-          <p className="flex items-center gap-4">
-            Zaključi prijavo
-            <ChevronRightIcon className="w-6 stroke-3" />
-          </p>
-        ) : (
-          "Postopek je v teku..."
-        )}
-      </button>
+      {isChecked === "preInvoice" && (
+        <button
+          className="from-primary to-secondary drop-shadow-btn hover:to-primary disabled:from-gray disabled:to-gray cursor-pointer self-end rounded-lg bg-gradient-to-r px-4 py-3 font-semibold transition-colors duration-300 disabled:cursor-not-allowed disabled:opacity-50"
+          onClick={handleClick}
+          disabled={isPendingBtn || isChecked === undefined}
+        >
+          {!isPendingBtn ? (
+            <p className="flex items-center gap-4">
+              Zaključi prijavo
+              <ChevronRightIcon className="w-6 stroke-3" />
+            </p>
+          ) : (
+            "Postopek je v teku..."
+          )}
+        </button>
+      )}
     </div>
   );
 }

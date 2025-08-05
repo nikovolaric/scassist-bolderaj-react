@@ -8,8 +8,9 @@ function ChildDashboardLayout() {
   const { childId } = useParams();
 
   const { isPending } = useQuery({
-    queryKey: ["child"],
+    queryKey: ["child", childId],
     queryFn: () => getMyChild(childId!),
+    enabled: !!childId,
   });
 
   if (isPending) {

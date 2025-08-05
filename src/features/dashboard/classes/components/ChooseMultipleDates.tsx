@@ -12,6 +12,7 @@ function ChooseMultipleDates() {
   const ageGroup = childId
     ? queryClient.getQueryData<{ myChild: { ageGroup: string; age: number } }>([
         "child",
+        childId,
       ])!.myChild.ageGroup
     : undefined;
 

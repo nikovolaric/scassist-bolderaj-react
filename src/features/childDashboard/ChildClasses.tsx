@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import Spinner from "../../components/Spinner";
 import { useParams } from "react-router";
 import { getChildClasses } from "../../services/classAPI";
@@ -6,15 +6,19 @@ import { getMyUnpaiedPreInvoices } from "../../services/preInvoiceAPI";
 
 function ChildClasses() {
   const { childId } = useParams();
-  const { data, isPending } = useQuery({
-    queryKey: ["childClasses"],
-    queryFn: () => getChildClasses(childId!),
-    enabled: !!childId,
-  });
 
-  const { data: preInvoiceData, isPending: isPendingPre } = useQuery({
-    queryKey: ["preInvoices"],
-    queryFn: getMyUnpaiedPreInvoices,
+  const [
+    { data, isPending },
+    { data: preInvoiceData, isPending: isPendingPre },
+  ] = useQueries({
+    queries: [
+      {
+        queryKey: ["childClasses"],
+        queryFn: () => getChildClasses(childId!),
+        enabled: !!childId,
+      },
+      { queryKey: ["preInvoices"], queryFn: getMyUnpaiedPreInvoices },
+    ],
   });
 
   if (isPending || isPendingPre) {

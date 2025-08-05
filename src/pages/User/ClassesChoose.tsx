@@ -1,5 +1,5 @@
 import { Link, useLocation, useParams } from "react-router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import { getOneArticle } from "../../services/articlesAPI";
 import Spinner from "../../components/Spinner";
 import ChooseMultipleDates from "../../features/dashboard/classes/components/ChooseMultipleDates";
@@ -9,25 +9,37 @@ import { useAppSelector } from "../../app/hooks";
 import { getClassCart } from "../../features/dashboard/classes/slices/classCartSlice";
 import LinkBtn from "../../components/LinkBtn";
 import Header from "../../components/Header";
+import { getMe, getMyChild } from "../../services/userAPI";
 
 function ClassesChoose() {
   const { pathname } = useLocation();
   const { id, childId } = useParams();
   const classData = useAppSelector(getClassCart);
-  const queryClient = useQueryClient();
-  const me = queryClient.getQueryData<{
-    firstName: string;
-    parentOf: unknown[];
-  }>(["me"])!;
-  const child = queryClient.getQueryData<{
-    myChild: { firstName: string; age: string };
-  }>(["child"])?.myChild;
-  const { data, isPending } = useQuery({
-    queryKey: ["article"],
-    queryFn: () => getOneArticle(id!),
+
+  const [
+    { data, isPending },
+    { data: meData, isPending: pendingMe },
+    { data: child },
+  ] = useQueries({
+    queries: [
+      {
+        queryKey: ["article"],
+        queryFn: () => getOneArticle(id!),
+        enabled: !!id,
+      },
+      {
+        queryKey: ["me"],
+        queryFn: getMe,
+      },
+      {
+        queryKey: ["child", childId],
+        queryFn: () => getMyChild(childId!),
+        enabled: !!childId,
+      },
+    ],
   });
 
-  if (isPending) {
+  if (isPending || pendingMe) {
     return <Spinner />;
   }
 
@@ -46,12 +58,12 @@ function ClassesChoose() {
             </Link>{" "}
             <ChevronRightIcon className="w-4 stroke-3" /> Prijava
           </h1>
-          {me.parentOf.length > 0 && (
+          {meData.parentOf.length > 0 && (
             <p className="bg-gray/80 mt-8 w-fit rounded-lg px-3 py-1 font-medium">
               Nakupujem za:{" "}
               {!childId
-                ? `${me.firstName} (jaz)`
-                : `${child?.firstName} (${child?.age} let)`}
+                ? `${meData.firstName} (jaz)`
+                : `${child.myChild.firstName} (${child.myChild.age} let)`}
             </p>
           )}
         </div>
