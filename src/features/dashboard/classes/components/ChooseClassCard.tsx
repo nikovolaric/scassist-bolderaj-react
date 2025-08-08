@@ -94,9 +94,9 @@ function ChooseClassCard({ classInfo }: { classInfo: IClassInfo }) {
         <div>
           <p>
             <span className="font-semibold">Zasedenost: </span>
-            {students.length} zasedenih mest od {maxStudents} mest
+            {students.length === maxStudents ? "Zasedeno" : "Prosto"}
           </p>
-          <progress value={students.length} max={maxStudents} />
+          {/* <progress value={students.length} max={maxStudents} /> */}
         </div>
         {signedUp && !full && (
           <p className="flex items-center gap-6 font-semibold">
@@ -170,9 +170,10 @@ function ChooseClassCard({ classInfo }: { classInfo: IClassInfo }) {
           <div>
             <p>
               <span className="font-semibold">Zasedenost: </span>
-              {students.length} zasedenih mest od {maxStudents} mest
+              {students.length === maxStudents ? "Zasedeno" : "Prosto"}
+              {/* {students.length} zasedenih mest od {maxStudents} mest */}
             </p>
-            <progress value={students.length} max={maxStudents} />
+            {/* <progress value={students.length} max={maxStudents} /> */}
           </div>
         </div>
       </div>
