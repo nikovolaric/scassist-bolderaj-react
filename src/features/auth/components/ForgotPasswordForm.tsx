@@ -58,7 +58,7 @@ function ForgotPasswordForm() {
             </p>
             <p>
               V kolikor nisi prejel/a povezave za ponastavitev gesla, se prosimo
-              obrni na podpora@bolderaj.si.
+              obrni na info@bolderaj.si.
             </p>
           </div>
         ) : (
