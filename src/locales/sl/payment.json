@@ -1,0 +1,8 @@
+{
+  "choosePayment": "Izberi način plačila in dokončaj nakup",
+  "payWith": "Znesek želim poravnati",
+  "card": "s plačilno kartico",
+  "proforma": "po predračunu",
+  "payPal": "s PayPal-om",
+  "paymentTextTicket": "Nakup vstopnice v spletni aplikaciji je možno izvršiti samo s spletnim plačilom. V kolikor želiš vstopnico kupiti z gotovino ali plačilno kartico kartico, lahko to opraviš v času delovnih ur na blagajni recepcije."
+}

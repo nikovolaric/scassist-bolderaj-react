@@ -3,8 +3,10 @@ import Spinner from "../../../components/Spinner";
 import { getMyKids } from "../../../services/userAPI";
 import LinkBtn from "../../../components/LinkBtn";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import { useTranslation } from "react-i18next";
 
 function MyChildrenSection() {
+  const { t } = useTranslation("common");
   const { data, isPending } = useQuery({
     queryKey: ["mykids"],
     queryFn: getMyKids,
@@ -16,7 +18,7 @@ function MyChildrenSection() {
 
   return (
     <section className="flex flex-col gap-12">
-      <h1 className="text-2xl font-semibold">Mladoletne osebe</h1>
+      <h1 className="text-2xl font-semibold">{t("dashboard.myChildren")}</h1>
       <div className="flex flex-col gap-6 lg:gap-10">
         {data.map((el: { child: { firstName: string; id: string } }) => (
           <Child key={el.child.id} child={el.child} />
@@ -27,6 +29,7 @@ function MyChildrenSection() {
 }
 
 function Child({ child }: { child: { firstName: string; id: string } }) {
+  const { t } = useTranslation("common");
   const { firstName, id } = child;
 
   return (
@@ -42,7 +45,7 @@ function Child({ child }: { child: { firstName: string; id: string } }) {
       <div className="ml-auto">
         <LinkBtn to={`/dashboard/child/${id}`} type="primary">
           <p className="md:flex md:items-center md:gap-4">
-            <span className="hidden md:block">Odpri oglasno desko</span>
+            <span className="hidden md:block">{t("dashboard.openChildDashboardBtn")}</span>
             <ChevronRightIcon className="w-4" />
           </p>
         </LinkBtn>

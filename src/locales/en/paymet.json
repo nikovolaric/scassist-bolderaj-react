@@ -1,0 +1,8 @@
+{
+  "choosePayment": "Choose a payment method and complete the purchase",
+  "payWith": "I want to pay",
+  "card": "with a payment card",
+  "proforma": "by bank transfer",
+  "payPal": "with PayPal",
+  "paymentTextTicket": "Tickets in the web app can only be purchased online. If you’d like to pay in cash or with a card, you can do so at the reception desk during opening hours."
+}

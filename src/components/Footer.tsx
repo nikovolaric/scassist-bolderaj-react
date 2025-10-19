@@ -3,8 +3,11 @@ import {
   ChatBubbleLeftRightIcon,
   PhoneIcon,
 } from "@heroicons/react/24/outline";
+import { useTranslation } from "react-i18next";
 
 function Footer() {
+  const { t } = useTranslation("common");
+  
   return (
     <footer className="absolute left-0 mt-28 flex w-dvw flex-col gap-16 rounded-t-xl bg-white pb-10">
       <div className="flex w-full max-w-[1440px] flex-col gap-16 pt-8 pb-15 font-medium lg:pt-10 xl:mx-auto">
@@ -16,7 +19,7 @@ function Footer() {
         <div className="flex flex-col gap-16 px-4 md:px-8 lg:grid lg:grid-cols-3 lg:px-20">
           <div className="flex flex-col gap-8 lg:gap-14">
             <p className="font-quicksand text-lg font-bold lg:text-xl">
-              KONTAKT
+              {t("footer.contact")}
             </p>
             <div className="flex flex-col gap-4">
               <p>PE: Plezalni center</p>
@@ -36,7 +39,7 @@ function Footer() {
           </div>
           <div className="flex w-60 flex-col gap-8 lg:gap-14">
             <p className="font-quicksand text-lg font-bold lg:text-xl">
-              DELOVNI ČAS
+              {t("footer.workingHours")}
             </p>
             <div className="flex flex-col gap-4">
               <p className="flex items-center justify-between">
@@ -49,7 +52,7 @@ function Footer() {
           </div>
           <div className="flex flex-col gap-8 lg:gap-14">
             <p className="font-quicksand text-lg font-bold lg:text-xl">
-              UPORABA SPLETNE APLIKACIJE
+              {t("footer.appUsage")}
             </p>
             <p className="flex items-center gap-4">
               <ChatBubbleLeftRightIcon className="text-secondary w-6 flex-none stroke-2" />
@@ -64,25 +67,25 @@ function Footer() {
           target="_blank"
           className="underline"
         >
-          Splošni pogoji poslovanja
+          {t("footer.generalTerms")}
         </a>
         <a
           href="https://bolderaj.si/pravila-in-pogoji-uporabe-plezalnega-centra-bolderaj/"
           target="_blank"
           className="underline"
         >
-          Pravila in pogoji uporabe plezalnega centra
+          {t("footer.rulesAndConditions")}
         </a>
         {/* <a href="/" target="_blank" className="underline">
           Nastavitve piškotkov
         </a> */}
       </div>
-      {/* <p className="w-full max-w-[1440px] px-4 text-center md:px-8 md:text-right lg:px-20 xl:mx-auto">
-        Oblikovanje in razvoj:{" "}
+       {/*<p className="w-full max-w-[1440px] px-4 text-center md:px-8 md:text-right lg:px-20 xl:mx-auto">
+        {t("footer.designAndDevelopment")}:{" "}
         <a href="https://www.lamastrategies.com" target="_blank">
           LAMA Strategies
         </a>
-      </p> */}
+      </p>*/} 
     </footer>
   );
 }

@@ -1,0 +1,21 @@
+{
+  "buyTicket": "Buy ticket",
+  "buyingFor": "Buying for",
+  "me": "me",
+  "years": "years",
+  "daily": "Daily tickets",
+  "longTerm": "Long-term tickets",
+  "packages": "Ticket packages",
+  "price": "Ticket price",
+  "buyBtn": "Buy ticket",
+  "payment": "Payment",
+  "recap": "Purchase summary",
+  "quantity": "Quantity",
+  "together": "Total amount",
+  "companyInvoice": "I want an invoice for a company",
+  "companyName": "Company name",
+  "companyAddress": "Street and house number",
+  "companyCity": "City",
+  "companyPostal": "Postal code",
+  "companyTaxNo": "Tax number"
+}

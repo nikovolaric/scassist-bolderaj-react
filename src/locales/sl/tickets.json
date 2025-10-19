@@ -1,0 +1,21 @@
+{
+  "buyTicket": "Nakup vstopnice",
+  "buyingFor": "Nakupujem za",
+  "me": "jaz",
+  "years": "let",
+  "daily": "Dnevne vstopnice",
+  "longTerm": "Vstopnice za daljše obdobje",
+  "packages": "Paketi obiskov",
+  "price": "Cena vstopnice",
+  "buyBtn": "Kupi vstopnico",
+  "payment": "Plačilo",
+  "recap": "Povzetek nakupa",
+  "quantity": "Količina",
+  "together": "Skupaj za plačilo",
+  "companyInvoice": "Želim račun na podjetje",
+  "companyName": "Ime podjetja",
+  "companyAddress": "Ulica in hišna številka",
+  "companyCity": "Kraj",
+  "companyPostal": "Poštna številka",
+  "companyTaxNo": "Davčna številka"
+}

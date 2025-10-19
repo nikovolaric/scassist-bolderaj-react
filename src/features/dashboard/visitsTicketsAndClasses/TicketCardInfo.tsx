@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../../../components/Spinner";
 import { getMyUnusedTickets } from "../../../services/ticketsAPI";
+import { useTranslation } from "react-i18next";
 
 function TicketCardInfo() {
+  const { t, i18n } = useTranslation("common");
   const { data, isPending } = useQuery({
     queryKey: ["myTickets"],
     queryFn: getMyUnusedTickets,
@@ -15,9 +17,7 @@ function TicketCardInfo() {
 
   if (data.results === 0) {
     return (
-      <p className="text-lg font-medium">
-        Podatki o veljavnih vstopnicah še niso na voljo.
-      </p>
+      <p className="text-lg font-medium">{t("dashboard.myTicketsNodata")}</p>
     );
   }
 
@@ -28,7 +28,7 @@ function TicketCardInfo() {
   if (!ticket || !ticket.validUntil) {
     return (
       <p className="text-lg font-medium">
-        Podatki o veljavnih vstopnicah še niso na voljo.
+        <p className="text-lg font-medium">{t("dashboard.myTicketsNodata")}</p>
       </p>
     );
   }
@@ -41,9 +41,9 @@ function TicketCardInfo() {
   return (
     <div className="bg-neutral border-gray/80 flex flex-col gap-8 rounded-xl border px-3 py-4">
       <div className="flex items-center justify-between">
-        <p className="text-lg font-semibold">{ticket.name.sl}</p>
+        <p className="text-lg font-semibold">{ticket.name[i18n.language]}</p>
         <p className="text-gray border-gray rounded-lg border bg-white px-2 text-sm font-medium shadow">
-          Velja do{" "}
+          {t("validUntil")}{" "}
           {new Date(ticket.validUntil).toLocaleDateString("sl-SI", {
             day: "2-digit",
             month: "2-digit",
@@ -55,39 +55,53 @@ function TicketCardInfo() {
         {ticket.type === "paket" && (
           <>
             <p>
-              {ticket.visits - ticket.visitsLeft} obiskov od {ticket.visits}{" "}
-              vstopnic
+              {ticket.visits - ticket.visitsLeft} {t("dashboard.visits")} od{" "}
+              {ticket.visits} {t("dashboard.tickets")}
             </p>
             <progress
               max={ticket.visits}
               value={ticket.visits - ticket.visitsLeft}
             />
             <p className="self-end text-sm">
-              Preostane vam še {ticket.visitsLeft} vstopnic.
+              {t("dashboard.remainingTickets")} {ticket.visitsLeft}{" "}
+              {t("dashboard.tickets")}.
             </p>
           </>
         )}
         {ticket.type === "terminska" && (
           <>
-            <p>
-              {ticket.used
-                ? `Velja še ${daysLeft} dni`
-                : `Karto je potrebno aktivirati v ${daysLeft} dneh`}
+            <p className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+              {ticket.used ? (
+                <>
+                  <span>
+                    {t("dashboard.validFor")} {daysLeft} {t("dashboard.days")}
+                  </span>
+                  {ticket.usedVisits > 0 && (
+                    <span className="self-end text-sm lg:self-auto">
+                      {t("dashboard.visitsWithTicket")}: {ticket.usedVisits}
+                    </span>
+                  )}
+                </>
+              ) : (
+                `${t("dashboard.ticketNeedsActivation")} ${daysLeft} ${t("dashboard.days")}`
+              )}
             </p>
             <progress
               max={ticket.duration}
               value={ticket.duration - daysLeft}
             />
-            <p className="self-end text-sm">
-              S to vstopnico ni omejitve obiskov.
-            </p>
+            <p className="self-end text-sm">{t("dashboard.noVisitsLimit")}</p>
           </>
         )}
         {ticket.type === "dnevna" && (
           <>
-            <p>0 obiskov 1 vstopnice</p>
+            <p>
+              0 {t("dashboard.visits")} 1 {t("dashboard.tickets")}
+            </p>
             <progress max={1} value={0} />
-            <p className="self-end text-sm">Preostane vam še 1 vstopnica.</p>
+            <p className="self-end text-sm">
+              {t("dashboard.remainingTickets")} 1 {t("dashboard.tickets")}.
+            </p>
           </>
         )}
       </div>

@@ -1,3 +1,6 @@
+import { useTranslation } from "react-i18next";
+
+
 export interface IVisit {
   _id: string;
   date: string;
@@ -10,6 +13,7 @@ export interface IVisit {
 }
 
 function MyVisitsCard({ visit }: { visit: IVisit }) {
+  const { t, i18n } = useTranslation("common");
   const { date, ticket } = visit;
 
   return (
@@ -20,12 +24,12 @@ function MyVisitsCard({ visit }: { visit: IVisit }) {
           month: "long",
           year: "numeric",
         })}
-        , ob {new Date(date).toLocaleTimeString("si-SL")}
+        , {t("at")} {new Date(date).toLocaleTimeString("si-SL")}
       </p>
       <progress value={1} max={1} />
       <p>
-        <span className="font-medium">Koriščena vstopnica:</span>{" "}
-        {ticket.name.sl}
+        <span className="font-medium">{t("dashboard.usedTicket")}:</span>{" "}
+        {ticket.name[i18n.language as keyof typeof ticket.name]}
       </p>
     </div>
   );

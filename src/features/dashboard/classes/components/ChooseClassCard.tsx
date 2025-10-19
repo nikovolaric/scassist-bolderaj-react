@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, Fragment, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../app/hooks";
 import {
   clearOneClass,
@@ -13,7 +13,7 @@ import { useParams } from "react-router";
 
 export interface IClassInfo {
   dates: string[];
-  teacher: { firstName: string; lastName: string };
+  teacher: { fullName: string } | { fullName: string }[];
   students: string[];
   maxStudents: number;
   hours: string[];
@@ -89,7 +89,13 @@ function ChooseClassCard({ classInfo }: { classInfo: IClassInfo }) {
         </p>
         <p>
           <span className="font-semibold">Izvajalec tečaja: </span>
-          {`${teacher.firstName} ${teacher.lastName}`}
+          <span>
+            {Array.isArray(teacher)
+              ? teacher.map((el) => (
+                  <Fragment key={el.fullName}>{el.fullName}</Fragment>
+                ))
+              : teacher.fullName}
+          </span>
         </p>
         <div>
           <p>
@@ -165,7 +171,13 @@ function ChooseClassCard({ classInfo }: { classInfo: IClassInfo }) {
           </p>
           <p>
             <span className="font-semibold">Izvajalec: </span>{" "}
-            {teacher.firstName} {teacher.lastName}
+            <span>
+              {Array.isArray(teacher)
+                ? teacher.map((el) => (
+                    <Fragment key={el.fullName}>{el.fullName}</Fragment>
+                  ))
+                : teacher.fullName}
+            </span>
           </p>
           <div>
             <p>

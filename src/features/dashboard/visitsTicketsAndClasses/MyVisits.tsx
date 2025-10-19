@@ -4,8 +4,10 @@ import Spinner from "../../../components/Spinner";
 import MyVisitsCard, { IVisit } from "./MyVisitsCard";
 import LinkBtn from "../../../components/LinkBtn";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
+import { useTranslation } from "react-i18next";
 
 function MyVisits({ page }: { page?: boolean }) {
+  const { t } = useTranslation("common");
   const { data, isPending } = useQuery({
     queryKey: ["myVisits"],
     queryFn: () => getMyLastVisits(page ? 3 : 7),
@@ -18,11 +20,11 @@ function MyVisits({ page }: { page?: boolean }) {
   return (
     <div className="flex flex-col gap-8 rounded-lg bg-white px-5 py-8 md:px-6 lg:py-10 xl:gap-12">
       <p className="font-quicksand text-lg font-bold lg:text-xl">
-        PRETEKLI OBISKI
+        {t("dashboard.pastVisits")}
       </p>
       {data.results === 0 && (
         <p className="text-lg font-medium">
-          Trenutno še nimaš zabeleženega obiska.
+          {t("dashboard.pastVisitsNodata")}
         </p>
       )}
       {data.results > 0 && (
@@ -36,7 +38,7 @@ function MyVisits({ page }: { page?: boolean }) {
         <div className="mt-auto self-end">
           <LinkBtn to="/dashboard/mytickets" type="primary">
             <p className="flex items-center gap-2">
-              Oglej si vse vstopnice{" "}
+              {t("dashboard.pastVisitsBtn")}
               <ChevronRightIcon className="h-4 stroke-3" />
             </p>
           </LinkBtn>

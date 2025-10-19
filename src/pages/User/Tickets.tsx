@@ -3,24 +3,28 @@ import LongtermTickets from "../../features/dashboard/tickets/components/Longter
 import PackageTickets from "../../features/dashboard/tickets/components/PackageTickets";
 import Header from "../../components/Header";
 import { useParams } from "react-router";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getMyChild } from "../../services/userAPI";
+import { useQueries} from "@tanstack/react-query";
+import { getMe, getMyChild } from "../../services/userAPI";
 import Spinner from "../../components/Spinner";
+import { useTranslation } from "react-i18next";
 
 function Tickets() {
+  const {t} = useTranslation("tickets")
   const { childId } = useParams();
-  const queryClient = useQueryClient();
-  const me = queryClient.getQueryData<{
-    firstName: string;
-    parentOf: unknown[];
-  }>(["me"])!;
-  const { data, isLoading } = useQuery({
+ 
+  const [{ data, isLoading },{data:me,isPending}] = useQueries({queries:[
+    {
     queryKey: ["child", childId],
     queryFn: () => getMyChild(childId!),
     enabled: !!childId,
-  });
+  },
+  {
+    queryKey: ["me"],
+    queryFn:  getMe,
+  }
+]});
 
-  if (isLoading) {
+  if (isLoading||isPending) {
     return <Spinner />;
   }
 
@@ -29,13 +33,13 @@ function Tickets() {
       <Header />
       <div className="flex flex-col gap-14">
         <div>
-          <h1 className="font-semibold">Nakup vstopnice</h1>
+          <h1 className="font-semibold">{t("buyTicket")}</h1>
           {me.parentOf.length > 0 && (
             <p className="bg-gray/80 mt-8 w-fit rounded-lg px-3 py-1 font-medium">
-              Nakupujem za:{" "}
+              {t("buyingFor")}:{" "}
               {!childId
-                ? `${me.firstName} (jaz)`
-                : `${data.myChild.firstName} (${data.myChild.age} let)`}
+                ? `${me.firstName} (${t("me")})`
+                : `${data.myChild.firstName} (${data.myChild.age} ${t("years")})`}
             </p>
           )}
         </div>

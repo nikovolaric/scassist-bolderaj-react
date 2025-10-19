@@ -6,8 +6,10 @@ import { ChangeEvent, useState } from "react";
 import LinkBtn from "../../components/LinkBtn";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
 import { useLocation } from "react-router";
+import { useTranslation } from "react-i18next";
 
 function PickUser() {
+  const { t } = useTranslation("common");
   const { pathname } = useLocation();
   const [isChecked, setIsChecked] = useState("");
   const queryClient = useQueryClient();
@@ -32,11 +34,11 @@ function PickUser() {
       <Header />
       <div className="flex flex-col gap-14">
         <h1 className="text-2xl font-semibold lg:text-3xl">
-          {ticket ? "Nakup vstopnice" : "Aktivnosti in vadbe"}
+          {ticket ? t("pickUser.buy") : t("pickUser.buyClasses")}
         </h1>
         <div className="flex flex-col gap-2 lg:mx-auto lg:w-2/3">
           <p className="font-medium">
-            {ticket ? "Nakupujem za:" : "Prijaviti želim:"}
+            {ticket ? t("pickUser.buyingFor") : t("pickUser.signingUpFor")}
           </p>
           <div className="flex flex-col gap-8 rounded-xl bg-white px-8 py-8 md:px-14">
             <div className="flex items-center gap-3">
@@ -55,7 +57,7 @@ function PickUser() {
                 </div>
               </label>
               <p className="font-semibold">
-                {me?.firstName} <span className="font-normal">(jaz)</span>
+                {me?.firstName} <span className="font-normal">({t("pickUser.me")})</span>
               </p>
             </div>
             {data.map(
@@ -84,7 +86,7 @@ function PickUser() {
                     {childData.child.firstName},
                     <span className="font-normal">
                       {" "}
-                      {childData.child.age} let
+                      {childData.child.age} {t("pickUser.years")}
                     </span>
                   </p>
                 </div>
@@ -101,7 +103,7 @@ function PickUser() {
               type="primary"
             >
               <p className="flex items-center gap-2">
-                {ticket ? "Nadaljuj na nakup vstopnic" : "Nadaljuj na prijavo"}{" "}
+                {ticket ? t("pickUser.continueTickets") : t("pickUser.continueClasses")}{" "}
                 <ChevronRightIcon className="h-4 stroke-3" />
               </p>
             </LinkBtn>

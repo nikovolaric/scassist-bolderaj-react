@@ -7,8 +7,10 @@ import { useState } from "react";
 import { useAppDispatch } from "../../../../app/hooks";
 import { setArticles } from "../slices/ticketCartSlice";
 import { useNavigate, useParams } from "react-router";
+import { useTranslation } from "react-i18next";
 
 function SetQuantity({ id }: { id: string }) {
+  const { t } = useTranslation("tickets");
   const { childId } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -66,7 +68,7 @@ function SetQuantity({ id }: { id: string }) {
         onClick={handleClick}
       >
         <p className="flex items-center gap-3">
-          Kupi vstopnico
+          {t("buyBtn")}
           <span>
             <ChevronRightIcon className="h-4 stroke-3" />
           </span>

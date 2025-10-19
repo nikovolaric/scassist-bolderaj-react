@@ -10,10 +10,20 @@ export interface iValidTicket {
   visitsLeft: number;
   used: boolean;
   duration: number;
+  usedVisits: number;
 }
 
 function MyValidTicketCard({ ticket }: { ticket: iValidTicket }) {
-  const { name, validUntil, type, visits, visitsLeft, used, duration } = ticket;
+  const {
+    name,
+    validUntil,
+    type,
+    visits,
+    visitsLeft,
+    used,
+    duration,
+    usedVisits,
+  } = ticket;
 
   const daysLeft = Math.ceil(
     (new Date(validUntil).getTime() - Date.now()) / (1000 * 60 * 60 * 24),
@@ -46,10 +56,19 @@ function MyValidTicketCard({ ticket }: { ticket: iValidTicket }) {
         )}
         {type === "terminska" && (
           <>
-            <p>
-              {used
-                ? `Vstopnica velja še ${daysLeft} dni`
-                : `Vstopnico je potrebno aktivirati v ${daysLeft} dneh`}
+            <p className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+              {used ? (
+                <>
+                  <span>Vstopnica velja še {daysLeft} dni</span>
+                  {usedVisits > 0 && (
+                    <span className="self-end text-sm lg:self-auto">
+                      Obiski s vstopnico: {usedVisits}
+                    </span>
+                  )}
+                </>
+              ) : (
+                `Vstopnico je potrebno aktivirati v ${daysLeft} dneh`
+              )}
             </p>
             <progress max={duration} value={duration - daysLeft} />
             <p className="self-end text-sm">

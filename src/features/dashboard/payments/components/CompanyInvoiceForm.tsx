@@ -8,8 +8,10 @@ import {
   setCompanyPostalCode,
   setCompanyTax,
 } from "../../tickets/slices/ticketCartSlice";
+import { useTranslation } from "react-i18next";
 
 function CompanyInvoiceForm() {
+  const { t } = useTranslation("tickets");
   const dispatch = useAppDispatch();
   const [isChecked, setIsChecked] = useState(false);
 
@@ -37,7 +39,7 @@ function CompanyInvoiceForm() {
             />
           </div>
         </label>
-        <p className="font-medium">Želim račun na podjetje.</p>
+        <p className="font-medium">{t("companyInvoice")}</p>
       </div>
       {isChecked && <InvoiceForm />}
     </div>
@@ -45,12 +47,13 @@ function CompanyInvoiceForm() {
 }
 
 function InvoiceForm() {
+  const { t } = useTranslation("tickets");
   const dispatch = useAppDispatch();
 
   return (
     <form className="mt-8 grid grid-cols-2 gap-x-5 gap-y-6 px-6 xl:px-10">
       <div className="col-span-2 flex flex-col gap-1.5 lg:col-span-1">
-        <label className="text-sm">Ime podjetja</label>
+        <label className="text-sm">{t("companyName")}</label>
         <input
           placeholder="Podjetje, d.o.o."
           className="border-gray rounded-lg border px-3.5 py-1.5 shadow-sm outline-none"
@@ -58,7 +61,7 @@ function InvoiceForm() {
         />
       </div>
       <div className="col-span-2 flex flex-col gap-1.5 lg:col-span-1">
-        <label className="text-sm">Ulica in hišna številka</label>
+        <label className="text-sm">{t("companyName")}</label>
         <input
           placeholder="Ljubljanska cesta 1"
           className="border-gray rounded-lg border px-3.5 py-1.5 shadow-sm outline-none"
@@ -66,7 +69,7 @@ function InvoiceForm() {
         />
       </div>
       <div className="col-span-2 flex flex-col gap-1.5 lg:col-span-1">
-        <label className="text-sm">Kraj</label>
+        <label className="text-sm">{t("companyCity")}</label>
         <input
           placeholder="Ljubljana"
           className="border-gray rounded-lg border px-3.5 py-1.5 shadow-sm outline-none"
@@ -74,7 +77,7 @@ function InvoiceForm() {
         />
       </div>
       <div className="flex flex-col gap-1.5">
-        <label className="text-sm">Poštna številka</label>
+        <label className="text-sm">{t("companyPostal")}</label>
         <input
           placeholder="1000"
           className="border-gray rounded-lg border px-3.5 py-1.5 shadow-sm outline-none"
@@ -82,7 +85,7 @@ function InvoiceForm() {
         />
       </div>
       <div className="flex flex-col gap-1.5">
-        <label className="text-sm">Davčna številka</label>
+        <label className="text-sm">{t("companyTaxNo")}</label>
         <input
           placeholder="SI12345678"
           className="border-gray rounded-lg border px-3.5 py-1.5 shadow-sm outline-none"

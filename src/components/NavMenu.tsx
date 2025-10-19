@@ -7,9 +7,12 @@ import {
 import { NavLink, useLocation, useNavigate } from "react-router";
 import { MouseEventHandler, useState } from "react";
 import { logout } from "../services/authAPI";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 function NavMenu() {
   const { pathname } = useLocation();
+  const { t } = useTranslation("common");
   const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   function toggleMenu() {
@@ -44,7 +47,7 @@ function NavMenu() {
             className={`rounded-lg px-3.5 py-2 ${pathname === "/dashboard" ? "bg-primary" : ""}`}
           >
             <NavLink to="/dashboard" className="flex items-center gap-6">
-              <HomeIcon className="h-6 stroke-2" /> Domača stran
+              <HomeIcon className="h-6 stroke-2" /> {t("navMenu.home")}
             </NavLink>
           </li>
           <li className="px-3.5 py-2">
@@ -52,7 +55,7 @@ function NavMenu() {
               to="/dashboard/tickets"
               className="flex items-center gap-6"
             >
-              <TicketIcon className="h-6 stroke-2" /> Nakup
+              <TicketIcon className="h-6 stroke-2" /> {t("navMenu.buyTickets")}
             </NavLink>
             <ul className="mt-4 flex flex-col gap-2">
               <li
@@ -62,7 +65,7 @@ function NavMenu() {
                   to="/dashboard/tickets"
                   className="text-sm text-black/50"
                 >
-                  Vstopnice
+                  {t("navMenu.tickets")}
                 </NavLink>
               </li>
               <li
@@ -72,7 +75,7 @@ function NavMenu() {
                   to="/dashboard/classes"
                   className="text-sm text-black/50"
                 >
-                  Aktivnosti in vadbe
+                  {t("navMenu.activitiesAndClasses")}
                 </NavLink>
               </li>
             </ul>
@@ -93,7 +96,7 @@ function NavMenu() {
                   to="/dashboard/mytickets"
                   className="text-sm text-black/50"
                 >
-                  Vstopnice in obiski
+                  {t("navMenu.ticketsAndVisits")}
                 </NavLink>
               </li>
               <li
@@ -103,7 +106,7 @@ function NavMenu() {
                   to="/dashboard/myclasses"
                   className="text-sm text-black/50"
                 >
-                  Aktivnosti in vadbe
+                  {t("navMenu.activitiesAndClasses")}
                 </NavLink>
               </li>
             </ul>
@@ -128,7 +131,7 @@ function NavMenu() {
                   strokeLinejoin="round"
                 />
               </svg>
-              Moj profil
+              {t("navMenu.myProfile")}
             </NavLink>
           </li>
           <li
@@ -154,7 +157,7 @@ function NavMenu() {
                   strokeLinejoin="round"
                 />
               </svg>
-              Moji računi
+              {t("navMenu.myInvoices")}
             </NavLink>
           </li>
           <li className="px-3.5 py-2">
@@ -179,9 +182,10 @@ function NavMenu() {
                   strokeLinejoin="round"
                 />
               </svg>
-              Na spletno stran
+              {t("navMenu.toWebsite")}
             </a>
           </li>
+          {import.meta.env.DEV && <LanguageSwitcher />}
         </ul>
         <LogoutBtn />
         {/* <ChevronDownIcon
@@ -313,6 +317,7 @@ function BottomMenu({
 }
 
 function LogoutBtn() {
+  const { t } = useTranslation("common");
   const navigate = useNavigate();
 
   async function handleClick() {
@@ -326,7 +331,7 @@ function LogoutBtn() {
       className="w-32 cursor-pointer self-end rounded-lg bg-white py-1 text-center text-black/50"
       onClick={handleClick}
     >
-      Odjavi se
+      {t("navMenu.logout")}
     </button>
   );
 }

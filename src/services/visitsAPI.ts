@@ -54,15 +54,23 @@ export async function getChildLastVisits(id: string, limit: number) {
   }
 }
 
-export async function getYearlyVisitNo(year: string) {
+export async function getYearlyVisitNo({
+  startDate,
+  endDate,
+}: {
+  startDate?: Date;
+  endDate?: Date;
+}) {
   try {
-    const res = await fetch(
-      `${import.meta.env.VITE_API_URL}/visits/yearly/${year}`,
-      {
-        method: "GET",
-        credentials: "include",
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/visits/yearly`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
       },
-    );
+      credentials: "include",
+      body: JSON.stringify({ startDate, endDate }),
+    });
 
     if (!res.ok) {
       const data = await res.json();

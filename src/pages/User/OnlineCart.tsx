@@ -12,8 +12,10 @@ import { setAmount } from "../../features/dashboard/payments/slices/paymentSlice
 import CompanyInvoiceForm from "../../features/dashboard/payments/components/CompanyInvoiceForm";
 import { getMyChild } from "../../services/userAPI";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { useTranslation } from "react-i18next";
 
 function OnlineCart() {
+  const { t, i18n } = useTranslation("tickets");
   const { childId } = useParams();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -61,35 +63,35 @@ function OnlineCart() {
       <div>
         <h1 className="flex items-center gap-4 font-semibold">
           <Link to={`/dashboard${childId ? `/child/${childId}` : ""}/tickets`}>
-            Nakup vstopnice
+            {t("buyTicket")}
           </Link>
-          <ChevronRightIcon className="w-4 stroke-3" /> Plačilo
+          <ChevronRightIcon className="w-4 stroke-3" /> {t("payment")}
         </h1>
         {me.parentOf.length > 0 && (
           <p className="bg-gray/80 mt-8 w-fit rounded-lg px-3 py-1 font-medium">
-            Nakupujem za:{" "}
+            {t("buyingFor")}:{" "}
             {!childId
-              ? `${me.firstName} (jaz)`
-              : `${childData.myChild.firstName} (${childData.myChild.age} let)`}
+              ? `${me.firstName} (${t("me")})`
+              : `${childData.myChild.firstName} (${childData.myChild.age} ${t("years")})`}
           </p>
         )}
       </div>
       <div className="flex flex-col lg:mx-auto lg:w-2/3">
-        <p className="font-medium">Povzetek nakupa</p>
+        <p className="font-medium">{t("recap")}</p>
         <div
           className={`mt-2 flex flex-col gap-5 rounded-xl bg-white px-4 py-8 md:grid md:grid-cols-[3fr_2fr] md:items-center md:px-8 xl:grid-cols-[5fr_2fr]`}
         >
           <p className={`font-quicksand text-lg font-bold uppercase`}>
-            {data.article.name.sl}
+            {data.article.name[i18n.language]}
           </p>
           <p className="bg-primary/10 flex items-center justify-between rounded-xl px-4 py-3 md:col-start-2 md:w-full md:justify-self-end">
-            Količina:{" "}
+            {t("quantity")}:{" "}
             <span className="font-semibold">
               {ticketCart.articles[0].quantity}
             </span>
           </p>
           <p className="bg-primary/35 flex items-center justify-between rounded-xl px-4 py-3 md:col-start-2 md:w-full md:justify-self-end">
-            Skupaj za plačilo:{" "}
+            {t("together")}:{" "}
             <span className="font-semibold">
               {(data.article.priceDDV * Number(ticketCart.articles[0].quantity))
                 .toFixed(2)
@@ -131,6 +133,7 @@ function PaymentType({
   };
   childId?: string;
 }) {
+  const { t } = useTranslation("payments");
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
@@ -138,11 +141,9 @@ function PaymentType({
 
   return (
     <>
-      <p className="mt-10 font-medium lg:mt-16">
-        Izberi način plačila in dokončaj nakup
-      </p>
+      <p className="mt-10 font-medium lg:mt-16">{t("choosePayment")}</p>
       <div className="mt-2 flex flex-col gap-8 rounded-xl bg-white px-4 py-6 md:px-8 lg:pb-10">
-        <p className="font-semibold">Znesek želim poravnati:</p>
+        <p className="font-semibold">{t("payWith")}:</p>
         <div className="flex flex-col gap-7">
           <div className="flex items-center gap-3">
             <label className="cursor-pointer">
@@ -162,7 +163,7 @@ function PaymentType({
                 />
               </div>
             </label>
-            <p className="font-medium">s plačilno kartico</p>
+            <p className="font-medium">{t("card")}</p>
           </div>
           <PaymentForm />
         </div>
@@ -184,7 +185,7 @@ function PaymentType({
               />
             </div>
           </label>
-          <p className="font-medium">s PayPal-om</p>
+          <p className="font-medium">{t("payPal")}</p>
         </div>
         {payment === "paypal" && (
           <div className="lg:mx-auto lg:w-1/2">
@@ -239,10 +240,7 @@ function PaymentType({
         <span className="from-primary to-secondary drop-shadow-btn flex h-6 w-6 flex-none items-center justify-center rounded-lg bg-gradient-to-r font-semibold">
           i
         </span>
-        Nakup vstopnice v spletni aplikaciji je možno izvršiti samo s spletnim
-        plačilom. V kolikor želiš vstopnico kupiti z gotovino ali plačilno
-        kartico kartico, lahko to opraviš v času delovnih ur na blagajni
-        recepcije.
+        {t("paymentTextTicket")}
       </p>
     </>
   );

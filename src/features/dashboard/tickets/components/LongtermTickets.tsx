@@ -1,27 +1,32 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import { getArticles } from "../../../../services/articlesAPI";
 import Spinner from "../../../../components/Spinner";
 import TicketCard, { ITicket } from "./TicketCard";
 import { useParams } from "react-router";
 import { useEffect, useState } from "react";
 import { getMe, getMyChild } from "../../../../services/userAPI";
+import { useTranslation } from "react-i18next";
 
 function LongtermTickets() {
+  const { t } = useTranslation("tickets");
   const { childId } = useParams();
   const [ageGroup, setAgeGroup] = useState("adult");
 
-  const { data: childData, isLoading: isLoadingChild } = useQuery({
-    queryKey: ["child", childId],
-    queryFn: () => getMyChild(childId!),
-    enabled: !!childId,
-  });
-  const {
-    data: meData,
-    isLoading: isLoadingMe,
-    isPending,
-  } = useQuery({
-    queryKey: ["me"],
-    queryFn: getMe,
+  const [
+    { data: meData, isLoading: isLoadingMe, isPending },
+    { data: childData, isLoading: isLoadingChild },
+  ] = useQueries({
+    queries: [
+      {
+        queryKey: ["me"],
+        queryFn: getMe,
+      },
+      {
+        queryKey: ["child", childId],
+        queryFn: () => getMyChild(childId!),
+        enabled: !!childId,
+      },
+    ],
   });
 
   const me = childId ? childData?.myChild : meData;
@@ -50,7 +55,7 @@ function LongtermTickets() {
 
   return (
     <div className="flex flex-col gap-4">
-      <p className="font-medium">Vstopnice za daljše obdobje</p>
+      <p className="font-medium">{t("longTerm")}</p>
       <div className="flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-x-5 lg:gap-y-6 xl:grid-cols-3">
         {data.articles.map((ticket: ITicket) => (
           <TicketCard key={ticket._id} ticket={ticket} />
