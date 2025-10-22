@@ -1,6 +1,5 @@
 import { useTranslation } from "react-i18next";
 
-
 export interface IVisit {
   _id: string;
   date: string;
@@ -19,12 +18,12 @@ function MyVisitsCard({ visit }: { visit: IVisit }) {
   return (
     <div>
       <p className="font-medium">
-        {new Date(date).toLocaleDateString("si-SL", {
+        {new Date(date).toLocaleDateString("sl-SI", {
           day: "numeric",
           month: "long",
           year: "numeric",
         })}
-        , {t("at")} {new Date(date).toLocaleTimeString("si-SL")}
+        , {t("at")} {new Date(date).toLocaleTimeString("sl-SI")}
       </p>
       <progress value={1} max={1} />
       <p>

@@ -14,24 +14,24 @@ const isDev = import.meta.env.DEV;
 const supportedLanguages = ["en", "sl"] as const;
 type SupportedLang = (typeof supportedLanguages)[number];
 
-function detectInitialLanguage(): SupportedLang {
-  try {
-    const stored =
-      typeof window !== "undefined" ? localStorage.getItem("i18nextLng") : null;
-    if (stored && supportedLanguages.includes(stored as SupportedLang))
-      return stored as SupportedLang;
-  } catch {
-    // Ignore errors reading localStorage
-  }
+// function detectInitialLanguage(): SupportedLang {
+//   try {
+//     const stored =
+//       typeof window !== "undefined" ? localStorage.getItem("i18nextLng") : null;
+//     if (stored && supportedLanguages.includes(stored as SupportedLang))
+//       return stored as SupportedLang;
+//   } catch {
+//     // Ignore errors reading localStorage
+//   }
 
-  const browser =
-    typeof navigator !== "undefined"
-      ? navigator.language?.slice(0, 2).toLowerCase()
-      : undefined;
-  if (browser && supportedLanguages.includes(browser as SupportedLang))
-    return browser as SupportedLang;
-  return "sl";
-}
+//   const browser =
+//     typeof navigator !== "undefined"
+//       ? navigator.language?.slice(0, 2).toLowerCase()
+//       : undefined;
+//   if (browser && supportedLanguages.includes(browser as SupportedLang))
+//     return browser as SupportedLang;
+//   return "sl";
+// }
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -51,6 +51,6 @@ i18n.use(initReactI18next).init({
   ns: ["common", "auth"],
   defaultNS: "common",
   debug: isDev,
-  lng: detectInitialLanguage(),
+  lng: "sl",
   fallbackLng: "sl",
 });
