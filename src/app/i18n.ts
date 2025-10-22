@@ -11,8 +11,8 @@ import enPayments from "../locales/en/paymet.json";
 
 const isDev = import.meta.env.DEV;
 
-const supportedLanguages = ["en", "sl"] as const;
-type SupportedLang = (typeof supportedLanguages)[number];
+// const supportedLanguages = ["en", "sl"] as const;
+// type SupportedLang = (typeof supportedLanguages)[number];
 
 // function detectInitialLanguage(): SupportedLang {
 //   try {
